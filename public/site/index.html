@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>African Reclaimers Organisation — Reclaiming The Future</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ── Reset & tokens ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  /* Dark palette */
+  --base:        #111810;
+  --surface:     #161d16;
+  --card-bg:     #1a221a;
+  --card-hover:  #1e271e;
+  --border:      #263026;
+  --border-dim:  #1c221c;
+
+  /* White palette */
+  --white-base:  #F2F5F2;
+  --white-surface: #FFFFFF;
+  --white-card:  #FFFFFF;
+  --white-border: #DDE8DD;
+  --white-border-dim: #E8EEE8;
+
+  --green:        #2A7A2A;
+  --green-mid:    #3A6E3A;   /* nav — readable but not too dark */
+  --green-bright: #3DAA3D;
+  --green-dim:    #1A4D1A;
+  --green-glow:   rgba(61,170,61,0.1);
+
+  --ink:      #1A1F1A;   /* dark text on white sections */
+  --ink-mid:  #3A443A;
+  --ink-soft: #5C6B5C;
+
+  --white:    #E8EDE8;
+  --white-hi: #F4F7F4;
+  --grey:     #7A8A7A;
+  --grey-mid: #9AA89A;
+
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body:    'Barlow', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--base); color: var(--white); font-family: var(--font-body); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ── Nav ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem; height: 84px;
+  background: var(--green-mid);
+  border-bottom: 2px solid var(--green-dim);
+  backdrop-filter: blur(10px);
+}
+.nav-logo { display: flex; align-items: center; gap: 1rem; }
+.nav-logo img { height: 80px; width: auto; }
+.nav-logo-text { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.2; color: #fff; }
+.nav-logo-text span { color: #a8e6a8; display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; margin-top: 0.1rem; }
+.nav-links { display: flex; align-items: center; gap: 0.2rem; list-style: none; }
+.nav-links a { font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.45rem 0.8rem; border-radius: 2px; transition: color 0.2s, background 0.2s; color: rgba(255,255,255,0.72); }
+.nav-links a:hover { color: #fff; background: rgba(0,0,0,0.2); }
+.nav-cta { background: var(--ink) !important; color: #fff !important; padding: 0.5rem 1.2rem !important; border-radius: 2px !important; margin-left: 0.5rem !important; }
+.nav-cta:hover { background: #000 !important; }
+
+.nav-hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+.nav-hamburger span { display: block; width: 26px; height: 2px; background: #fff; }
+
+/* ── Ticker ── */
+.ticker {
+  position: fixed; top: 84px; left: 0; right: 0; z-index: 99;
+  background: var(--green-dim);
+  border-bottom: 1px solid var(--green);
+  height: 38px; overflow: hidden; display: flex; align-items: center;
+}
+.ticker-track { display: flex; animation: ticker-scroll 50s linear infinite; white-space: nowrap; }
+.ticker-item { display: inline-flex; align-items: center; gap: 1.4rem; font-family: var(--font-mono); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 3.5rem; color: rgba(255,255,255,0.88); }
+.ticker-item strong { color: var(--green-bright); font-weight: 900; }
+.ticker-sep { color: rgba(255,255,255,0.35); }
+@keyframes ticker-scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* ── Hero ── */
+.hero { min-height: 100vh; padding-top: 122px; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; }
+.hero-bg-img { position: absolute; inset: 0; background-size: cover; background-position: center; background-color: var(--base); }
+.hero-bg-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(10,18,10,0.84) 0%, rgba(10,18,10,0.55) 50%, rgba(10,18,10,0.9) 100%); }
+.hero-pattern { position: absolute; inset: 0; z-index: 1; opacity: 0.03; background-image: repeating-linear-gradient(0deg, transparent, transparent 60px, var(--green) 60px, var(--green) 61px), repeating-linear-gradient(90deg, transparent, transparent 60px, var(--green) 60px, var(--green) 61px); }
+.hero-content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 4rem 2rem 5rem; width: 100%; }
+.hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-bright); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+.hero-eyebrow::after { content:''; flex: 0 0 40px; height: 1px; background: var(--green-bright); }
+.hero h1 { font-family: var(--font-display); font-size: clamp(3.5rem, 10vw, 8.5rem); font-weight: 900; line-height: 0.92; text-transform: uppercase; letter-spacing: -0.01em; max-width: 900px; color: var(--white-hi); }
+.hero h1 .accent { color: var(--green-bright); }
+.hero h1 .line-indent { padding-left: 4rem; }
+.hero-sub { font-size: 1.1rem; color: var(--grey-mid); max-width: 540px; margin-top: 2rem; line-height: 1.75; }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+
+/* ── Buttons ── */
+.btn { font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.8rem 1.8rem; border: 2px solid transparent; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+.btn-primary { background: var(--green); color: #fff; border-color: var(--green); }
+.btn-primary:hover { background: var(--green-bright); border-color: var(--green-bright); }
+.btn-outline { background: transparent; color: var(--white); border-color: rgba(255,255,255,0.25); }
+.btn-outline:hover { border-color: var(--green-bright); color: var(--green-bright); }
+.btn-dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+.btn-dark:hover { background: var(--green); border-color: var(--green); }
+
+/* ── Stats strip ── */
+.stats-strip { background: var(--green-dim); border-top: 1px solid var(--green); border-bottom: 1px solid var(--green); }
+.stats-strip-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.stat-item { padding: 2rem; border-right: 1px solid rgba(255,255,255,0.08); text-align: center; }
+.stat-item:last-child { border-right: none; }
+.stat-value { font-family: var(--font-display); font-size: 3rem; font-weight: 900; color: var(--green-bright); line-height: 1; }
+.stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.4rem; }
+
+/* ── Section base ── */
+section { padding: 6rem 2rem; }
+.container { max-width: 1200px; margin: 0 auto; }
+
+/* DARK section tokens */
+.sec-dark { background: var(--base); }
+.sec-dark-alt { background: var(--surface); }
+
+/* WHITE section tokens */
+.sec-white { background: var(--white-base); }
+.sec-white-alt { background: var(--white-surface); }
+
+/* Eyebrow — adapts to section */
+.sec-dark .section-eyebrow, .sec-dark-alt .section-eyebrow { color: var(--green-bright); }
+.sec-white .section-eyebrow, .sec-white-alt .section-eyebrow { color: var(--green); }
+.section-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.75rem; }
+
+/* Section title — adapts */
+.sec-dark h2.section-title, .sec-dark-alt h2.section-title { color: var(--white-hi); }
+.sec-white h2.section-title, .sec-white-alt h2.section-title { color: var(--ink); }
+h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; text-transform: uppercase; line-height: 0.95; margin-bottom: 1rem; }
+
+/* Intro text */
+.sec-dark .section-intro, .sec-dark-alt .section-intro { color: var(--white-base); }
+.sec-white .section-intro, .sec-white-alt .section-intro { color: var(--ink-soft); }
+.section-intro { max-width: 640px; margin-bottom: 3.5rem; font-size: 1.05rem; line-height: 1.75; }
+
+/* ── Dark card grid ── */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: var(--border-dim); }
+.card { background: var(--card-bg); display: flex; flex-direction: column; transition: background 0.2s; overflow: hidden; }
+.card:hover { background: var(--card-hover); }
+.card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; filter: brightness(0.88) saturate(0.85); transition: filter 0.3s; }
+.card:hover .card-img { filter: brightness(1) saturate(1); }
+.card-img-placeholder { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, var(--border) 0%, var(--card-bg) 100%); display: flex; align-items: center; justify-content: center; }
+.card-img-placeholder span { font-family: var(--font-mono); font-size: 0.6rem; color: var(--grey); letter-spacing: 0.12em; text-transform: uppercase; }
+.card-body { padding: 1.75rem; display: flex; flex-direction: column; gap: 0.75rem; flex: 1; }
+.card-tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-bright); border: 1px solid var(--green-dim); padding: 0.18rem 0.5rem; display: inline-block; align-self: flex-start; }
+.card h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; text-transform: uppercase; line-height: 1.15; color: var(--white-hi); }
+.card p { color: var(--grey-mid); font-size: 0.92rem; line-height: 1.72; flex: 1; }
+
+/* ── White card grid ── */
+.card-grid-white { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: var(--white-border-dim); }
+.card-w { background: var(--white-card); display: flex; flex-direction: column; transition: box-shadow 0.2s, transform 0.2s; overflow: hidden; }
+.card-w:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
+.card-w .card-img { filter: brightness(0.95) saturate(0.9); }
+.card-w:hover .card-img { filter: brightness(1) saturate(1); }
+.card-w .card-img-placeholder { background: linear-gradient(135deg, #e8eee8 0%, #f5f8f5 100%); }
+.card-w .card-img-placeholder span { color: #aab8aa; }
+.card-w-body { padding: 1.75rem; display: flex; flex-direction: column; gap: 0.75rem; flex: 1; }
+.card-w-tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); border: 1px solid #c0d8c0; padding: 0.18rem 0.5rem; display: inline-block; align-self: flex-start; }
+.card-w h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; text-transform: uppercase; line-height: 1.15; color: var(--ink); }
+.card-w p { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.72; flex: 1; }
+
+/* Video embeds */
+.card-videos, .card-w-videos { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem; }
+.video-label { font-family: var(--font-mono); font-size: 0.6rem; color: var(--grey); letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+.card-w .video-label { color: var(--ink-soft); }
+.video-embed-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: var(--border); border-radius: 2px; }
+.card-w .video-embed-wrap { background: #e0e8e0; }
+.video-embed-wrap iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
+
+/* ── Films ── */
+.films-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem; }
+.film-card { display: flex; flex-direction: column; gap: 1rem; }
+.film-embed-wrap { position: relative; padding-bottom: 56.25%; height: 0; background: var(--card-bg); overflow: hidden; border-radius: 3px; }
+.film-embed-wrap iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
+.film-placeholder { display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.68rem; color: var(--grey); letter-spacing: 0.1em; height: 100%; }
+.film-meta { display: flex; flex-direction: column; gap: 0.35rem; }
+.film-type { font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-bright); }
+.film-meta h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; text-transform: uppercase; color: var(--white-hi); }
+.film-meta p { color: var(--grey-mid); font-size: 0.88rem; }
+.film-credit { font-family: var(--font-mono); font-size: 0.62rem; color: var(--grey); }
+
+/* ── News — white section ── */
+.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; }
+.news-card { background: #fff; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--white-border); transition: box-shadow 0.2s, transform 0.2s; }
+.news-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.09); transform: translateY(-2px); }
+.news-card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; filter: brightness(0.95) saturate(0.88); transition: filter 0.3s; }
+.news-card:hover .news-card-img { filter: brightness(1) saturate(1); }
+.news-card-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+.news-date { font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink-soft); letter-spacing: 0.1em; }
+.news-cat { font-family: var(--font-mono); font-size: 0.63rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; }
+.news-card h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; text-transform: uppercase; line-height: 1.15; color: var(--ink); }
+.news-card p { color: var(--ink-soft); font-size: 0.9rem; line-height: 1.7; }
+
+/* ── Reclaimers — white section ── */
+.reclaimers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+.reclaimer-card { background: #fff; padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem; border: 1px solid var(--white-border); transition: box-shadow 0.2s; }
+.reclaimer-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.reclaimer-img { width: 100px; height: 100px; border-radius: 50%; background: #e0ece0; border: 3px solid var(--green); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.reclaimer-img img { width: 100%; height: 100%; object-fit: cover; }
+.reclaimer-img-placeholder { font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; color: var(--green); }
+.reclaimer-quote { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; font-style: italic; color: var(--ink); line-height: 1.4; border-left: 3px solid var(--green); padding-left: 0.85rem; }
+.reclaimer-name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 1rem; color: var(--ink); }
+.reclaimer-role { font-family: var(--font-mono); font-size: 0.63rem; color: var(--green); letter-spacing: 0.1em; }
+.reclaimer-bio { color: var(--ink-soft); font-size: 0.88rem; line-height: 1.65; }
+
+/* ── Partners — dark ── */
+.partners-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 2rem; }
+.partner-chip { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.6rem 1.4rem; border: 1px solid var(--border); color: var(--grey); transition: all 0.2s; }
+.partner-chip:hover { border-color: var(--green-bright); color: var(--green-bright); }
+
+/* ── Contact — white ── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+.contact-detail { display: flex; flex-direction: column; gap: 1.5rem; }
+.contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+.contact-icon { width: 44px; height: 44px; background: var(--green); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 2px; }
+.contact-icon i { color: #fff; font-size: 1.1rem; }
+.contact-label { font-family: var(--font-mono); font-size: 0.63rem; color: var(--ink-soft); letter-spacing: 0.1em; text-transform: uppercase; }
+.contact-value { font-size: 0.95rem; margin-top: 0.2rem; color: var(--ink); }
+.social-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.social-link { font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.5rem 1rem; border: 1px solid #c0d0c0; transition: all 0.2s; color: var(--ink-soft); }
+.social-link:hover { border-color: var(--green); color: var(--green); }
+
+/* ── Footer ── */
+footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+.footer-logo { display: flex; align-items: center; gap: 1rem; }
+.footer-logo img { height: 52px; width: auto; }
+.footer-logo-text { font-family: var(--font-display); font-weight: 800; font-size: 0.95rem; letter-spacing: 0.05em; color: #fff; line-height: 1.3; }
+.footer-logo-sub { font-family: var(--font-mono); font-size: 0.62rem; color: #a8e6a8; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 0.15rem; }
+.footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem; }
+.footer-socials { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end; }
+.footer-social-link { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.9rem; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.65); transition: all 0.2s; border-radius: 2px; }
+.footer-social-link:hover { border-color: #a8e6a8; color: #a8e6a8; }
+.footer-copy { font-family: var(--font-mono); font-size: 0.6rem; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; }
+
+/* ── Section divider ── */
+.section-divider { height: 1px; }
+.section-divider-dark { background: var(--border-dim); }
+.section-divider-white { background: var(--white-border-dim); }
+.section-divider-mix { background: linear-gradient(90deg, var(--border-dim) 0%, var(--white-border) 100%); }
+
+/* ── Empty state ── */
+.empty-state { text-align: center; padding: 4rem 2rem; font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.1em; grid-column: 1 / -1; }
+.sec-dark .empty-state, .sec-dark-alt .empty-state { color: var(--grey); }
+.sec-white .empty-state, .sec-white-alt .empty-state { color: var(--ink-soft); }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; flex-direction: column; position: absolute; top: 84px; left: 0; right: 0; background: var(--green-mid); padding: 1rem; border-bottom: 2px solid var(--green-dim); }
+  .nav-links.open { display: flex; }
+  .nav-hamburger { display: flex; }
+  .hero h1 .line-indent { padding-left: 1.5rem; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .stat-item:last-child { border-bottom: none; }
+  .footer-right { align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="/images/aro-logo.png" alt="ARO Logo">
+    <div class="nav-logo-text">
+      African Reclaimers Organisation
+      <span>Reclaiming The Future</span>
+    </div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#campaigns">Campaigns</a></li>
+    <li><a href="#programmes">Programmes</a></li>
+    <li><a href="#policy">Policy</a></li>
+    <li><a href="#international">International</a></li>
+    <li><a href="#films">Films</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#reclaimers">Reclaimers</a></li>
+    <li><a href="#contact" class="nav-cta btn">Get Involved</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<!-- HERO — dark -->
+<section class="hero sec-dark" id="home">
+  <div class="hero-bg-img" id="heroBg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">African Reclaimers Organisation — Johannesburg</div>
+    <h1>
+      Reclaimers<br>
+      Keep South<br>
+      <span class="accent line-indent">Africa Clean.</span>
+    </h1>
+    <p class="hero-sub">ARO is a democratic organisation of over 6,000 reclaimers. We fight for recognition, fair pay, and justice — because the people who recycle South Africa's waste deserve to be treated with dignity.</p>
+    <div class="hero-actions">
+      <a href="#campaigns" class="btn btn-primary">Our Campaigns</a>
+      <a href="#reclaimers" class="btn btn-outline">Meet the Reclaimers</a>
+      <a href="#contact" class="btn btn-outline">Get Involved</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS — dark green band -->
+<div class="stats-strip">
+  <div class="stats-strip-inner" id="statsStrip"></div>
+</div>
+
+<div class="section-divider section-divider-dark"></div>
+
+<!-- CAMPAIGNS — dark -->
+<section id="campaigns" class="sec-dark">
+  <div class="container">
+    <div class="section-eyebrow">Fighting for Change</div>
+    <h2 class="section-title">Campaigns</h2>
+    <p class="section-intro">ARO is a campaigning organisation. Our campaigns build pressure on government and industry, mobilise our members, and win recognition and rights for reclaimers.</p>
+    <div class="card-grid" id="campaignsGrid"></div>
+  </div>
+</section>
+
+<div class="section-divider section-divider-mix"></div>
+
+<!-- PROGRAMMES — white -->
+<section id="programmes" class="sec-white">
+  <div class="container">
+    <div class="section-eyebrow">Putting Vision Into Practice</div>
+    <h2 class="section-title">Programmes</h2>
+    <p class="section-intro">ARO's programmes demonstrate concretely that a reclaimer-inclusive model of waste management works better for everyone — for reclaimers, residents, municipalities, and the environment.</p>
+    <div class="card-grid-white" id="programmesGrid"></div>
+  </div>
+</section>
+
+<div class="section-divider section-divider-mix"></div>
+
+<!-- POLICY — dark -->
+<section id="policy" class="sec-dark-alt">
+  <div class="container">
+    <div class="section-eyebrow">Shaping National Policy</div>
+    <h2 class="section-title">Policy Engagement</h2>
+    <p class="section-intro">Real change requires changes in law and policy. ARO has been a consistent and effective voice in South Africa's national policy debates, pushing for frameworks that formally recognise and pay reclaimers.</p>
+    <div class="card-grid" id="policyGrid"></div>
+  </div>
+</section>
+
+<div class="section-divider section-divider-mix"></div>
+
+<!-- INTERNATIONAL — white -->
+<section id="international" class="sec-white-alt">
+  <div class="container">
+    <div class="section-eyebrow">Global Solidarity</div>
+    <h2 class="section-title">International Work</h2>
+    <p class="section-intro">The struggle for reclaimer rights is not only a South African struggle. ARO has built genuine relationships with reclaimer organisations and international policy processes across the world.</p>
+    <div class="card-grid-white" id="internationalGrid"></div>
+  </div>
+</section>
+
+<div class="section-divider section-divider-mix"></div>
+
+<!-- FILMS — dark -->
+<section id="films" class="sec-dark">
+  <div class="container">
+    <div class="section-eyebrow">Documented. Witnessed. Archived.</div>
+    <h2 class="section-title">Films & Media</h2>
+    <p class="section-intro">ARO's story has been documented by filmmakers, students, and researchers. These films are the visual record of a movement.</p>
+    <div class="films-grid" id="filmsGrid"></div>
+  </div>
+</section>
+
+<div class="section-divider section-divider-mix"></div>
+
+<!-- NEWS — white -->
+<section id="news" class="sec-white">
+  <div class="container">
+    <div class="section-eyebrow">Latest from the Movement</div>
+    <h2 class="section-title">News & Updates</h2>
+    <p class="section-intro">Campaign wins, policy developments, international events — what ARO has been doing and fighting for.</p>
+    <div class="news-grid" id="newsGrid"></div>
+  </div>
+</section>
+
+<div class="section-divider section-divider-mix"></div>
+
+<!-- RECLAIMERS — white alt -->
+<section id="reclaimers" class="sec-white-alt">
+  <div class="container">
+    <div class="section-eyebrow">The Movement's Heart</div>
+    <h2 class="section-title">The Reclaimers</h2>
+    <p class="section-intro">Close to 90,000 South Africans work as informal reclaimers, doing close to 90% of all recycling in this country. ARO members are these workers — skilled, organised, and fighting for their rights.</p>
+    <div class="reclaimers-grid" id="reclaimersGrid"></div>
+  </div>
+</section>
+
+<div class="section-divider section-divider-dark"></div>
+
+<!-- PARTNERS — dark -->
+<section id="partners" class="sec-dark-alt" style="padding:5rem 2rem">
+  <div class="container" style="text-align:center">
+    <div class="section-eyebrow">Partners & Funders</div>
+    <h2 class="section-title" style="font-size:2.5rem">Standing With ARO</h2>
+    <div class="partners-grid" id="partnersGrid"></div>
+  </div>
+</section>
+
+<div class="section-divider section-divider-mix"></div>
+
+<!-- CONTACT — white -->
+<section id="contact" class="sec-white">
+  <div class="container">
+    <div class="section-eyebrow">Join the Movement</div>
+    <h2 class="section-title">Get Involved</h2>
+    <p class="section-intro">Whether you are a resident, a business, a researcher, or a reclaimer — there is a role for you in this struggle.</p>
+    <div class="contact-grid">
+      <div class="contact-detail" id="contactDetail"></div>
+      <div>
+        <p style="color:var(--ink-soft);line-height:1.85;margin-bottom:1.25rem">The most important thing a resident can do is simple: when you put out your recyclables, put them out in a way that reclaimers can access. Contact ARO to join the Recycling with Reclaimers programme in your area.</p>
+        <p style="color:var(--ink-soft);line-height:1.85;margin-bottom:1.25rem">For businesses and corporates: buy from reclaimers, partner with ARO, and ensure your recycling contracts support the people doing the work.</p>
+        <p style="color:var(--ink-soft);line-height:1.85">For reclaimers: join ARO, register on SAWPRS, and organise together for recognition and fair pay.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="/images/aro-logo.png" alt="ARO">
+    <div>
+      <div class="footer-logo-text">African Reclaimers Organisation</div>
+      <div class="footer-logo-sub">Reclaiming The Future</div>
+    </div>
+  </div>
+  <div class="footer-right">
+    <div class="footer-socials" id="footerSocials"></div>
+    <div class="footer-copy">© 2026 African Reclaimers Organisation. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function extractVideoId(url) {
+  if (!url) return null;
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  if (yt) return { type: 'youtube', id: yt[1] };
+  const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vm) return { type: 'vimeo', id: vm[1] };
+  return null;
+}
+function embedSrc(url) {
+  const v = extractVideoId(url);
+  if (!v) return null;
+  return v.type === 'youtube' ? `https://www.youtube.com/embed/${v.id}` : `https://player.vimeo.com/video/${v.id}`;
+}
+function renderVideos(videos, isWhite) {
+  if (!videos || !videos.length) return '';
+  return `<div class="${isWhite ? 'card-w-videos' : 'card-videos'}">${videos.map(v => {
+    const src = embedSrc(v.url);
+    return src ? `<div>${v.title ? `<div class="video-label">${v.title}</div>` : ''}<div class="video-embed-wrap"><iframe src="${src}" allowfullscreen loading="lazy"></iframe></div></div>` : '';
+  }).join('')}</div>`;
+}
+function cardImage(image, title) {
+  return image
+    ? `<img class="card-img" src="${image}" alt="${title}" loading="lazy">`
+    : `<div class="card-img-placeholder"><span>Image coming soon</span></div>`;
+}
+function formatDate(d) {
+  if (!d) return '';
+  return new Date(d).toLocaleDateString('en-ZA', { year:'numeric', month:'long', day:'numeric' });
+}
+function initials(name) {
+  return name.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase();
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+async function init() {
+  const res = await fetch('/api/content');
+  const data = await res.json();
+
+  // Hero bg
+  const heroImg = data.campaigns?.find(c => c.image)?.image || data.programmes?.find(p => p.image)?.image || '';
+  if (heroImg) document.getElementById('heroBg').style.backgroundImage = `url('${heroImg}')`;
+
+  // Ticker
+  const tickerHTML = data.stats.map(s =>
+    `<span class="ticker-item"><strong>${s.value}</strong><span class="ticker-sep"> — </span>${s.label}</span>`
+  ).join('');
+  document.getElementById('tickerTrack').innerHTML = tickerHTML + tickerHTML;
+
+  // Stats strip
+  document.getElementById('statsStrip').innerHTML = data.stats.map(s => `
+    <div class="stat-item">
+      <div class="stat-value">${s.value}</div>
+      <div class="stat-label">${s.label}</div>
+    </div>`).join('');
+
+  // Dark card renderer
+  function renderDarkCards(containerId, items, tagFn) {
+    const el = document.getElementById(containerId);
+    if (!items || !items.length) { el.innerHTML = '<div class="empty-state">Content coming soon</div>'; return; }
+    el.innerHTML = items.map(item => `
+      <div class="card">
+        ${cardImage(item.image, item.title)}
+        <div class="card-body">
+          <span class="card-tag">${tagFn(item)}</span>
+          <h3>${item.title}</h3>
+          <p>${item.summary}</p>
+          ${renderVideos(item.videos, false)}
+        </div>
+      </div>`).join('');
+  }
+
+  // White card renderer
+  function renderWhiteCards(containerId, items, tagFn) {
+    const el = document.getElementById(containerId);
+    if (!items || !items.length) { el.innerHTML = '<div class="empty-state">Content coming soon</div>'; return; }
+    el.innerHTML = items.map(item => `
+      <div class="card-w">
+        ${cardImage(item.image, item.title)}
+        <div class="card-w-body">
+          <span class="card-w-tag">${tagFn(item)}</span>
+          <h3>${item.title}</h3>
+          <p>${item.summary}</p>
+          ${renderVideos(item.videos, true)}
+        </div>
+      </div>`).join('');
+  }
+
+  renderDarkCards('campaignsGrid',    data.campaigns,    c => c.status === 'current' ? 'Current Campaign' : 'Historical Campaign');
+  renderWhiteCards('programmesGrid',  data.programmes,   () => 'Programme');
+  renderDarkCards('policyGrid',       data.policy,       () => 'Policy Engagement');
+  renderWhiteCards('internationalGrid', data.international, () => 'International Work');
+
+  // Films — dark
+  const filmsEl = document.getElementById('filmsGrid');
+  if (!data.films || !data.films.length) {
+    filmsEl.innerHTML = '<div class="empty-state">Films coming soon</div>';
+  } else {
+    filmsEl.innerHTML = data.films.map(f => {
+      const src = embedSrc(f.embed);
+      return `<div class="film-card">
+        <div class="film-embed-wrap">
+          ${src ? `<iframe src="${src}" allowfullscreen loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0"></iframe>` : `<div class="film-placeholder">Video coming soon</div>`}
+        </div>
+        <div class="film-meta">
+          <span class="film-type">${f.type || 'Film'}${f.year ? ' · ' + f.year : ''}</span>
+          <h3>${f.title}</h3>
+          ${f.description ? `<p>${f.description}</p>` : ''}
+          ${f.credit ? `<span class="film-credit">Produced by ${f.credit}</span>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // News — white
+  const newsEl = document.getElementById('newsGrid');
+  const published = (data.news || []).filter(n => n.published);
+  if (!published.length) {
+    newsEl.innerHTML = '<div class="empty-state">News coming soon</div>';
+  } else {
+    newsEl.innerHTML = published.map(n => `
+      <div class="news-card">
+        ${n.image ? `<img class="news-card-img" src="${n.image}" alt="${n.title}" loading="lazy">` : ''}
+        <div class="news-card-body">
+          <span class="news-cat">${n.category}</span>
+          <span class="news-date">${formatDate(n.date)}</span>
+          <h3>${n.title}</h3>
+          <p>${n.body.substring(0,200)}${n.body.length > 200 ? '…' : ''}</p>
+        </div>
+      </div>`).join('');
+  }
+
+  // Reclaimers — white
+  const rGrid = document.getElementById('reclaimersGrid');
+  if (!data.reclaimers || !data.reclaimers.length) {
+    rGrid.innerHTML = '<div class="empty-state">Profiles coming soon</div>';
+  } else {
+    rGrid.innerHTML = data.reclaimers.map(r => `
+      <div class="reclaimer-card">
+        <div class="reclaimer-img">
+          ${r.image ? `<img src="${r.image}" alt="${r.name}" style="width:100%;height:100%;object-fit:cover">` : `<span class="reclaimer-img-placeholder">${initials(r.name)}</span>`}
+        </div>
+        ${r.quote ? `<div class="reclaimer-quote">${r.quote}</div>` : ''}
+        <div class="reclaimer-name">${r.name}</div>
+        <div class="reclaimer-role">${r.role}${r.area ? ' · ' + r.area : ''}</div>
+        ${r.bio ? `<p class="reclaimer-bio">${r.bio}</p>` : ''}
+      </div>`).join('');
+  }
+
+  // Partners — dark
+  document.getElementById('partnersGrid').innerHTML = (data.partners || []).map(p =>
+    `<a href="${p.url || '#'}" class="partner-chip" ${p.url ? 'target="_blank" rel="noopener"' : ''}>${p.name}</a>`
+  ).join('');
+
+  // Contact — white, Font Awesome icons
+  const s = data.site;
+  document.getElementById('contactDetail').innerHTML = `
+    <div class="contact-item">
+      <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+      <div><div class="contact-label">Address</div><div class="contact-value">${s.address}</div></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+      <div><div class="contact-label">Phone</div><div class="contact-value">${s.phone}</div></div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+      <div><div class="contact-label">Email</div>
+        <div class="contact-value"><a href="mailto:${s.email}" style="color:var(--green)">${s.email}</a></div>
+      </div>
+    </div>
+    <div class="social-links">
+      ${s.facebook  ? `<a href="${s.facebook}"  target="_blank" class="social-link"><i class="fa-brands fa-facebook-f"></i> Facebook</a>`  : ''}
+      ${s.twitter   ? `<a href="${s.twitter}"   target="_blank" class="social-link"><i class="fa-brands fa-x-twitter"></i> Twitter</a>`   : ''}
+      ${s.instagram ? `<a href="${s.instagram}" target="_blank" class="social-link"><i class="fa-brands fa-instagram"></i> Instagram</a>` : ''}
+      ${s.youtube   ? `<a href="${s.youtube}"   target="_blank" class="social-link"><i class="fa-brands fa-youtube"></i> YouTube</a>`   : ''}
+    </div>`;
+
+  // Footer socials
+  document.getElementById('footerSocials').innerHTML = [
+    s.facebook  ? `<a href="${s.facebook}"  target="_blank" class="footer-social-link"><i class="fa-brands fa-facebook-f"></i></a>`  : '',
+    s.twitter   ? `<a href="${s.twitter}"   target="_blank" class="footer-social-link"><i class="fa-brands fa-x-twitter"></i></a>`   : '',
+    s.instagram ? `<a href="${s.instagram}" target="_blank" class="footer-social-link"><i class="fa-brands fa-instagram"></i></a>` : '',
+    s.youtube   ? `<a href="${s.youtube}"   target="_blank" class="footer-social-link"><i class="fa-brands fa-youtube"></i></a>`   : '',
+  ].join('');
+}
+
+init();
+</script>
+</body>
+</html>
