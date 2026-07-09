@@ -2,6 +2,9 @@
   "rewrites": [
     { "source": "/admin", "destination": "/admin/index.html" },
     { "source": "/admin/(.*)", "destination": "/admin/index.html" },
+    { "source": "/site/images/(.*)", "destination": "/site/images/$1" },
+    { "source": "/site/css/(.*)", "destination": "/site/css/$1" },
+    { "source": "/site/js/(.*)", "destination": "/site/js/$1" },
     { "source": "/(.*)", "destination": "/site/index.html" }
   ],
   "headers": [
