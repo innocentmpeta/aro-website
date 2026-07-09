@@ -8,85 +8,66 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-/* ── Reset & tokens ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  /* Dark palette */
   --base:        #111810;
   --surface:     #161d16;
   --card-bg:     #1a221a;
   --card-hover:  #1e271e;
   --border:      #263026;
   --border-dim:  #1c221c;
-
-  /* White palette */
   --white-base:  #F2F5F2;
   --white-surface: #FFFFFF;
   --white-card:  #FFFFFF;
   --white-border: #DDE8DD;
   --white-border-dim: #E8EEE8;
-
   --green:        #2A7A2A;
-  --green-mid:    #3A6E3A;   /* nav — readable but not too dark */
+  --green-mid:    #3A6E3A;
   --green-bright: #3DAA3D;
   --green-dim:    #1A4D1A;
   --green-glow:   rgba(61,170,61,0.1);
-
-  --ink:      #1A1F1A;   /* dark text on white sections */
+  --ink:      #1A1F1A;
   --ink-mid:  #3A443A;
   --ink-soft: #5C6B5C;
-
   --white:    #E8EDE8;
   --white-hi: #F4F7F4;
   --grey:     #7A8A7A;
   --grey-mid: #9AA89A;
-
   --font-display: 'Barlow Condensed', sans-serif;
   --font-body:    'Barlow', sans-serif;
   --font-mono:    'IBM Plex Mono', monospace;
 }
-
 html { scroll-behavior: smooth; }
 body { background: var(--base); color: var(--white); font-family: var(--font-body); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 
-/* ── Nav ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 2.5rem; height: 84px;
   background: var(--green-mid);
   border-bottom: 2px solid var(--green-dim);
-  backdrop-filter: blur(10px);
 }
 .nav-logo { display: flex; align-items: center; gap: 1rem; }
-.nav-logo img { height: 80px; width: auto; }
-.nav-logo-text { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.2; color: #fff; }
+.nav-logo img { height: 56px; width: auto; }
+.nav-logo-text { font-family: var(--font-display); font-weight: 800; font-size: 1.05rem; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.2; color: #fff; }
 .nav-logo-text span { color: #a8e6a8; display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; margin-top: 0.1rem; }
 .nav-links { display: flex; align-items: center; gap: 0.2rem; list-style: none; }
 .nav-links a { font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.45rem 0.8rem; border-radius: 2px; transition: color 0.2s, background 0.2s; color: rgba(255,255,255,0.72); }
 .nav-links a:hover { color: #fff; background: rgba(0,0,0,0.2); }
 .nav-cta { background: var(--ink) !important; color: #fff !important; padding: 0.5rem 1.2rem !important; border-radius: 2px !important; margin-left: 0.5rem !important; }
 .nav-cta:hover { background: #000 !important; }
-
 .nav-hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
 .nav-hamburger span { display: block; width: 26px; height: 2px; background: #fff; }
 
-/* ── Ticker ── */
-.ticker {
-  position: fixed; top: 84px; left: 0; right: 0; z-index: 99;
-  background: var(--green-dim);
-  border-bottom: 1px solid var(--green);
-  height: 38px; overflow: hidden; display: flex; align-items: center;
-}
+.ticker { position: fixed; top: 84px; left: 0; right: 0; z-index: 99; background: var(--green-dim); border-bottom: 1px solid var(--green); height: 38px; overflow: hidden; display: flex; align-items: center; }
 .ticker-track { display: flex; animation: ticker-scroll 50s linear infinite; white-space: nowrap; }
 .ticker-item { display: inline-flex; align-items: center; gap: 1.4rem; font-family: var(--font-mono); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 3.5rem; color: rgba(255,255,255,0.88); }
 .ticker-item strong { color: var(--green-bright); font-weight: 900; }
 .ticker-sep { color: rgba(255,255,255,0.35); }
 @keyframes ticker-scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-/* ── Hero ── */
 .hero { min-height: 100vh; padding-top: 122px; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; }
 .hero-bg-img { position: absolute; inset: 0; background-size: cover; background-position: center; background-color: var(--base); }
 .hero-bg-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(10,18,10,0.84) 0%, rgba(10,18,10,0.55) 50%, rgba(10,18,10,0.9) 100%); }
@@ -99,17 +80,12 @@ nav {
 .hero h1 .line-indent { padding-left: 4rem; }
 .hero-sub { font-size: 1.1rem; color: var(--grey-mid); max-width: 540px; margin-top: 2rem; line-height: 1.75; }
 .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
-
-/* ── Buttons ── */
 .btn { font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.8rem 1.8rem; border: 2px solid transparent; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
 .btn-primary { background: var(--green); color: #fff; border-color: var(--green); }
 .btn-primary:hover { background: var(--green-bright); border-color: var(--green-bright); }
 .btn-outline { background: transparent; color: var(--white); border-color: rgba(255,255,255,0.25); }
 .btn-outline:hover { border-color: var(--green-bright); color: var(--green-bright); }
-.btn-dark { background: var(--ink); color: #fff; border-color: var(--ink); }
-.btn-dark:hover { background: var(--green); border-color: var(--green); }
 
-/* ── Stats strip ── */
 .stats-strip { background: var(--green-dim); border-top: 1px solid var(--green); border-bottom: 1px solid var(--green); }
 .stats-strip-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 .stat-item { padding: 2rem; border-right: 1px solid rgba(255,255,255,0.08); text-align: center; }
@@ -117,34 +93,22 @@ nav {
 .stat-value { font-family: var(--font-display); font-size: 3rem; font-weight: 900; color: var(--green-bright); line-height: 1; }
 .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.4rem; }
 
-/* ── Section base ── */
 section { padding: 6rem 2rem; }
 .container { max-width: 1200px; margin: 0 auto; }
-
-/* DARK section tokens */
 .sec-dark { background: var(--base); }
 .sec-dark-alt { background: var(--surface); }
-
-/* WHITE section tokens */
 .sec-white { background: var(--white-base); }
 .sec-white-alt { background: var(--white-surface); }
-
-/* Eyebrow — adapts to section */
 .sec-dark .section-eyebrow, .sec-dark-alt .section-eyebrow { color: var(--green-bright); }
 .sec-white .section-eyebrow, .sec-white-alt .section-eyebrow { color: var(--green); }
 .section-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.75rem; }
-
-/* Section title — adapts */
 .sec-dark h2.section-title, .sec-dark-alt h2.section-title { color: var(--white-hi); }
 .sec-white h2.section-title, .sec-white-alt h2.section-title { color: var(--ink); }
 h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; text-transform: uppercase; line-height: 0.95; margin-bottom: 1rem; }
-
-/* Intro text */
-.sec-dark .section-intro, .sec-dark-alt .section-intro { color: var(--white-base); }
+.sec-dark .section-intro, .sec-dark-alt .section-intro { color: var(--grey-mid); }
 .sec-white .section-intro, .sec-white-alt .section-intro { color: var(--ink-soft); }
 .section-intro { max-width: 640px; margin-bottom: 3.5rem; font-size: 1.05rem; line-height: 1.75; }
 
-/* ── Dark card grid ── */
 .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: var(--border-dim); }
 .card { background: var(--card-bg); display: flex; flex-direction: column; transition: background 0.2s; overflow: hidden; }
 .card:hover { background: var(--card-hover); }
@@ -157,7 +121,6 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .card h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; text-transform: uppercase; line-height: 1.15; color: var(--white-hi); }
 .card p { color: var(--grey-mid); font-size: 0.92rem; line-height: 1.72; flex: 1; }
 
-/* ── White card grid ── */
 .card-grid-white { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: var(--white-border-dim); }
 .card-w { background: var(--white-card); display: flex; flex-direction: column; transition: box-shadow 0.2s, transform 0.2s; overflow: hidden; }
 .card-w:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
@@ -170,39 +133,31 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .card-w h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; text-transform: uppercase; line-height: 1.15; color: var(--ink); }
 .card-w p { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.72; flex: 1; }
 
-/* Video embeds */
 .card-videos, .card-w-videos { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem; }
 .video-label { font-family: var(--font-mono); font-size: 0.6rem; color: var(--grey); letter-spacing: 0.08em; margin-bottom: 0.3rem; }
-.card-w .video-label { color: var(--ink-soft); }
 .video-embed-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: var(--border); border-radius: 2px; }
-.card-w .video-embed-wrap { background: #e0e8e0; }
 .video-embed-wrap iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
 
-/* ── Films ── */
 .films-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem; }
 .film-card { display: flex; flex-direction: column; gap: 1rem; }
 .film-embed-wrap { position: relative; padding-bottom: 56.25%; height: 0; background: var(--card-bg); overflow: hidden; border-radius: 3px; }
 .film-embed-wrap iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
-.film-placeholder { display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.68rem; color: var(--grey); letter-spacing: 0.1em; height: 100%; }
-.film-meta { display: flex; flex-direction: column; gap: 0.35rem; }
+.film-placeholder { display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.68rem; color: var(--grey); height: 100%; }
 .film-type { font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-bright); }
 .film-meta h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; text-transform: uppercase; color: var(--white-hi); }
 .film-meta p { color: var(--grey-mid); font-size: 0.88rem; }
 .film-credit { font-family: var(--font-mono); font-size: 0.62rem; color: var(--grey); }
 
-/* ── News — white section ── */
 .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; }
 .news-card { background: #fff; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--white-border); transition: box-shadow 0.2s, transform 0.2s; }
 .news-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.09); transform: translateY(-2px); }
-.news-card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; filter: brightness(0.95) saturate(0.88); transition: filter 0.3s; }
-.news-card:hover .news-card-img { filter: brightness(1) saturate(1); }
+.news-card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
 .news-card-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
 .news-date { font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink-soft); letter-spacing: 0.1em; }
 .news-cat { font-family: var(--font-mono); font-size: 0.63rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; }
 .news-card h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; text-transform: uppercase; line-height: 1.15; color: var(--ink); }
 .news-card p { color: var(--ink-soft); font-size: 0.9rem; line-height: 1.7; }
 
-/* ── Reclaimers — white section ── */
 .reclaimers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
 .reclaimer-card { background: #fff; padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem; border: 1px solid var(--white-border); transition: box-shadow 0.2s; }
 .reclaimer-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
@@ -214,12 +169,10 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .reclaimer-role { font-family: var(--font-mono); font-size: 0.63rem; color: var(--green); letter-spacing: 0.1em; }
 .reclaimer-bio { color: var(--ink-soft); font-size: 0.88rem; line-height: 1.65; }
 
-/* ── Partners — dark ── */
 .partners-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 2rem; }
 .partner-chip { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.6rem 1.4rem; border: 1px solid var(--border); color: var(--grey); transition: all 0.2s; }
 .partner-chip:hover { border-color: var(--green-bright); color: var(--green-bright); }
 
-/* ── Contact — white ── */
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
 .contact-detail { display: flex; flex-direction: column; gap: 1.5rem; }
 .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
@@ -228,10 +181,9 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .contact-label { font-family: var(--font-mono); font-size: 0.63rem; color: var(--ink-soft); letter-spacing: 0.1em; text-transform: uppercase; }
 .contact-value { font-size: 0.95rem; margin-top: 0.2rem; color: var(--ink); }
 .social-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.social-link { font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.5rem 1rem; border: 1px solid #c0d0c0; transition: all 0.2s; color: var(--ink-soft); }
+.social-link { font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.5rem 1rem; border: 1px solid #c0d0c0; transition: all 0.2s; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 0.4rem; }
 .social-link:hover { border-color: var(--green); color: var(--green); }
 
-/* ── Footer ── */
 footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
 .footer-logo { display: flex; align-items: center; gap: 1rem; }
 .footer-logo img { height: 52px; width: auto; }
@@ -239,44 +191,36 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
 .footer-logo-sub { font-family: var(--font-mono); font-size: 0.62rem; color: #a8e6a8; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 0.15rem; }
 .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem; }
 .footer-socials { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end; }
-.footer-social-link { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.9rem; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.65); transition: all 0.2s; border-radius: 2px; }
+.footer-social-link { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.9rem; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.65); transition: all 0.2s; border-radius: 2px; display: inline-flex; align-items: center; gap: 0.35rem; }
 .footer-social-link:hover { border-color: #a8e6a8; color: #a8e6a8; }
 .footer-copy { font-family: var(--font-mono); font-size: 0.6rem; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; }
 
-/* ── Section divider ── */
 .section-divider { height: 1px; }
 .section-divider-dark { background: var(--border-dim); }
-.section-divider-white { background: var(--white-border-dim); }
 .section-divider-mix { background: linear-gradient(90deg, var(--border-dim) 0%, var(--white-border) 100%); }
 
-/* ── Empty state ── */
 .empty-state { text-align: center; padding: 4rem 2rem; font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.1em; grid-column: 1 / -1; }
 .sec-dark .empty-state, .sec-dark-alt .empty-state { color: var(--grey); }
 .sec-white .empty-state, .sec-white-alt .empty-state { color: var(--ink-soft); }
 
-/* ── Mobile ── */
+.loading { display: flex; align-items: center; justify-content: center; min-height: 40vh; font-family: var(--font-mono); font-size: 0.75rem; color: var(--grey); letter-spacing: 0.15em; text-transform: uppercase; }
+
 @media (max-width: 768px) {
   .nav-links { display: none; flex-direction: column; position: absolute; top: 84px; left: 0; right: 0; background: var(--green-mid); padding: 1rem; border-bottom: 2px solid var(--green-dim); }
   .nav-links.open { display: flex; }
   .nav-hamburger { display: flex; }
   .hero h1 .line-indent { padding-left: 1.5rem; }
   .contact-grid { grid-template-columns: 1fr; }
-  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .stat-item:last-child { border-bottom: none; }
   .footer-right { align-items: flex-start; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo">
-    <img src="/images/aro-logo.png" alt="ARO Logo">
-    <div class="nav-logo-text">
-      African Reclaimers Organisation
-      <span>Reclaiming The Future</span>
-    </div>
+    <img src="/site/images/aro-logo.png" alt="ARO Logo">
+    <div class="nav-logo-text">African Reclaimers Organisation<span>Reclaiming The Future</span></div>
   </div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#campaigns">Campaigns</a></li>
@@ -288,27 +232,19 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
     <li><a href="#reclaimers">Reclaimers</a></li>
     <li><a href="#contact" class="nav-cta btn">Get Involved</a></li>
   </ul>
-  <div class="nav-hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+  <div class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
     <span></span><span></span><span></span>
   </div>
 </nav>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-track" id="tickerTrack"></div>
-</div>
+<div class="ticker"><div class="ticker-track" id="tickerTrack"><span class="ticker-item">Loading…</span></div></div>
 
-<!-- HERO — dark -->
 <section class="hero sec-dark" id="home">
   <div class="hero-bg-img" id="heroBg"></div>
   <div class="hero-pattern"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">African Reclaimers Organisation — Johannesburg</div>
-    <h1>
-      Reclaimers<br>
-      Keep South<br>
-      <span class="accent line-indent">Africa Clean.</span>
-    </h1>
+    <h1>Reclaimers<br>Keep South<br><span class="accent line-indent">Africa Clean.</span></h1>
     <p class="hero-sub">ARO is a democratic organisation of over 6,000 reclaimers. We fight for recognition, fair pay, and justice — because the people who recycle South Africa's waste deserve to be treated with dignity.</p>
     <div class="hero-actions">
       <a href="#campaigns" class="btn btn-primary">Our Campaigns</a>
@@ -318,98 +254,79 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
   </div>
 </section>
 
-<!-- STATS — dark green band -->
-<div class="stats-strip">
-  <div class="stats-strip-inner" id="statsStrip"></div>
-</div>
-
+<div class="stats-strip"><div class="stats-strip-inner" id="statsStrip"><div class="loading">Loading…</div></div></div>
 <div class="section-divider section-divider-dark"></div>
 
-<!-- CAMPAIGNS — dark -->
 <section id="campaigns" class="sec-dark">
   <div class="container">
     <div class="section-eyebrow">Fighting for Change</div>
     <h2 class="section-title">Campaigns</h2>
     <p class="section-intro">ARO is a campaigning organisation. Our campaigns build pressure on government and industry, mobilise our members, and win recognition and rights for reclaimers.</p>
-    <div class="card-grid" id="campaignsGrid"></div>
+    <div class="card-grid" id="campaignsGrid"><div class="loading">Loading…</div></div>
   </div>
 </section>
-
 <div class="section-divider section-divider-mix"></div>
 
-<!-- PROGRAMMES — white -->
 <section id="programmes" class="sec-white">
   <div class="container">
     <div class="section-eyebrow">Putting Vision Into Practice</div>
     <h2 class="section-title">Programmes</h2>
-    <p class="section-intro">ARO's programmes demonstrate concretely that a reclaimer-inclusive model of waste management works better for everyone — for reclaimers, residents, municipalities, and the environment.</p>
-    <div class="card-grid-white" id="programmesGrid"></div>
+    <p class="section-intro">ARO's programmes demonstrate concretely that a reclaimer-inclusive model of waste management works better for everyone.</p>
+    <div class="card-grid-white" id="programmesGrid"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
   </div>
 </section>
-
 <div class="section-divider section-divider-mix"></div>
 
-<!-- POLICY — dark -->
 <section id="policy" class="sec-dark-alt">
   <div class="container">
     <div class="section-eyebrow">Shaping National Policy</div>
     <h2 class="section-title">Policy Engagement</h2>
-    <p class="section-intro">Real change requires changes in law and policy. ARO has been a consistent and effective voice in South Africa's national policy debates, pushing for frameworks that formally recognise and pay reclaimers.</p>
-    <div class="card-grid" id="policyGrid"></div>
+    <p class="section-intro">Real change requires changes in law and policy. ARO has been a consistent and effective voice in South Africa's national policy debates.</p>
+    <div class="card-grid" id="policyGrid"><div class="loading">Loading…</div></div>
   </div>
 </section>
-
 <div class="section-divider section-divider-mix"></div>
 
-<!-- INTERNATIONAL — white -->
 <section id="international" class="sec-white-alt">
   <div class="container">
     <div class="section-eyebrow">Global Solidarity</div>
     <h2 class="section-title">International Work</h2>
-    <p class="section-intro">The struggle for reclaimer rights is not only a South African struggle. ARO has built genuine relationships with reclaimer organisations and international policy processes across the world.</p>
-    <div class="card-grid-white" id="internationalGrid"></div>
+    <p class="section-intro">The struggle for reclaimer rights is not only a South African struggle. ARO has built genuine relationships across the world.</p>
+    <div class="card-grid-white" id="internationalGrid"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
   </div>
 </section>
-
 <div class="section-divider section-divider-mix"></div>
 
-<!-- FILMS — dark -->
 <section id="films" class="sec-dark">
   <div class="container">
     <div class="section-eyebrow">Documented. Witnessed. Archived.</div>
     <h2 class="section-title">Films & Media</h2>
     <p class="section-intro">ARO's story has been documented by filmmakers, students, and researchers. These films are the visual record of a movement.</p>
-    <div class="films-grid" id="filmsGrid"></div>
+    <div class="films-grid" id="filmsGrid"><div class="loading">Loading…</div></div>
   </div>
 </section>
-
 <div class="section-divider section-divider-mix"></div>
 
-<!-- NEWS — white -->
 <section id="news" class="sec-white">
   <div class="container">
     <div class="section-eyebrow">Latest from the Movement</div>
     <h2 class="section-title">News & Updates</h2>
     <p class="section-intro">Campaign wins, policy developments, international events — what ARO has been doing and fighting for.</p>
-    <div class="news-grid" id="newsGrid"></div>
+    <div class="news-grid" id="newsGrid"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
   </div>
 </section>
-
 <div class="section-divider section-divider-mix"></div>
 
-<!-- RECLAIMERS — white alt -->
 <section id="reclaimers" class="sec-white-alt">
   <div class="container">
     <div class="section-eyebrow">The Movement's Heart</div>
     <h2 class="section-title">The Reclaimers</h2>
-    <p class="section-intro">Close to 90,000 South Africans work as informal reclaimers, doing close to 90% of all recycling in this country. ARO members are these workers — skilled, organised, and fighting for their rights.</p>
-    <div class="reclaimers-grid" id="reclaimersGrid"></div>
+    <p class="section-intro">Close to 90,000 South Africans work as informal reclaimers, doing close to 90% of all recycling in this country.</p>
+    <div class="reclaimers-grid" id="reclaimersGrid"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
   </div>
 </section>
-
 <div class="section-divider section-divider-dark"></div>
 
-<!-- PARTNERS — dark -->
 <section id="partners" class="sec-dark-alt" style="padding:5rem 2rem">
   <div class="container" style="text-align:center">
     <div class="section-eyebrow">Partners & Funders</div>
@@ -417,34 +334,28 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
     <div class="partners-grid" id="partnersGrid"></div>
   </div>
 </section>
-
 <div class="section-divider section-divider-mix"></div>
 
-<!-- CONTACT — white -->
 <section id="contact" class="sec-white">
   <div class="container">
     <div class="section-eyebrow">Join the Movement</div>
     <h2 class="section-title">Get Involved</h2>
     <p class="section-intro">Whether you are a resident, a business, a researcher, or a reclaimer — there is a role for you in this struggle.</p>
     <div class="contact-grid">
-      <div class="contact-detail" id="contactDetail"></div>
+      <div class="contact-detail" id="contactDetail"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
       <div>
-        <p style="color:var(--ink-soft);line-height:1.85;margin-bottom:1.25rem">The most important thing a resident can do is simple: when you put out your recyclables, put them out in a way that reclaimers can access. Contact ARO to join the Recycling with Reclaimers programme in your area.</p>
-        <p style="color:var(--ink-soft);line-height:1.85;margin-bottom:1.25rem">For businesses and corporates: buy from reclaimers, partner with ARO, and ensure your recycling contracts support the people doing the work.</p>
+        <p style="color:var(--ink-soft);line-height:1.85;margin-bottom:1.25rem">The most important thing a resident can do is simple: put out your recyclables in a way that reclaimers can access. Contact ARO to join the Recycling with Reclaimers programme in your area.</p>
+        <p style="color:var(--ink-soft);line-height:1.85;margin-bottom:1.25rem">For businesses: buy from reclaimers, partner with ARO, and ensure your recycling contracts support the people doing the work.</p>
         <p style="color:var(--ink-soft);line-height:1.85">For reclaimers: join ARO, register on SAWPRS, and organise together for recognition and fair pay.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">
-    <img src="/images/aro-logo.png" alt="ARO">
-    <div>
-      <div class="footer-logo-text">African Reclaimers Organisation</div>
-      <div class="footer-logo-sub">Reclaiming The Future</div>
-    </div>
+    <img src="/site/images/aro-logo.png" alt="ARO">
+    <div><div class="footer-logo-text">African Reclaimers Organisation</div><div class="footer-logo-sub">Reclaiming The Future</div></div>
   </div>
   <div class="footer-right">
     <div class="footer-socials" id="footerSocials"></div>
@@ -452,20 +363,31 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
   </div>
 </footer>
 
-<script>
-// ── Helpers ───────────────────────────────────────────────────────────────────
-function extractVideoId(url) {
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, doc, getDoc, getDocs, query, where, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDGPVYiQa5_s_zNqMwfSk3eSKULRpxf20g",
+  authDomain: "aro-website-be081.firebaseapp.com",
+  projectId: "aro-website-be081",
+  storageBucket: "aro-website-be081.firebasestorage.app",
+  messagingSenderId: "434573758758",
+  appId: "1:434573758758:web:6dae0903f50ad8a852b1e7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function embedSrc(url) {
   if (!url) return null;
   const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-  if (yt) return { type: 'youtube', id: yt[1] };
+  if (yt) return `https://www.youtube.com/embed/${yt[1]}`;
   const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
-  if (vm) return { type: 'vimeo', id: vm[1] };
+  if (vm) return `https://player.vimeo.com/video/${vm[1]}`;
   return null;
-}
-function embedSrc(url) {
-  const v = extractVideoId(url);
-  if (!v) return null;
-  return v.type === 'youtube' ? `https://www.youtube.com/embed/${v.id}` : `https://player.vimeo.com/video/${v.id}`;
 }
 function renderVideos(videos, isWhite) {
   if (!videos || !videos.length) return '';
@@ -474,7 +396,7 @@ function renderVideos(videos, isWhite) {
     return src ? `<div>${v.title ? `<div class="video-label">${v.title}</div>` : ''}<div class="video-embed-wrap"><iframe src="${src}" allowfullscreen loading="lazy"></iframe></div></div>` : '';
   }).join('')}</div>`;
 }
-function cardImage(image, title) {
+function cardImg(image, title) {
   return image
     ? `<img class="card-img" src="${image}" alt="${title}" loading="lazy">`
     : `<div class="card-img-placeholder"><span>Image coming soon</span></div>`;
@@ -484,160 +406,156 @@ function formatDate(d) {
   return new Date(d).toLocaleDateString('en-ZA', { year:'numeric', month:'long', day:'numeric' });
 }
 function initials(name) {
-  return name.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase();
+  return (name||'').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+}
+async function getCol(col) {
+  const snap = await getDocs(collection(db, col));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
-// ── Init ──────────────────────────────────────────────────────────────────────
+// ── Load & render ─────────────────────────────────────────────────────────────
 async function init() {
-  const res = await fetch('/api/content');
-  const data = await res.json();
+  try {
+    // Config
+    const [siteSnap, statsSnap] = await Promise.all([
+      getDoc(doc(db, 'config', 'site')),
+      getDoc(doc(db, 'config', 'stats'))
+    ]);
+    const site  = siteSnap.exists()  ? siteSnap.data()  : {};
+    const stats = statsSnap.exists() ? (statsSnap.data().items || []) : [];
 
-  // Hero bg
-  const heroImg = data.campaigns?.find(c => c.image)?.image || data.programmes?.find(p => p.image)?.image || '';
-  if (heroImg) document.getElementById('heroBg').style.backgroundImage = `url('${heroImg}')`;
+    // Collections
+    const [campaigns, programmes, policy, international, films, news, reclaimers, partners] = await Promise.all([
+      getCol('campaigns'), getCol('programmes'), getCol('policy'),
+      getCol('international'), getCol('films'), getCol('news'),
+      getCol('reclaimers'), getCol('partners')
+    ]);
 
-  // Ticker
-  const tickerHTML = data.stats.map(s =>
-    `<span class="ticker-item"><strong>${s.value}</strong><span class="ticker-sep"> — </span>${s.label}</span>`
-  ).join('');
-  document.getElementById('tickerTrack').innerHTML = tickerHTML + tickerHTML;
+    // Hero bg
+    const heroImg = campaigns.find(c=>c.image)?.image || programmes.find(p=>p.image)?.image || '';
+    if (heroImg) document.getElementById('heroBg').style.backgroundImage = `url('${heroImg}')`;
 
-  // Stats strip
-  document.getElementById('statsStrip').innerHTML = data.stats.map(s => `
-    <div class="stat-item">
-      <div class="stat-value">${s.value}</div>
-      <div class="stat-label">${s.label}</div>
-    </div>`).join('');
+    // Ticker
+    const tickerHTML = stats.map(s =>
+      `<span class="ticker-item"><strong>${s.value}</strong><span class="ticker-sep"> — </span>${s.label}</span>`
+    ).join('');
+    document.getElementById('tickerTrack').innerHTML = tickerHTML + tickerHTML;
 
-  // Dark card renderer
-  function renderDarkCards(containerId, items, tagFn) {
-    const el = document.getElementById(containerId);
-    if (!items || !items.length) { el.innerHTML = '<div class="empty-state">Content coming soon</div>'; return; }
-    el.innerHTML = items.map(item => `
-      <div class="card">
-        ${cardImage(item.image, item.title)}
-        <div class="card-body">
-          <span class="card-tag">${tagFn(item)}</span>
-          <h3>${item.title}</h3>
-          <p>${item.summary}</p>
-          ${renderVideos(item.videos, false)}
-        </div>
-      </div>`).join('');
-  }
+    // Stats strip
+    document.getElementById('statsStrip').innerHTML = stats.map(s =>
+      `<div class="stat-item"><div class="stat-value">${s.value}</div><div class="stat-label">${s.label}</div></div>`
+    ).join('');
 
-  // White card renderer
-  function renderWhiteCards(containerId, items, tagFn) {
-    const el = document.getElementById(containerId);
-    if (!items || !items.length) { el.innerHTML = '<div class="empty-state">Content coming soon</div>'; return; }
-    el.innerHTML = items.map(item => `
-      <div class="card-w">
-        ${cardImage(item.image, item.title)}
-        <div class="card-w-body">
-          <span class="card-w-tag">${tagFn(item)}</span>
-          <h3>${item.title}</h3>
-          <p>${item.summary}</p>
-          ${renderVideos(item.videos, true)}
-        </div>
-      </div>`).join('');
-  }
+    // Dark card renderer
+    function darkCards(id, items, tagFn) {
+      const el = document.getElementById(id);
+      if (!items.length) { el.innerHTML = '<div class="empty-state">Content coming soon</div>'; return; }
+      el.innerHTML = items.map(item => `
+        <div class="card">
+          ${cardImg(item.image, item.title)}
+          <div class="card-body">
+            <span class="card-tag">${tagFn(item)}</span>
+            <h3>${item.title}</h3>
+            <p>${item.summary||''}</p>
+            ${renderVideos(item.videos, false)}
+          </div>
+        </div>`).join('');
+    }
 
-  renderDarkCards('campaignsGrid',    data.campaigns,    c => c.status === 'current' ? 'Current Campaign' : 'Historical Campaign');
-  renderWhiteCards('programmesGrid',  data.programmes,   () => 'Programme');
-  renderDarkCards('policyGrid',       data.policy,       () => 'Policy Engagement');
-  renderWhiteCards('internationalGrid', data.international, () => 'International Work');
+    // White card renderer
+    function whiteCards(id, items, tagFn) {
+      const el = document.getElementById(id);
+      if (!items.length) { el.innerHTML = '<div class="empty-state">Content coming soon</div>'; return; }
+      el.innerHTML = items.map(item => `
+        <div class="card-w">
+          ${cardImg(item.image, item.title)}
+          <div class="card-w-body">
+            <span class="card-w-tag">${tagFn(item)}</span>
+            <h3>${item.title}</h3>
+            <p>${item.summary||''}</p>
+            ${renderVideos(item.videos, true)}
+          </div>
+        </div>`).join('');
+    }
 
-  // Films — dark
-  const filmsEl = document.getElementById('filmsGrid');
-  if (!data.films || !data.films.length) {
-    filmsEl.innerHTML = '<div class="empty-state">Films coming soon</div>';
-  } else {
-    filmsEl.innerHTML = data.films.map(f => {
+    darkCards('campaignsGrid',     campaigns,    c => c.status==='current' ? 'Current Campaign' : 'Historical Campaign');
+    whiteCards('programmesGrid',   programmes,   () => 'Programme');
+    darkCards('policyGrid',        policy,       () => 'Policy Engagement');
+    whiteCards('internationalGrid',international,() => 'International Work');
+
+    // Films
+    const filmsEl = document.getElementById('filmsGrid');
+    if (!films.length) { filmsEl.innerHTML = '<div class="empty-state">Films coming soon</div>'; }
+    else { filmsEl.innerHTML = films.map(f => {
       const src = embedSrc(f.embed);
       return `<div class="film-card">
-        <div class="film-embed-wrap">
-          ${src ? `<iframe src="${src}" allowfullscreen loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0"></iframe>` : `<div class="film-placeholder">Video coming soon</div>`}
-        </div>
+        <div class="film-embed-wrap">${src ? `<iframe src="${src}" allowfullscreen loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0"></iframe>` : '<div class="film-placeholder">Video coming soon</div>'}</div>
         <div class="film-meta">
-          <span class="film-type">${f.type || 'Film'}${f.year ? ' · ' + f.year : ''}</span>
+          <span class="film-type">${f.type||'Film'}${f.year?' · '+f.year:''}</span>
           <h3>${f.title}</h3>
-          ${f.description ? `<p>${f.description}</p>` : ''}
-          ${f.credit ? `<span class="film-credit">Produced by ${f.credit}</span>` : ''}
-        </div>
-      </div>`;
-    }).join('');
-  }
+          ${f.description?`<p>${f.description}</p>`:''}
+          ${f.credit?`<span class="film-credit">Produced by ${f.credit}</span>`:''}
+        </div></div>`;
+    }).join(''); }
 
-  // News — white
-  const newsEl = document.getElementById('newsGrid');
-  const published = (data.news || []).filter(n => n.published);
-  if (!published.length) {
-    newsEl.innerHTML = '<div class="empty-state">News coming soon</div>';
-  } else {
-    newsEl.innerHTML = published.map(n => `
+    // News
+    const newsEl = document.getElementById('newsGrid');
+    const published = news.filter(n=>n.published);
+    if (!published.length) { newsEl.innerHTML = '<div class="empty-state">News coming soon</div>'; }
+    else { newsEl.innerHTML = published.map(n => `
       <div class="news-card">
-        ${n.image ? `<img class="news-card-img" src="${n.image}" alt="${n.title}" loading="lazy">` : ''}
+        ${n.image?`<img class="news-card-img" src="${n.image}" alt="${n.title}" loading="lazy">`:''}
         <div class="news-card-body">
-          <span class="news-cat">${n.category}</span>
+          <span class="news-cat">${n.category||''}</span>
           <span class="news-date">${formatDate(n.date)}</span>
           <h3>${n.title}</h3>
-          <p>${n.body.substring(0,200)}${n.body.length > 200 ? '…' : ''}</p>
-        </div>
-      </div>`).join('');
-  }
+          <p>${(n.body||'').substring(0,200)}${(n.body||'').length>200?'…':''}</p>
+        </div></div>`).join(''); }
 
-  // Reclaimers — white
-  const rGrid = document.getElementById('reclaimersGrid');
-  if (!data.reclaimers || !data.reclaimers.length) {
-    rGrid.innerHTML = '<div class="empty-state">Profiles coming soon</div>';
-  } else {
-    rGrid.innerHTML = data.reclaimers.map(r => `
+    // Reclaimers
+    const rGrid = document.getElementById('reclaimersGrid');
+    if (!reclaimers.length) { rGrid.innerHTML = '<div class="empty-state">Profiles coming soon</div>'; }
+    else { rGrid.innerHTML = reclaimers.map(r => `
       <div class="reclaimer-card">
-        <div class="reclaimer-img">
-          ${r.image ? `<img src="${r.image}" alt="${r.name}" style="width:100%;height:100%;object-fit:cover">` : `<span class="reclaimer-img-placeholder">${initials(r.name)}</span>`}
-        </div>
-        ${r.quote ? `<div class="reclaimer-quote">${r.quote}</div>` : ''}
+        <div class="reclaimer-img">${r.image?`<img src="${r.image}" alt="${r.name}" style="width:100%;height:100%;object-fit:cover">`:`<span class="reclaimer-img-placeholder">${initials(r.name)}</span>`}</div>
+        ${r.quote?`<div class="reclaimer-quote">${r.quote}</div>`:''}
         <div class="reclaimer-name">${r.name}</div>
-        <div class="reclaimer-role">${r.role}${r.area ? ' · ' + r.area : ''}</div>
-        ${r.bio ? `<p class="reclaimer-bio">${r.bio}</p>` : ''}
-      </div>`).join('');
+        <div class="reclaimer-role">${r.role||''}${r.area?' · '+r.area:''}</div>
+        ${r.bio?`<p class="reclaimer-bio">${r.bio}</p>`:''}
+      </div>`).join(''); }
+
+    // Partners
+    document.getElementById('partnersGrid').innerHTML = partners.map(p =>
+      `<a href="${p.url||'#'}" class="partner-chip" ${p.url?'target="_blank" rel="noopener"':''}>${p.name}</a>`
+    ).join('');
+
+    // Contact
+    document.getElementById('contactDetail').innerHTML = `
+      <div class="contact-item"><div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div><div class="contact-label">Address</div><div class="contact-value">${site.address||''}</div></div></div>
+      <div class="contact-item"><div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+        <div><div class="contact-label">Phone</div><div class="contact-value">${site.phone||''}</div></div></div>
+      <div class="contact-item"><div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+        <div><div class="contact-label">Email</div>
+          <div class="contact-value"><a href="mailto:${site.email||''}" style="color:var(--green)">${site.email||''}</a></div></div></div>
+      <div class="social-links">
+        ${site.facebook ?`<a href="${site.facebook}"  target="_blank" class="social-link"><i class="fa-brands fa-facebook-f"></i> Facebook</a>`:''}
+        ${site.twitter  ?`<a href="${site.twitter}"   target="_blank" class="social-link"><i class="fa-brands fa-x-twitter"></i> Twitter</a>`:''}
+        ${site.instagram?`<a href="${site.instagram}" target="_blank" class="social-link"><i class="fa-brands fa-instagram"></i> Instagram</a>`:''}
+        ${site.youtube  ?`<a href="${site.youtube}"   target="_blank" class="social-link"><i class="fa-brands fa-youtube"></i> YouTube</a>`:''}
+      </div>`;
+
+    // Footer socials
+    document.getElementById('footerSocials').innerHTML = [
+      site.facebook ?`<a href="${site.facebook}"  target="_blank" class="footer-social-link"><i class="fa-brands fa-facebook-f"></i></a>`:'',
+      site.twitter  ?`<a href="${site.twitter}"   target="_blank" class="footer-social-link"><i class="fa-brands fa-x-twitter"></i></a>`:'',
+      site.instagram?`<a href="${site.instagram}" target="_blank" class="footer-social-link"><i class="fa-brands fa-instagram"></i></a>`:'',
+      site.youtube  ?`<a href="${site.youtube}"   target="_blank" class="footer-social-link"><i class="fa-brands fa-youtube"></i></a>`:'',
+    ].join('');
+
+  } catch(err) {
+    console.error('Failed to load content:', err);
   }
-
-  // Partners — dark
-  document.getElementById('partnersGrid').innerHTML = (data.partners || []).map(p =>
-    `<a href="${p.url || '#'}" class="partner-chip" ${p.url ? 'target="_blank" rel="noopener"' : ''}>${p.name}</a>`
-  ).join('');
-
-  // Contact — white, Font Awesome icons
-  const s = data.site;
-  document.getElementById('contactDetail').innerHTML = `
-    <div class="contact-item">
-      <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
-      <div><div class="contact-label">Address</div><div class="contact-value">${s.address}</div></div>
-    </div>
-    <div class="contact-item">
-      <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
-      <div><div class="contact-label">Phone</div><div class="contact-value">${s.phone}</div></div>
-    </div>
-    <div class="contact-item">
-      <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
-      <div><div class="contact-label">Email</div>
-        <div class="contact-value"><a href="mailto:${s.email}" style="color:var(--green)">${s.email}</a></div>
-      </div>
-    </div>
-    <div class="social-links">
-      ${s.facebook  ? `<a href="${s.facebook}"  target="_blank" class="social-link"><i class="fa-brands fa-facebook-f"></i> Facebook</a>`  : ''}
-      ${s.twitter   ? `<a href="${s.twitter}"   target="_blank" class="social-link"><i class="fa-brands fa-x-twitter"></i> Twitter</a>`   : ''}
-      ${s.instagram ? `<a href="${s.instagram}" target="_blank" class="social-link"><i class="fa-brands fa-instagram"></i> Instagram</a>` : ''}
-      ${s.youtube   ? `<a href="${s.youtube}"   target="_blank" class="social-link"><i class="fa-brands fa-youtube"></i> YouTube</a>`   : ''}
-    </div>`;
-
-  // Footer socials
-  document.getElementById('footerSocials').innerHTML = [
-    s.facebook  ? `<a href="${s.facebook}"  target="_blank" class="footer-social-link"><i class="fa-brands fa-facebook-f"></i></a>`  : '',
-    s.twitter   ? `<a href="${s.twitter}"   target="_blank" class="footer-social-link"><i class="fa-brands fa-x-twitter"></i></a>`   : '',
-    s.instagram ? `<a href="${s.instagram}" target="_blank" class="footer-social-link"><i class="fa-brands fa-instagram"></i></a>` : '',
-    s.youtube   ? `<a href="${s.youtube}"   target="_blank" class="footer-social-link"><i class="fa-brands fa-youtube"></i></a>`   : '',
-  ].join('');
 }
 
 init();

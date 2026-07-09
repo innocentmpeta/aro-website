@@ -1,26 +1,121 @@
-# ARO Website & CMS
+# ARO Website — Firebase + Vercel
 
-**African Reclaimers Organisation — Website & Content Management System**
+## Stack
+- **Frontend**: Static HTML/JS (no framework)
+- **Database**: Firebase Firestore
+- **Image Storage**: Firebase Storage
+- **Auth**: Firebase Authentication (email/password)
+- **Hosting**: Vercel
 
-## Quick Start
+---
 
+## One-time Setup
+
+### 1. Run the migration script (push seed data into Firestore)
+
+You need a Firebase service account key:
+1. Firebase Console → Project Settings → Service Accounts
+2. Click **Generate new private key** → download the JSON file
+3. Save it as `scripts/serviceAccount.json`
+
+Then run:
 ```bash
-# 1. Install dependencies
 npm install
-
-# 2. Start the server
-npm start
-
-# Development mode (auto-restart on changes)
-npm run dev
+npm run migrate
 ```
 
-The server runs on **http://localhost:3000** by default.
+This pushes all content from `scripts/content.json` into Firestore.
+Check your Firestore console to verify the data landed correctly.
 
-| URL | What it is |
-|-----|-----------|
-| `http://localhost:3000` | Public-facing ARO website |
-| `http://localhost:3000/admin` | CMS — content management panel |
+**Delete `scripts/serviceAccount.json` after running** — never commit it to git.
+
+---
+
+### 2. Deploy to Vercel
+
+```bash
+npm install -g vercel
+vercel
+```
+
+Follow the prompts. Vercel will detect `vercel.json` and route correctly:
+- `/` → public website (reads Firestore)
+- `/admin` → CMS panel (Firebase Auth + Firestore + Storage)
+
+---
+
+### 3. Add to .gitignore
+
+Create a `.gitignore` file:
+```
+scripts/serviceAccount.json
+node_modules/
+```
+
+---
+
+## URLs (after deploy)
+
+| URL | What |
+|-----|------|
+| `https://your-project.vercel.app/` | Public ARO website |
+| `https://your-project.vercel.app/admin` | CMS — login with your Firebase Auth user |
+
+---
+
+## Content Management
+
+Log into `/admin` with the email/password you set up in Firebase Authentication.
+
+### Sections managed from CMS
+- Campaigns (+ video manager, image upload)
+- Programmes (+ video manager, image upload)
+- Policy Engagement (+ video manager, image upload)
+- International Work (+ video manager, image upload)
+- Films & Media (YouTube/Vimeo embed)
+- News & Stories (rich text, image, published/draft toggle)
+- Reclaimer Profiles (portrait upload, bio, quote)
+- Impact Statistics (homepage ticker + strip)
+- Partners & Funders
+- Site Info (address, phone, email, social links)
+
+### Images
+Images upload directly to Firebase Storage under `images/{collection}/`.
+URLs are stored in Firestore alongside the content item.
+
+### Videos
+Paste any YouTube or Vimeo URL. The site embeds it automatically.
+Never upload video files — always use YouTube or Vimeo.
+
+---
+
+## Firebase Security Rules
+
+### Firestore
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
+```
+
+### Storage
+```
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
+```
 
 ---
 
@@ -28,100 +123,17 @@ The server runs on **http://localhost:3000** by default.
 
 ```
 aro-website/
-├── server/
-│   ├── index.js          # Express server entry point
-│   ├── data.js           # JSON read/write helper
-│   └── routes/
-│       ├── api.js        # REST API (all content CRUD + file upload)
-│       ├── admin.js      # Serves the CMS panel
-│       └── site.js       # Serves the public website
 ├── public/
 │   ├── site/
-│   │   ├── index.html    # Public website (single page, self-contained)
-│   │   └── images/       # Static images (logo etc.)
-│   ├── admin/
-│   │   └── index.html    # CMS panel (single page app)
-│   └── uploads/          # User-uploaded images and media (auto-created)
-├── data/
-│   └── content.json      # All site content (the "database")
-└── package.json
+│   │   ├── index.html      ← Public website
+│   │   └── images/
+│   │       └── aro-logo.png
+│   └── admin/
+│       └── index.html      ← CMS panel
+├── scripts/
+│   ├── migrate.js          ← One-time Firestore seed script
+│   └── content.json        ← Seed data
+├── vercel.json             ← Vercel routing
+├── package.json
+└── README.md
 ```
-
----
-
-## Content Management
-
-### Sections you can manage from the CMS
-
-| Section | What you can do |
-|---------|----------------|
-| **Campaigns** | Add/edit/delete campaigns. Mark as Current or Historical. Add YouTube/Vimeo videos. |
-| **Programmes** | Add/edit/delete programme descriptions. Add videos. |
-| **Policy** | Add/edit policy engagement items. Add videos. |
-| **International** | Add/edit international work entries. Add videos. |
-| **Films & Media** | Add documentary and animation films with YouTube/Vimeo links. Set type (Documentary / Animation / Campaign). |
-| **News & Stories** | Write articles. Set Published/Draft status. Categorise by type. |
-| **Reclaimers** | Add member profiles with photo, quote, bio. |
-| **Impact Stats** | Edit the four statistics in the ticker and homepage strip. |
-| **Partners** | Add/remove partner and funder organisations. |
-| **Site Info** | Edit address, phone, email, social media links. |
-
-### Adding videos
-
-1. Go to the relevant section (e.g. Campaigns)
-2. Click **▶ Videos** on any item
-3. Paste a YouTube or Vimeo link and give it a title
-4. Click **+ Add Video**
-
-The video will appear embedded directly in that section on the live site.
-
-### Adding news articles
-
-1. Go to **News & Stories**
-2. Click **+ Add Article**
-3. Write the headline and body text
-4. Set **Published** toggle to ON when ready to go live
-5. Leave it OFF to save as a draft
-
-### Uploading images
-
-Click the image upload zone in any form. Supported formats: JPG, PNG. Maximum size: 20MB.
-
----
-
-## Data Storage
-
-All content is stored in `data/content.json` — a plain JSON file. This means:
-
-- **No database required** — the file is the database
-- **Easy to back up** — just copy the file
-- **Easy to migrate** — the file can be moved to any server
-
-To back up all content and uploaded media:
-```bash
-# Back up content
-cp data/content.json data/content.backup.json
-
-# Back up uploads
-cp -r public/uploads/ uploads-backup/
-```
-
----
-
-## Changing the Port
-
-Set a `PORT` environment variable before starting:
-
-```bash
-PORT=8080 npm start
-```
-
----
-
-## Production Notes
-
-- For production, place behind a reverse proxy (nginx or Caddy)
-- Set `NODE_ENV=production`
-- Consider a daily cron job to back up `data/content.json` and `public/uploads/`
-- Video files should always be hosted on YouTube or Vimeo — never uploaded directly to the server
-# aro-website

@@ -9,550 +9,444 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
 :root {
-  /* Light surface palette */
-  --bg:         #F4F6F4;   /* page background — very slightly green-tinted white */
-  --panel:      #FFFFFF;   /* sidebar, cards, modals */
-  --panel-alt:  #F8FAF8;   /* topbar, subtle alt */
-  --border:     #E2E8E2;   /* borders throughout */
-  --border-mid: #D0D8D0;   /* slightly stronger dividers */
-
-  /* Green — ARO brand, used sparingly as accent */
+  --bg:         #F4F6F4;
+  --panel:      #FFFFFF;
+  --panel-alt:  #F8FAF8;
+  --border:     #E2E8E2;
+  --border-mid: #D0D8D0;
   --green:        #2A7A2A;
+  --green-mid:    #3A6E3A;
   --green-bright: #3DAA3D;
-  --green-dim:    #EBF5EB;   /* very light green tint for active states */
+  --green-dim:    #EBF5EB;
   --green-border: #C2DCC2;
-
-  /* Text */
-  --ink:       #1A201A;   /* primary text */
-  --ink-mid:   #3D4D3D;   /* secondary text */
-  --ink-soft:  #6B7D6B;   /* meta, labels */
-  --ink-ghost: #9AAA9A;   /* placeholders */
-
-  /* Status */
+  --ink:       #1A201A;
+  --ink-mid:   #3D4D3D;
+  --ink-soft:  #6B7D6B;
+  --ink-ghost: #9AAA9A;
   --red:       #C0392B;
   --red-dim:   #FDECEA;
   --orange:    #C0650A;
   --orange-dim:#FEF3E8;
   --green-ok:  #1E6B1E;
   --green-ok-dim: #EBF5EB;
-
   --font-d: 'Barlow Condensed', sans-serif;
   --font-b: 'Barlow', sans-serif;
   --font-m: 'IBM Plex Mono', monospace;
 }
+body { background:var(--bg); color:var(--ink); font-family:var(--font-b); display:flex; min-height:100vh; font-size:14px; }
 
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-b);
-  display: flex;
-  min-height: 100vh;
-  font-size: 14px;
+/* ── Login screen ── */
+#loginScreen {
+  position:fixed; inset:0; background:var(--green-mid);
+  display:flex; align-items:center; justify-content:center; z-index:1000;
 }
+.login-box {
+  background:#fff; border-radius:12px; padding:2.5rem;
+  width:100%; max-width:380px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.2);
+}
+.login-logo { display:flex; align-items:center; gap:0.75rem; margin-bottom:2rem; }
+.login-logo img { height:48px; }
+.login-logo-text { font-family:var(--font-d); font-weight:800; font-size:1rem; letter-spacing:0.04em; color:var(--ink); line-height:1.2; }
+.login-logo-sub { font-family:var(--font-m); font-size:0.6rem; color:var(--green); letter-spacing:0.1em; text-transform:uppercase; }
+.login-title { font-family:var(--font-d); font-size:1.5rem; font-weight:800; text-transform:uppercase; color:var(--ink); margin-bottom:0.25rem; }
+.login-sub { font-size:0.85rem; color:var(--ink-soft); margin-bottom:1.75rem; }
+.login-field { display:flex; flex-direction:column; gap:0.4rem; margin-bottom:1rem; }
+.login-field label { font-family:var(--font-m); font-size:0.62rem; color:var(--ink-soft); letter-spacing:0.1em; text-transform:uppercase; }
+.login-field input { background:var(--bg); border:1px solid var(--border-mid); color:var(--ink); font-family:var(--font-b); font-size:0.9rem; padding:0.65rem 0.85rem; border-radius:6px; width:100%; transition:border-color 0.15s, box-shadow 0.15s; }
+.login-field input:focus { outline:none; border-color:var(--green); box-shadow:0 0 0 3px rgba(42,122,42,0.12); background:#fff; }
+.login-btn { width:100%; background:var(--green); color:#fff; border:none; border-radius:6px; padding:0.75rem; font-family:var(--font-d); font-size:1rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; margin-top:0.5rem; transition:background 0.2s; }
+.login-btn:hover { background:var(--green-bright); }
+.login-btn:disabled { background:var(--ink-ghost); cursor:not-allowed; }
+.login-error { background:var(--red-dim); border:1px solid #f5c0bc; border-radius:5px; padding:0.65rem 0.85rem; font-size:0.84rem; color:var(--red); margin-top:0.75rem; display:none; }
+.login-error.show { display:block; }
+
+/* ── App shell (hidden until logged in) ── */
+#appShell { display:none; width:100%; }
+#appShell.visible { display:flex; }
 
 /* ── Sidebar ── */
-.sidebar {
-  width: 230px; flex-shrink: 0;
-  background: var(--panel);
-  border-right: 1px solid var(--border);
-  display: flex; flex-direction: column;
-  position: fixed; top: 0; bottom: 0; left: 0;
-  overflow-y: auto;
-}
-.sidebar-logo {
-  padding: 1.25rem 1.1rem;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 0.75rem;
-}
-.sidebar-logo img { height: 44px; width: auto; }
-.logo-text-wrap { display: flex; flex-direction: column; gap: 0.1rem; }
-.logo-title { font-family: var(--font-d); font-size: 0.88rem; font-weight: 800; letter-spacing: 0.03em; color: var(--ink); line-height: 1.2; }
-.logo-sub { font-family: var(--font-m); font-size: 0.58rem; color: var(--green); letter-spacing: 0.1em; text-transform: uppercase; }
-
-.sidebar-section {
-  padding: 1.1rem 1rem 0.3rem;
-  font-family: var(--font-m); font-size: 0.58rem;
-  color: var(--ink-ghost); letter-spacing: 0.14em; text-transform: uppercase;
-}
-.sidebar-nav { list-style: none; padding: 0 0.6rem 0.5rem; }
-.sidebar-nav li a {
-  display: flex; align-items: center; gap: 0.65rem;
-  padding: 0.55rem 0.8rem; border-radius: 6px;
-  font-size: 0.855rem; font-weight: 500;
-  color: var(--ink-soft);
-  cursor: pointer; transition: all 0.15s;
-  text-decoration: none;
-}
-.sidebar-nav li a:hover { background: var(--bg); color: var(--ink); }
-.sidebar-nav li a.active {
-  background: var(--green-dim);
-  color: var(--green);
-  font-weight: 600;
-}
-.sidebar-nav li a.active .nav-icon { color: var(--green); }
-.nav-icon { width: 16px; text-align: center; font-size: 0.85rem; color: var(--ink-ghost); transition: color 0.15s; }
-
-.sidebar-bottom { margin-top: auto; padding: 1rem; border-top: 1px solid var(--border); }
-.view-site-btn {
-  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
-  font-family: var(--font-d); font-size: 0.8rem; font-weight: 700;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 0.65rem; background: var(--green); color: #fff;
-  border: none; cursor: pointer; width: 100%;
-  border-radius: 6px; transition: background 0.2s; text-decoration: none;
-}
-.view-site-btn:hover { background: var(--green-bright); }
+.sidebar { width:230px; flex-shrink:0; background:var(--panel); border-right:1px solid var(--border); display:flex; flex-direction:column; position:fixed; top:0; bottom:0; left:0; overflow-y:auto; }
+.sidebar-logo { padding:1.1rem; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:0.75rem; }
+.sidebar-logo img { height:42px; width:auto; }
+.logo-text-wrap { display:flex; flex-direction:column; gap:0.1rem; }
+.logo-title { font-family:var(--font-d); font-size:0.88rem; font-weight:800; letter-spacing:0.03em; color:var(--ink); line-height:1.2; }
+.logo-sub { font-family:var(--font-m); font-size:0.56rem; color:var(--green); letter-spacing:0.1em; text-transform:uppercase; }
+.sidebar-section { padding:1rem 1rem 0.3rem; font-family:var(--font-m); font-size:0.57rem; color:var(--ink-ghost); letter-spacing:0.14em; text-transform:uppercase; }
+.sidebar-nav { list-style:none; padding:0 0.6rem 0.5rem; }
+.sidebar-nav li a { display:flex; align-items:center; gap:0.65rem; padding:0.55rem 0.8rem; border-radius:6px; font-size:0.85rem; font-weight:500; color:var(--ink-soft); cursor:pointer; transition:all 0.15s; text-decoration:none; }
+.sidebar-nav li a:hover { background:var(--bg); color:var(--ink); }
+.sidebar-nav li a.active { background:var(--green-dim); color:var(--green); font-weight:600; }
+.nav-icon { width:16px; text-align:center; font-size:0.82rem; color:var(--ink-ghost); transition:color 0.15s; }
+.sidebar-nav li a.active .nav-icon { color:var(--green); }
+.sidebar-bottom { margin-top:auto; padding:1rem; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:0.5rem; }
+.view-site-btn { display:flex; align-items:center; justify-content:center; gap:0.4rem; font-family:var(--font-d); font-size:0.8rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.65rem; background:var(--green); color:#fff; border:none; cursor:pointer; width:100%; border-radius:6px; transition:background 0.2s; text-decoration:none; }
+.view-site-btn:hover { background:var(--green-bright); }
+.signout-btn { display:flex; align-items:center; justify-content:center; gap:0.4rem; font-family:var(--font-d); font-size:0.75rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:0.5rem; background:transparent; color:var(--ink-soft); border:1px solid var(--border-mid); cursor:pointer; width:100%; border-radius:6px; transition:all 0.2s; }
+.signout-btn:hover { background:var(--red-dim); color:var(--red); border-color:var(--red); }
 
 /* ── Main ── */
-.main { margin-left: 230px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+.main { margin-left:230px; flex:1; display:flex; flex-direction:column; min-height:100vh; }
+.topbar { background:var(--panel); border-bottom:1px solid var(--border); padding:0 2rem; height:56px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; }
+.topbar-title { font-family:var(--font-d); font-size:1.35rem; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink); }
+.save-status { font-family:var(--font-m); font-size:0.63rem; color:var(--ink-ghost); letter-spacing:0.06em; }
+.save-status.saved { color:var(--green-ok); }
+.save-status.saving { color:var(--orange); }
+.save-status.error { color:var(--red); }
 
-.topbar {
-  background: var(--panel);
-  border-bottom: 1px solid var(--border);
-  padding: 0 2rem; height: 56px;
-  display: flex; align-items: center; justify-content: space-between;
-  position: sticky; top: 0; z-index: 50;
-}
-.topbar-title { font-family: var(--font-d); font-size: 1.35rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink); }
-.topbar-right { display: flex; align-items: center; gap: 1rem; }
-.save-status { font-family: var(--font-m); font-size: 0.65rem; color: var(--ink-ghost); letter-spacing: 0.06em; }
-.save-status.saved  { color: var(--green-ok); }
-.save-status.saving { color: var(--orange); }
-.save-status.error  { color: var(--red); }
+.page { display:none; padding:2rem; }
+.page.active { display:block; }
 
-/* ── Page panels ── */
-.page { display: none; padding: 2rem; }
-.page.active { display: block; }
+.cms-card { background:var(--panel); border:1px solid var(--border); border-radius:8px; margin-bottom:1.5rem; overflow:hidden; }
+.cms-card-header { padding:1rem 1.4rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:1rem; background:var(--panel-alt); }
+.cms-card-title { font-family:var(--font-d); font-size:1rem; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink); }
+.cms-card-body { padding:1.4rem; }
 
-/* ── CMS Cards ── */
-.cms-card {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-}
-.cms-card-header {
-  padding: 1rem 1.4rem;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  background: var(--panel-alt);
-}
-.cms-card-title { font-family: var(--font-d); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink); }
-.cms-card-body { padding: 1.4rem; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.form-group { display:flex; flex-direction:column; gap:0.4rem; }
+.form-group.full { grid-column:1/-1; }
+label { font-family:var(--font-m); font-size:0.62rem; color:var(--ink-soft); letter-spacing:0.1em; text-transform:uppercase; }
+input[type=text], input[type=url], input[type=email], input[type=date], select, textarea { background:var(--bg); border:1px solid var(--border-mid); color:var(--ink); font-family:var(--font-b); font-size:0.88rem; padding:0.55rem 0.75rem; border-radius:5px; transition:border-color 0.15s, box-shadow 0.15s; width:100%; }
+input:focus, select:focus, textarea:focus { outline:none; border-color:var(--green); box-shadow:0 0 0 3px rgba(42,122,42,0.1); background:#fff; }
+textarea { resize:vertical; min-height:90px; }
 
-/* ── Forms ── */
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.form-grid.three { grid-template-columns: 1fr 1fr 1fr; }
-.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-.form-group.full { grid-column: 1 / -1; }
+.btn { font-family:var(--font-d); font-size:0.8rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:0.5rem 1.1rem; border:1px solid transparent; border-radius:5px; cursor:pointer; transition:all 0.15s; display:inline-flex; align-items:center; gap:0.4rem; }
+.btn-primary { background:var(--green); color:#fff; border-color:var(--green); }
+.btn-primary:hover { background:var(--green-bright); }
+.btn-ghost { background:transparent; color:var(--ink-soft); border-color:var(--border-mid); }
+.btn-ghost:hover { color:var(--ink); border-color:var(--ink-soft); background:var(--bg); }
+.btn-danger { background:transparent; color:var(--red); border-color:#f0c0bc; }
+.btn-danger:hover { background:var(--red-dim); border-color:var(--red); }
+.btn-sm { padding:0.3rem 0.7rem; font-size:0.72rem; }
+.btn-icon { padding:0.3rem 0.5rem; }
 
-label {
-  font-family: var(--font-m); font-size: 0.63rem;
-  color: var(--ink-soft); letter-spacing: 0.1em; text-transform: uppercase;
-}
+.item-list { display:flex; flex-direction:column; gap:0.75rem; }
+.item-row { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:1rem 1.25rem; display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; transition:border-color 0.15s, box-shadow 0.15s; }
+.item-row:hover { border-color:var(--border-mid); box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+.item-main { flex:1; min-width:0; }
+.item-title { font-family:var(--font-d); font-size:1rem; font-weight:700; text-transform:uppercase; color:var(--ink); }
+.item-meta { font-family:var(--font-m); font-size:0.62rem; color:var(--ink-soft); margin-top:0.25rem; }
+.item-summary { font-size:0.84rem; color:var(--ink-soft); margin-top:0.4rem; line-height:1.5; }
+.item-actions { display:flex; gap:0.4rem; flex-shrink:0; align-items:flex-start; }
+.item-img-thumb { width:64px; height:40px; object-fit:cover; border-radius:3px; border:1px solid var(--border); flex-shrink:0; }
 
-input[type=text], input[type=url], input[type=email],
-input[type=date], select, textarea {
-  background: var(--bg);
-  border: 1px solid var(--border-mid);
-  color: var(--ink);
-  font-family: var(--font-b); font-size: 0.88rem;
-  padding: 0.55rem 0.75rem;
-  border-radius: 5px;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  width: 100%;
-}
-input:focus, select:focus, textarea:focus {
-  outline: none;
-  border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(42,122,42,0.1);
-  background: #fff;
-}
-textarea { resize: vertical; min-height: 90px; }
-select { cursor: pointer; }
+.badge { font-family:var(--font-m); font-size:0.57rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.2rem 0.55rem; border-radius:20px; font-weight:500; }
+.badge-green  { background:var(--green-ok-dim); color:var(--green-ok); }
+.badge-grey   { background:var(--bg); color:var(--ink-soft); border:1px solid var(--border-mid); }
+.badge-orange { background:var(--orange-dim); color:var(--orange); }
 
-/* ── Buttons ── */
-.btn {
-  font-family: var(--font-d); font-size: 0.8rem; font-weight: 700;
-  letter-spacing: 0.07em; text-transform: uppercase;
-  padding: 0.5rem 1.1rem; border: 1px solid transparent;
-  border-radius: 5px; cursor: pointer;
-  transition: all 0.15s;
-  display: inline-flex; align-items: center; gap: 0.4rem;
-}
-.btn-primary { background: var(--green); color: #fff; border-color: var(--green); }
-.btn-primary:hover { background: var(--green-bright); border-color: var(--green-bright); }
-.btn-ghost { background: transparent; color: var(--ink-soft); border-color: var(--border-mid); }
-.btn-ghost:hover { color: var(--ink); border-color: var(--ink-soft); background: var(--bg); }
-.btn-danger { background: transparent; color: var(--red); border-color: #f0c0bc; }
-.btn-danger:hover { background: var(--red-dim); border-color: var(--red); }
-.btn-sm { padding: 0.3rem 0.7rem; font-size: 0.72rem; }
-.btn-icon { padding: 0.3rem 0.5rem; }
+.toggle { display:flex; align-items:center; gap:0.6rem; cursor:pointer; }
+.toggle input { display:none; }
+.toggle-track { width:38px; height:22px; background:var(--border-mid); border-radius:11px; position:relative; transition:background 0.2s; flex-shrink:0; }
+.toggle input:checked + .toggle-track { background:var(--green); }
+.toggle-thumb { position:absolute; top:3px; left:3px; width:16px; height:16px; background:#fff; border-radius:50%; transition:left 0.2s; box-shadow:0 1px 3px rgba(0,0,0,0.2); }
+.toggle input:checked + .toggle-track .toggle-thumb { left:19px; }
 
-/* ── Item rows ── */
-.item-list { display: flex; flex-direction: column; gap: 0.75rem; }
-.item-row {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 1rem 1.25rem;
-  display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-.item-row:hover { border-color: var(--border-mid); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-.item-main { flex: 1; min-width: 0; }
-.item-title { font-family: var(--font-d); font-size: 1rem; font-weight: 700; text-transform: uppercase; color: var(--ink); }
-.item-meta { font-family: var(--font-m); font-size: 0.63rem; color: var(--ink-soft); margin-top: 0.25rem; }
-.item-summary { font-size: 0.84rem; color: var(--ink-soft); margin-top: 0.4rem; line-height: 1.5; }
-.item-actions { display: flex; gap: 0.4rem; flex-shrink: 0; align-items: flex-start; }
+.video-sublist { display:flex; flex-direction:column; gap:0.5rem; margin-top:0.75rem; }
+.video-row { background:var(--bg); border:1px solid var(--border); border-radius:5px; padding:0.65rem 0.85rem; display:flex; align-items:center; justify-content:space-between; gap:0.75rem; }
+.video-row-info { flex:1; min-width:0; }
+.video-row-title { font-size:0.85rem; font-weight:600; color:var(--ink); }
+.video-row-url { font-family:var(--font-m); font-size:0.6rem; color:var(--ink-ghost); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-top:0.1rem; }
 
-/* ── Badges ── */
-.badge { font-family: var(--font-m); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 20px; font-weight: 500; }
-.badge-green  { background: var(--green-ok-dim); color: var(--green-ok); }
-.badge-grey   { background: var(--bg); color: var(--ink-soft); border: 1px solid var(--border-mid); }
-.badge-orange { background: var(--orange-dim); color: var(--orange); }
+/* Upload zone */
+.upload-zone { border:2px dashed var(--border-mid); border-radius:6px; padding:1.5rem; text-align:center; cursor:pointer; transition:all 0.2s; font-size:0.84rem; color:var(--ink-soft); background:var(--bg); }
+.upload-zone:hover { border-color:var(--green); background:var(--green-dim); color:var(--green); }
+.upload-zone.uploading { border-color:var(--orange); color:var(--orange); }
+.img-preview { width:80px; height:80px; object-fit:cover; border-radius:5px; border:1px solid var(--border); }
+.upload-progress { font-family:var(--font-m); font-size:0.65rem; color:var(--orange); margin-top:0.4rem; }
 
-/* ── Toggle ── */
-.toggle { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; }
-.toggle input { display: none; }
-.toggle-track { width: 38px; height: 22px; background: var(--border-mid); border-radius: 11px; position: relative; transition: background 0.2s; flex-shrink: 0; }
-.toggle input:checked + .toggle-track { background: var(--green); }
-.toggle-thumb { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: #fff; border-radius: 50%; transition: left 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
-.toggle input:checked + .toggle-track .toggle-thumb { left: 19px; }
-.toggle-label { font-family: var(--font-m); font-size: 0.68rem; color: var(--ink-soft); letter-spacing: 0.06em; }
+.stats-editor { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.stat-edit-card { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:1rem; display:flex; flex-direction:column; gap:0.5rem; }
 
-/* ── Video sublist ── */
-.video-sublist { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
-.video-row {
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: 5px; padding: 0.65rem 0.85rem;
-  display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
-}
-.video-row-info { flex: 1; min-width: 0; }
-.video-row-title { font-size: 0.85rem; font-weight: 600; color: var(--ink); }
-.video-row-url { font-family: var(--font-m); font-size: 0.62rem; color: var(--ink-ghost); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 0.15rem; }
+.dash-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:1rem; }
+.dash-card { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:1.25rem 1rem; text-align:center; }
+.dash-count { font-family:var(--font-d); font-size:2.4rem; font-weight:900; color:var(--green); line-height:1; }
+.dash-label { font-family:var(--font-m); font-size:0.6rem; color:var(--ink-soft); letter-spacing:0.1em; text-transform:uppercase; margin-top:0.4rem; }
 
-/* ── Upload zone ── */
-.upload-zone {
-  border: 2px dashed var(--border-mid);
-  border-radius: 6px; padding: 1.5rem;
-  text-align: center; cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-  font-size: 0.84rem; color: var(--ink-soft);
-  background: var(--bg);
-}
-.upload-zone:hover { border-color: var(--green); background: var(--green-dim); color: var(--green); }
-.img-preview { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; border: 1px solid var(--border); }
+.sep { height:1px; background:var(--border); margin:1.25rem 0; }
+.tip { background:var(--green-dim); border:1px solid var(--green-border); border-radius:6px; padding:0.75rem 1rem; font-size:0.855rem; color:var(--ink-mid); line-height:1.65; }
+.tip strong { color:var(--green); }
 
-/* ── Stats editor ── */
-.stats-editor { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.stat-edit-card {
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: 6px; padding: 1rem;
-  display: flex; flex-direction: column; gap: 0.5rem;
-}
-
-/* ── Dashboard summary ── */
-.dash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
-.dash-card {
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: 8px; padding: 1.25rem 1rem; text-align: center;
-}
-.dash-count { font-family: var(--font-d); font-size: 2.4rem; font-weight: 900; color: var(--green); line-height: 1; }
-.dash-label { font-family: var(--font-m); font-size: 0.62rem; color: var(--ink-soft); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.4rem; }
-
-/* ── Separator ── */
-.sep { height: 1px; background: var(--border); margin: 1.25rem 0; }
-
-/* ── Toast ── */
-#toast { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999; display: flex; flex-direction: column; gap: 0.5rem; }
-.toast-msg {
-  background: var(--panel); border: 1px solid var(--border);
-  border-radius: 6px; padding: 0.75rem 1.1rem;
-  font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  animation: slideIn 0.2s ease;
-}
-.toast-msg.success { border-left: 3px solid var(--green); }
-.toast-msg.error   { border-left: 3px solid var(--red); }
+#toast { position:fixed; bottom:1.5rem; right:1.5rem; z-index:999; display:flex; flex-direction:column; gap:0.5rem; }
+.toast-msg { background:var(--panel); border:1px solid var(--border); border-radius:6px; padding:0.75rem 1.1rem; font-size:0.85rem; display:flex; align-items:center; gap:0.5rem; box-shadow:0 4px 16px rgba(0,0,0,0.1); animation:slideIn 0.2s ease; }
+.toast-msg.success { border-left:3px solid var(--green); }
+.toast-msg.error { border-left:3px solid var(--red); }
 @keyframes slideIn { from{transform:translateX(20px);opacity:0} to{transform:translateX(0);opacity:1} }
 
-/* ── Modal ── */
-.modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 200; align-items: center; justify-content: center; }
-.modal-backdrop.open { display: flex; }
-.modal {
-  background: var(--panel); border: 1px solid var(--border);
-  border-radius: 10px; width: 90%; max-width: 580px;
-  max-height: 90vh; overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-}
-.modal-header {
-  padding: 1.1rem 1.4rem; border-bottom: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center;
-  background: var(--panel-alt);
-  border-radius: 10px 10px 0 0;
-}
-.modal-title { font-family: var(--font-d); font-size: 1.1rem; font-weight: 800; text-transform: uppercase; color: var(--ink); }
-.modal-body { padding: 1.4rem; display: flex; flex-direction: column; gap: 1rem; }
-.modal-footer { padding: 1rem 1.4rem; border-top: 1px solid var(--border); display: flex; gap: 0.75rem; justify-content: flex-end; background: var(--panel-alt); border-radius: 0 0 10px 10px; }
-
-/* ── Tips box ── */
-.tip { background: var(--green-dim); border: 1px solid var(--green-border); border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.855rem; color: var(--ink-mid); line-height: 1.65; }
-.tip strong { color: var(--green); }
+.modal-backdrop { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35); z-index:200; align-items:center; justify-content:center; }
+.modal-backdrop.open { display:flex; }
+.modal { background:var(--panel); border:1px solid var(--border); border-radius:10px; width:90%; max-width:580px; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.15); }
+.modal-header { padding:1.1rem 1.4rem; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:var(--panel-alt); border-radius:10px 10px 0 0; }
+.modal-title { font-family:var(--font-d); font-size:1.1rem; font-weight:800; text-transform:uppercase; color:var(--ink); }
+.modal-body { padding:1.4rem; display:flex; flex-direction:column; gap:1rem; }
+.modal-footer { padding:1rem 1.4rem; border-top:1px solid var(--border); display:flex; gap:0.75rem; justify-content:flex-end; background:var(--panel-alt); border-radius:0 0 10px 10px; }
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <img src="/images/aro-logo.png" alt="ARO">
-    <div class="logo-text-wrap">
-      <div class="logo-title">ARO Content Manager</div>
-      <div class="logo-sub">African Reclaimers Org.</div>
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="/site/images/aro-logo.png" alt="ARO">
+      <div><div class="login-logo-text">ARO Content Manager</div><div class="login-logo-sub">Admin Access</div></div>
     </div>
+    <div class="login-title">Sign In</div>
+    <div class="login-sub">Enter your credentials to access the content manager.</div>
+    <div class="login-field"><label>Email</label><input type="email" id="loginEmail" placeholder="admin@example.com"></div>
+    <div class="login-field"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="loginError"></div>
   </div>
+</div>
 
-  <div class="sidebar-section">Content</div>
-  <ul class="sidebar-nav">
-    <li><a href="#" class="active" data-page="dashboard"><span class="nav-icon">◈</span>Dashboard</a></li>
-    <li><a href="#" data-page="campaigns"><span class="nav-icon">✊</span>Campaigns</a></li>
-    <li><a href="#" data-page="programmes"><span class="nav-icon">⚙</span>Programmes</a></li>
-    <li><a href="#" data-page="policy"><span class="nav-icon">⚖</span>Policy</a></li>
-    <li><a href="#" data-page="international"><span class="nav-icon">🌍</span>International</a></li>
-    <li><a href="#" data-page="films"><span class="nav-icon">▶</span>Films & Media</a></li>
-    <li><a href="#" data-page="news"><span class="nav-icon">📰</span>News & Stories</a></li>
-    <li><a href="#" data-page="reclaimers"><span class="nav-icon">👤</span>Reclaimers</a></li>
-  </ul>
-
-  <div class="sidebar-section">Settings</div>
-  <ul class="sidebar-nav">
-    <li><a href="#" data-page="stats"><span class="nav-icon">📊</span>Impact Stats</a></li>
-    <li><a href="#" data-page="partners"><span class="nav-icon">🤝</span>Partners</a></li>
-    <li><a href="#" data-page="siteinfo"><span class="nav-icon">⚙</span>Site Info</a></li>
-  </ul>
-
-  <div class="sidebar-bottom">
-    <a href="/" target="_blank" class="view-site-btn">↗ View Live Site</a>
-  </div>
-</aside>
-
-<!-- MAIN -->
-<main class="main">
-  <div class="topbar">
-    <div class="topbar-title" id="topbarTitle">Dashboard</div>
-    <div class="topbar-right">
-      <span class="save-status" id="saveStatus">All changes saved</span>
-    </div>
-  </div>
-
-  <!-- DASHBOARD -->
-  <div class="page active" id="page-dashboard">
-    <div class="cms-card">
-      <div class="cms-card-header"><div class="cms-card-title">Content Overview</div></div>
-      <div class="cms-card-body">
-        <div class="dash-grid" id="dashSummary"></div>
+<!-- APP SHELL -->
+<div id="appShell">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="/site/images/aro-logo.png" alt="ARO">
+      <div class="logo-text-wrap">
+        <div class="logo-title">ARO Content Manager</div>
+        <div class="logo-sub">African Reclaimers</div>
       </div>
     </div>
-    <div class="cms-card">
-      <div class="cms-card-header"><div class="cms-card-title">Quick Tips</div></div>
-      <div class="cms-card-body" style="display:flex;flex-direction:column;gap:0.75rem">
-        <div class="tip"><strong>Adding videos:</strong> Go to any section item, click <em>Videos</em>, and paste a YouTube or Vimeo link. The site embeds it automatically.</div>
-        <div class="tip"><strong>Images:</strong> Upload JPG or PNG. Portraits should be square or vertical. Section images should be landscape (16:9).</div>
-        <div class="tip"><strong>News articles:</strong> Set the <em>Published</em> toggle to ON when ready. Drafts are saved but hidden from the public site.</div>
-        <div class="tip"><strong>Campaigns:</strong> Mark each campaign as <em>Current</em> or <em>Historical</em> — the site groups them accordingly.</div>
+    <div class="sidebar-section">Content</div>
+    <ul class="sidebar-nav">
+      <li><a href="#" class="active" data-page="dashboard"><span class="nav-icon"><i class="fa-solid fa-gauge"></i></span>Dashboard</a></li>
+      <li><a href="#" data-page="campaigns"><span class="nav-icon"><i class="fa-solid fa-bullhorn"></i></span>Campaigns</a></li>
+      <li><a href="#" data-page="programmes"><span class="nav-icon"><i class="fa-solid fa-gears"></i></span>Programmes</a></li>
+      <li><a href="#" data-page="policy"><span class="nav-icon"><i class="fa-solid fa-scale-balanced"></i></span>Policy</a></li>
+      <li><a href="#" data-page="international"><span class="nav-icon"><i class="fa-solid fa-earth-africa"></i></span>International</a></li>
+      <li><a href="#" data-page="films"><span class="nav-icon"><i class="fa-solid fa-film"></i></span>Films & Media</a></li>
+      <li><a href="#" data-page="news"><span class="nav-icon"><i class="fa-solid fa-newspaper"></i></span>News & Stories</a></li>
+      <li><a href="#" data-page="reclaimers"><span class="nav-icon"><i class="fa-solid fa-person"></i></span>Reclaimers</a></li>
+    </ul>
+    <div class="sidebar-section">Settings</div>
+    <ul class="sidebar-nav">
+      <li><a href="#" data-page="stats"><span class="nav-icon"><i class="fa-solid fa-chart-bar"></i></span>Impact Stats</a></li>
+      <li><a href="#" data-page="partners"><span class="nav-icon"><i class="fa-solid fa-handshake"></i></span>Partners</a></li>
+      <li><a href="#" data-page="siteinfo"><span class="nav-icon"><i class="fa-solid fa-circle-info"></i></span>Site Info</a></li>
+    </ul>
+    <div class="sidebar-bottom">
+      <a href="/" target="_blank" class="view-site-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> View Live Site</a>
+      <button class="signout-btn" onclick="doSignOut()"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      <div class="topbar-right">
+        <span class="save-status" id="saveStatus">Ready</span>
       </div>
     </div>
-  </div>
 
-  <!-- CAMPAIGNS -->
-  <div class="page" id="page-campaigns">
-    <div class="cms-card">
-      <div class="cms-card-header">
-        <div class="cms-card-title">Campaigns</div>
-        <button class="btn btn-primary" onclick="openModal('campaigns')">+ Add Campaign</button>
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">Content Overview</div></div>
+        <div class="cms-card-body"><div class="dash-grid" id="dashSummary"></div></div>
       </div>
-      <div class="cms-card-body">
-        <div class="item-list" id="campaigns-list"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PROGRAMMES -->
-  <div class="page" id="page-programmes">
-    <div class="cms-card">
-      <div class="cms-card-header">
-        <div class="cms-card-title">Programmes</div>
-        <button class="btn btn-primary" onclick="openModal('programmes')">+ Add Programme</button>
-      </div>
-      <div class="cms-card-body">
-        <div class="item-list" id="programmes-list"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- POLICY -->
-  <div class="page" id="page-policy">
-    <div class="cms-card">
-      <div class="cms-card-header">
-        <div class="cms-card-title">Policy Engagement</div>
-        <button class="btn btn-primary" onclick="openModal('policy')">+ Add Policy Item</button>
-      </div>
-      <div class="cms-card-body">
-        <div class="item-list" id="policy-list"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- INTERNATIONAL -->
-  <div class="page" id="page-international">
-    <div class="cms-card">
-      <div class="cms-card-header">
-        <div class="cms-card-title">International Work</div>
-        <button class="btn btn-primary" onclick="openModal('international')">+ Add Item</button>
-      </div>
-      <div class="cms-card-body">
-        <div class="item-list" id="international-list"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FILMS -->
-  <div class="page" id="page-films">
-    <div class="cms-card">
-      <div class="cms-card-header">
-        <div class="cms-card-title">Films & Media</div>
-        <button class="btn btn-primary" onclick="openModal('films')">+ Add Film / Video</button>
-      </div>
-      <div class="cms-card-body">
-        <div class="item-list" id="films-list"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- NEWS -->
-  <div class="page" id="page-news">
-    <div class="cms-card">
-      <div class="cms-card-header">
-        <div class="cms-card-title">News & Stories</div>
-        <button class="btn btn-primary" onclick="openModal('news')">+ Add Article</button>
-      </div>
-      <div class="cms-card-body">
-        <div class="item-list" id="news-list"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RECLAIMERS -->
-  <div class="page" id="page-reclaimers">
-    <div class="cms-card">
-      <div class="cms-card-header">
-        <div class="cms-card-title">Reclaimer Profiles</div>
-        <button class="btn btn-primary" onclick="openModal('reclaimers')">+ Add Profile</button>
-      </div>
-      <div class="cms-card-body">
-        <div class="item-list" id="reclaimers-list"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STATS -->
-  <div class="page" id="page-stats">
-    <div class="cms-card">
-      <div class="cms-card-header">
-        <div class="cms-card-title">Impact Statistics</div>
-        <button class="btn btn-primary" onclick="saveStats()">Save Stats</button>
-      </div>
-      <div class="cms-card-body">
-        <p style="color:var(--grey);font-size:0.85rem;margin-bottom:1rem">These figures appear in the ticker banner and the statistics strip on the homepage.</p>
-        <div class="stats-editor" id="statsEditor"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PARTNERS -->
-  <div class="page" id="page-partners">
-    <div class="cms-card">
-      <div class="cms-card-header">
-        <div class="cms-card-title">Partners & Funders</div>
-        <button class="btn btn-primary" onclick="openModal('partners')">+ Add Partner</button>
-      </div>
-      <div class="cms-card-body">
-        <div class="item-list" id="partners-list"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SITE INFO -->
-  <div class="page" id="page-siteinfo">
-    <div class="cms-card">
-      <div class="cms-card-header">
-        <div class="cms-card-title">Site Information & Contact</div>
-        <button class="btn btn-primary" onclick="saveSiteInfo()">Save Changes</button>
-      </div>
-      <div class="cms-card-body">
-        <div class="form-grid">
-          <div class="form-group"><label>Organisation Name</label><input type="text" id="si-title"></div>
-          <div class="form-group"><label>Tagline</label><input type="text" id="si-tagline"></div>
-          <div class="form-group"><label>Email Address</label><input type="email" id="si-email"></div>
-          <div class="form-group"><label>Phone Number</label><input type="text" id="si-phone"></div>
-          <div class="form-group full"><label>Physical Address</label><input type="text" id="si-address"></div>
-          <div class="form-group"><label>Facebook URL</label><input type="url" id="si-facebook"></div>
-          <div class="form-group"><label>Twitter / X URL</label><input type="url" id="si-twitter"></div>
-          <div class="form-group"><label>Instagram URL</label><input type="url" id="si-instagram"></div>
-          <div class="form-group"><label>YouTube URL</label><input type="url" id="si-youtube"></div>
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">Quick Tips</div></div>
+        <div class="cms-card-body" style="display:flex;flex-direction:column;gap:0.75rem">
+          <div class="tip"><strong>Videos:</strong> Open any section item, click <em>Videos</em>, paste a YouTube or Vimeo link. Embeds automatically on the live site.</div>
+          <div class="tip"><strong>Images:</strong> Upload JPG or PNG. Images upload directly to Firebase Storage. Landscape (16:9) for section cards, square for portraits.</div>
+          <div class="tip"><strong>News:</strong> Toggle <em>Published</em> ON when ready. Drafts are saved but hidden from the public site.</div>
+          <div class="tip"><strong>All changes</strong> save directly to Firestore and appear on the live site within seconds.</div>
         </div>
       </div>
     </div>
-  </div>
-</main>
 
-<!-- MODAL -->
+    <!-- CAMPAIGNS -->
+    <div class="page" id="page-campaigns">
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">Campaigns</div><button class="btn btn-primary" onclick="openModal('campaigns')"><i class="fa-solid fa-plus"></i> Add Campaign</button></div>
+        <div class="cms-card-body"><div class="item-list" id="campaigns-list"></div></div>
+      </div>
+    </div>
+
+    <!-- PROGRAMMES -->
+    <div class="page" id="page-programmes">
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">Programmes</div><button class="btn btn-primary" onclick="openModal('programmes')"><i class="fa-solid fa-plus"></i> Add Programme</button></div>
+        <div class="cms-card-body"><div class="item-list" id="programmes-list"></div></div>
+      </div>
+    </div>
+
+    <!-- POLICY -->
+    <div class="page" id="page-policy">
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">Policy Engagement</div><button class="btn btn-primary" onclick="openModal('policy')"><i class="fa-solid fa-plus"></i> Add Policy Item</button></div>
+        <div class="cms-card-body"><div class="item-list" id="policy-list"></div></div>
+      </div>
+    </div>
+
+    <!-- INTERNATIONAL -->
+    <div class="page" id="page-international">
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">International Work</div><button class="btn btn-primary" onclick="openModal('international')"><i class="fa-solid fa-plus"></i> Add Item</button></div>
+        <div class="cms-card-body"><div class="item-list" id="international-list"></div></div>
+      </div>
+    </div>
+
+    <!-- FILMS -->
+    <div class="page" id="page-films">
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">Films & Media</div><button class="btn btn-primary" onclick="openModal('films')"><i class="fa-solid fa-plus"></i> Add Film / Video</button></div>
+        <div class="cms-card-body"><div class="item-list" id="films-list"></div></div>
+      </div>
+    </div>
+
+    <!-- NEWS -->
+    <div class="page" id="page-news">
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">News & Stories</div><button class="btn btn-primary" onclick="openModal('news')"><i class="fa-solid fa-plus"></i> Add Article</button></div>
+        <div class="cms-card-body"><div class="item-list" id="news-list"></div></div>
+      </div>
+    </div>
+
+    <!-- RECLAIMERS -->
+    <div class="page" id="page-reclaimers">
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">Reclaimer Profiles</div><button class="btn btn-primary" onclick="openModal('reclaimers')"><i class="fa-solid fa-plus"></i> Add Profile</button></div>
+        <div class="cms-card-body"><div class="item-list" id="reclaimers-list"></div></div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="page" id="page-stats">
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">Impact Statistics</div><button class="btn btn-primary" onclick="saveStats()"><i class="fa-solid fa-floppy-disk"></i> Save Stats</button></div>
+        <div class="cms-card-body">
+          <p style="color:var(--ink-soft);font-size:0.85rem;margin-bottom:1rem">These figures appear in the ticker banner and statistics strip on the homepage.</p>
+          <div class="stats-editor" id="statsEditor"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTNERS -->
+    <div class="page" id="page-partners">
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">Partners & Funders</div><button class="btn btn-primary" onclick="openModal('partners')"><i class="fa-solid fa-plus"></i> Add Partner</button></div>
+        <div class="cms-card-body"><div class="item-list" id="partners-list"></div></div>
+      </div>
+    </div>
+
+    <!-- SITE INFO -->
+    <div class="page" id="page-siteinfo">
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">Site Information & Contact</div><button class="btn btn-primary" onclick="saveSiteInfo()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button></div>
+        <div class="cms-card-body">
+          <div class="form-grid">
+            <div class="form-group"><label>Organisation Name</label><input type="text" id="si-title"></div>
+            <div class="form-group"><label>Tagline</label><input type="text" id="si-tagline"></div>
+            <div class="form-group"><label>Email Address</label><input type="email" id="si-email"></div>
+            <div class="form-group"><label>Phone Number</label><input type="text" id="si-phone"></div>
+            <div class="form-group full"><label>Physical Address</label><input type="text" id="si-address"></div>
+            <div class="form-group"><label>Facebook URL</label><input type="url" id="si-facebook"></div>
+            <div class="form-group"><label>Twitter / X URL</label><input type="url" id="si-twitter"></div>
+            <div class="form-group"><label>Instagram URL</label><input type="url" id="si-instagram"></div>
+            <div class="form-group"><label>YouTube URL</label><input type="url" id="si-youtube"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ITEM MODAL -->
 <div class="modal-backdrop" id="modal">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title" id="modal-title">Add Item</div>
-      <button class="btn btn-ghost btn-sm" onclick="closeModal()">✕ Close</button>
-    </div>
+    <div class="modal-header"><div class="modal-title" id="modal-title">Add Item</div><button class="btn btn-ghost btn-sm" onclick="closeModal()"><i class="fa-solid fa-xmark"></i> Close</button></div>
     <div class="modal-body" id="modal-body"></div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" id="modal-save-btn" onclick="modalSave()">Save</button>
-    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" id="modal-save-btn" onclick="modalSave()"><i class="fa-solid fa-floppy-disk"></i> Save</button></div>
   </div>
 </div>
 
 <!-- VIDEO MODAL -->
 <div class="modal-backdrop" id="videoModal">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title" id="videoModal-title">Manage Videos</div>
-      <button class="btn btn-ghost btn-sm" onclick="closeVideoModal()">✕ Close</button>
-    </div>
+    <div class="modal-header"><div class="modal-title" id="videoModal-title">Manage Videos</div><button class="btn btn-ghost btn-sm" onclick="closeVideoModal()"><i class="fa-solid fa-xmark"></i> Close</button></div>
     <div class="modal-body" id="videoModal-body"></div>
   </div>
 </div>
 
-<!-- TOAST -->
 <div id="toast"></div>
 
-<script>
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDGPVYiQa5_s_zNqMwfSk3eSKULRpxf20g",
+  authDomain: "aro-website-be081.firebaseapp.com",
+  projectId: "aro-website-be081",
+  storageBucket: "aro-website-be081.firebasestorage.app",
+  messagingSenderId: "434573758758",
+  appId: "1:434573758758:web:6dae0903f50ad8a852b1e7"
+};
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const storage = getStorage(app);
+
 // ── State ─────────────────────────────────────────────────────────────────────
 let DATA = {};
 let modalCtx = { collection: null, editId: null };
 let videoCtx  = { collection: null, itemId: null };
+let pendingImageUrl = null; // holds uploaded image URL before save
 
-// ── Toast ─────────────────────────────────────────────────────────────────────
+// ── Auth ──────────────────────────────────────────────────────────────────────
+window.doLogin = async function() {
+  const email = document.getElementById('loginEmail').value;
+  const pass  = document.getElementById('loginPassword').value;
+  const btn   = document.getElementById('loginBtn');
+  const err   = document.getElementById('loginError');
+  btn.disabled = true; btn.textContent = 'Signing in…';
+  err.classList.remove('show');
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e) {
+    err.textContent = 'Incorrect email or password. Please try again.';
+    err.classList.add('show');
+    btn.disabled = false; btn.textContent = 'Sign In';
+  }
+};
+
+window.doSignOut = async function() {
+  await signOut(auth);
+};
+
+// Enter key on password field
+document.getElementById('loginPassword').addEventListener('keydown', e => {
+  if (e.key === 'Enter') window.doLogin();
+});
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appShell').classList.add('visible');
+    loadAll();
+  } else {
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('appShell').classList.remove('visible');
+  }
+});
+
+// ── Toast & status ────────────────────────────────────────────────────────────
 function toast(msg, type='success') {
   const t = document.getElementById('toast');
   const el = document.createElement('div');
   el.className = `toast-msg ${type}`;
-  el.textContent = (type === 'success' ? '✓ ' : '✗ ') + msg;
+  el.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check':'fa-circle-exclamation'}"></i> ${msg}`;
   t.appendChild(el);
-  setTimeout(() => el.remove(), 3000);
+  setTimeout(() => el.remove(), 3500);
 }
-
 function setStatus(s, cls='') {
   const el = document.getElementById('saveStatus');
   el.textContent = s; el.className = 'save-status ' + cls;
@@ -572,114 +466,139 @@ document.querySelectorAll('.sidebar-nav a').forEach(a => {
   });
 });
 
-// ── API helpers ───────────────────────────────────────────────────────────────
-async function api(method, path, body) {
+// ── Firestore helpers ─────────────────────────────────────────────────────────
+async function getCol(col) {
+  const snap = await getDocs(collection(db, col));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+async function loadAll() {
+  const [campaigns, programmes, policy, international, films, news, reclaimers, partners] = await Promise.all([
+    getCol('campaigns'), getCol('programmes'), getCol('policy'), getCol('international'),
+    getCol('films'), getCol('news'), getCol('reclaimers'), getCol('partners')
+  ]);
+  const [siteSnap, statsSnap] = await Promise.all([
+    getDoc(doc(db, 'config', 'site')),
+    getDoc(doc(db, 'config', 'stats'))
+  ]);
+  DATA = {
+    campaigns, programmes, policy, international, films, news, reclaimers, partners,
+    site:  siteSnap.exists()  ? siteSnap.data()  : {},
+    stats: statsSnap.exists() ? (statsSnap.data().items || []) : []
+  };
+  renderDashboard();
+}
+
+async function saveItem(col, id, body) {
   setStatus('Saving…', 'saving');
-  const opts = { method, headers: { 'Content-Type': 'application/json' } };
-  if (body) opts.body = JSON.stringify(body);
-  const res = await fetch('/api' + path, opts);
-  if (!res.ok) { setStatus('Save failed', 'error'); throw new Error(await res.text()); }
-  const data = await res.json();
-  setStatus('All changes saved', 'saved');
-  return data;
+  try {
+    if (id) {
+      await updateDoc(doc(db, col, id), body);
+    } else {
+      await addDoc(collection(db, col), body);
+    }
+    setStatus('Saved', 'saved');
+    toast(id ? 'Updated successfully' : 'Added successfully');
+    await loadAll();
+  } catch(e) {
+    setStatus('Save failed', 'error');
+    toast('Save failed: ' + e.message, 'error');
+  }
 }
 
-async function reload() {
-  const res = await fetch('/api/content');
-  DATA = await res.json();
+async function deleteItem(col, id, imageUrl) {
+  if (!confirm('Delete this item? This cannot be undone.')) return;
+  setStatus('Deleting…', 'saving');
+  try {
+    await deleteDoc(doc(db, col, id));
+    if (imageUrl) {
+      try { await deleteObject(ref(storage, imageUrl)); } catch(e) {}
+    }
+    setStatus('Deleted', 'saved');
+    toast('Item deleted');
+    await loadAll();
+    renderPage(col);
+  } catch(e) {
+    setStatus('Delete failed', 'error');
+    toast('Delete failed: ' + e.message, 'error');
+  }
+}
+window.deleteItem = deleteItem;
+
+// ── Image upload to Firebase Storage ─────────────────────────────────────────
+async function uploadImage(file, path, progressEl) {
+  return new Promise((resolve, reject) => {
+    const storageRef = ref(storage, `images/${path}/${Date.now()}_${file.name}`);
+    const task = uploadBytesResumable(storageRef, file);
+    task.on('state_changed',
+      snap => {
+        const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+        if (progressEl) progressEl.textContent = `Uploading… ${pct}%`;
+      },
+      err => reject(err),
+      async () => {
+        const url = await getDownloadURL(task.snapshot.ref);
+        resolve(url);
+      }
+    );
+  });
 }
 
-async function uploadFile(file) {
-  const fd = new FormData();
-  fd.append('file', file);
-  const res = await fetch('/api/upload', { method:'POST', body: fd });
-  const d = await res.json();
-  return d.url;
-}
-
-// ── Image upload helper for forms ─────────────────────────────────────────────
-function makeUploadField(id, currentUrl) {
+function makeUploadField(fieldId, currentUrl, uploadPath) {
   return `
-    <div class="upload-zone" id="zone-${id}" onclick="document.getElementById('fileinput-${id}').click()">
-      ${currentUrl ? `<img src="${currentUrl}" class="img-preview" style="margin:0 auto 0.5rem"><br>` : ''}
+    <div class="upload-zone" id="zone-${fieldId}" onclick="document.getElementById('fi-${fieldId}').click()">
+      ${currentUrl ? `<img src="${currentUrl}" class="img-preview" style="margin:0 auto 0.5rem"><br>` : `<i class="fa-solid fa-image" style="font-size:1.5rem;margin-bottom:0.4rem;display:block"></i>`}
       <span>Click to upload image (JPG / PNG)</span>
+      <div class="upload-progress" id="prog-${fieldId}"></div>
     </div>
-    <input type="file" id="fileinput-${id}" accept="image/*" style="display:none" onchange="handleUpload('${id}', this)">
-    <input type="hidden" id="imgurl-${id}" value="${currentUrl || ''}">`;
+    <input type="file" id="fi-${fieldId}" accept="image/*" style="display:none"
+      onchange="handleUpload('${fieldId}','${uploadPath}',this)">
+    <input type="hidden" id="imgurl-${fieldId}" value="${currentUrl || ''}">`;
 }
 
-async function handleUpload(id, input) {
+window.handleUpload = async function(fieldId, uploadPath, input) {
   if (!input.files[0]) return;
-  const url = await uploadFile(input.files[0]);
-  document.getElementById('imgurl-' + id).value = url;
-  const zone = document.getElementById('zone-' + id);
-  zone.innerHTML = `<img src="${url}" class="img-preview" style="margin:0 auto 0.5rem"><br><span>Click to change image</span>`;
-  toast('Image uploaded');
-}
+  const zone = document.getElementById('zone-' + fieldId);
+  zone.classList.add('uploading');
+  try {
+    const url = await uploadImage(input.files[0], uploadPath, document.getElementById('prog-' + fieldId));
+    document.getElementById('imgurl-' + fieldId).value = url;
+    zone.classList.remove('uploading');
+    zone.innerHTML = `<img src="${url}" class="img-preview" style="margin:0 auto 0.5rem"><br><span>Click to change image</span>`;
+    toast('Image uploaded to Firebase Storage');
+  } catch(e) {
+    zone.classList.remove('uploading');
+    toast('Upload failed: ' + e.message, 'error');
+  }
+};
 
 // ── Render pages ──────────────────────────────────────────────────────────────
 async function renderPage(page) {
-  await reload();
-
+  await loadAll();
   if (page === 'dashboard') { renderDashboard(); return; }
-  if (page === 'stats') { renderStats(); return; }
-  if (page === 'siteinfo') { renderSiteInfo(); return; }
-
+  if (page === 'stats')     { renderStats();     return; }
+  if (page === 'siteinfo')  { renderSiteInfo();  return; }
   const listEl = document.getElementById(page + '-list');
   if (!listEl) return;
   const items = DATA[page] || [];
-
-  if (!items.length) {
-    listEl.innerHTML = `<div style="color:var(--grey);padding:1rem;font-size:0.85rem">No items yet. Click "Add" to get started.</div>`;
-    return;
-  }
-
+  if (!items.length) { listEl.innerHTML = `<div style="color:var(--ink-soft);padding:1rem;font-size:0.85rem">No items yet. Click Add to get started.</div>`; return; }
   listEl.innerHTML = items.map(item => renderItemRow(page, item)).join('');
-}
-
-function renderItemRow(col, item) {
-  const hasVideos = ['campaigns','programmes','policy','international'].includes(col);
-  const videoCount = hasVideos ? (item.videos || []).length : 0;
-
-  let meta = '';
-  if (col === 'campaigns') meta = `<span class="badge ${item.status === 'current' ? 'badge-green' : 'badge-grey'}">${item.status || 'current'}</span>`;
-  if (col === 'news') meta = `<span class="badge ${item.published ? 'badge-green' : 'badge-orange'}">${item.published ? 'Published' : 'Draft'}</span> <span style="margin-left:0.5rem;font-family:var(--font-m);font-size:0.65rem;color:var(--grey)">${item.date || ''}</span>`;
-  if (col === 'films') meta = `<span class="badge badge-grey">${item.type || 'film'}</span> <span style="margin-left:0.5rem;font-family:var(--font-m);font-size:0.65rem;color:var(--grey)">${item.year || ''}</span>`;
-  if (col === 'reclaimers') meta = `<span style="font-family:var(--font-m);font-size:0.65rem;color:var(--grey)">${item.role || ''} · ${item.area || ''}</span>`;
-  if (col === 'partners') meta = `<span style="font-family:var(--font-m);font-size:0.65rem;color:var(--grey)">${item.url || ''}</span>`;
-
-  return `<div class="item-row">
-    <div class="item-main">
-      <div class="item-title">${item.title || item.name || '—'}</div>
-      <div class="item-meta">${meta}</div>
-      <div class="item-summary">${(item.summary || item.bio || item.body || item.description || '').substring(0,120)}${((item.summary||item.bio||item.body||item.description||'').length>120?'…':'')}</div>
-      ${hasVideos && videoCount > 0 ? `<div style="margin-top:0.4rem;font-family:var(--font-m);font-size:0.62rem;color:var(--green-bright)">▶ ${videoCount} video${videoCount>1?'s':''} attached</div>` : ''}
-    </div>
-    <div class="item-actions">
-      ${hasVideos ? `<button class="btn btn-ghost btn-sm" onclick="openVideoModal('${col}','${item.id}')">▶ Videos</button>` : ''}
-      <button class="btn btn-ghost btn-sm" onclick="openModal('${col}','${item.id}')">Edit</button>
-      <button class="btn btn-danger btn-sm btn-icon" onclick="deleteItem('${col}','${item.id}')">✕</button>
-    </div>
-  </div>`;
 }
 
 function renderDashboard() {
   const cols = { campaigns:'Campaigns', programmes:'Programmes', policy:'Policy', international:'International', films:'Films', news:'News', reclaimers:'Reclaimers', partners:'Partners' };
-  document.getElementById('dashSummary').innerHTML = Object.entries(cols).map(([k,v]) => `
-    <div class="dash-card">
-      <div class="dash-count">${(DATA[k]||[]).length}</div>
-      <div class="dash-label">${v}</div>
-    </div>`).join('');
+  document.getElementById('dashSummary').innerHTML = Object.entries(cols).map(([k,v]) =>
+    `<div class="dash-card"><div class="dash-count">${(DATA[k]||[]).length}</div><div class="dash-label">${v}</div></div>`
+  ).join('');
 }
 
 function renderStats() {
-  const el = document.getElementById('statsEditor');
-  el.innerHTML = (DATA.stats || []).map((s,i) => `
+  document.getElementById('statsEditor').innerHTML = (DATA.stats||[]).map((s,i) => `
     <div class="stat-edit-card">
       <label>Stat ${i+1} — Value</label>
-      <input type="text" id="stat-val-${i}" value="${s.value}" placeholder="e.g. 6,000+">
+      <input type="text" id="stat-val-${i}" value="${s.value||''}" placeholder="e.g. 6,000+">
       <label style="margin-top:0.4rem">Label</label>
-      <input type="text" id="stat-lbl-${i}" value="${s.label}" placeholder="e.g. ARO Members">
+      <input type="text" id="stat-lbl-${i}" value="${s.label||''}" placeholder="e.g. ARO Members">
     </div>`).join('');
 }
 
@@ -691,156 +610,163 @@ function renderSiteInfo() {
   });
 }
 
-// ── Save functions ────────────────────────────────────────────────────────────
-async function saveStats() {
-  const stats = (DATA.stats || []).map((s,i) => ({
-    id: s.id,
-    value: document.getElementById('stat-val-' + i).value,
-    label: document.getElementById('stat-lbl-' + i).value,
-  }));
-  await api('PUT', '/stats', stats);
-  toast('Impact stats saved');
+function renderItemRow(col, item) {
+  const hasVideos = ['campaigns','programmes','policy','international'].includes(col);
+  const videoCount = hasVideos ? (item.videos||[]).length : 0;
+  let meta = '';
+  if (col==='campaigns') meta = `<span class="badge ${item.status==='current'?'badge-green':'badge-grey'}">${item.status||'current'}</span>`;
+  if (col==='news') meta = `<span class="badge ${item.published?'badge-green':'badge-orange'}">${item.published?'Published':'Draft'}</span> <span style="font-family:var(--font-m);font-size:0.62rem;color:var(--ink-soft);margin-left:0.4rem">${item.date||''}</span>`;
+  if (col==='films') meta = `<span class="badge badge-grey">${item.type||'film'}</span>${item.year?` <span style="font-family:var(--font-m);font-size:0.62rem;color:var(--ink-soft);margin-left:0.4rem">${item.year}</span>`:''}`;
+  if (col==='reclaimers') meta = `<span style="font-family:var(--font-m);font-size:0.62rem;color:var(--ink-soft)">${item.role||''}${item.area?' · '+item.area:''}</span>`;
+  if (col==='partners') meta = `<span style="font-family:var(--font-m);font-size:0.62rem;color:var(--ink-soft)">${item.url||''}</span>`;
+
+  return `<div class="item-row">
+    ${item.image ? `<img class="item-img-thumb" src="${item.image}" alt="">` : ''}
+    <div class="item-main">
+      <div class="item-title">${item.title||item.name||'—'}</div>
+      <div class="item-meta">${meta}</div>
+      <div class="item-summary">${((item.summary||item.bio||item.body||item.description||'')).substring(0,120)}...</div>
+      ${hasVideos && videoCount > 0 ? `<div style="margin-top:0.35rem;font-family:var(--font-m);font-size:0.6rem;color:var(--green)"><i class="fa-solid fa-film"></i> ${videoCount} video${videoCount>1?'s':''}</div>` : ''}
+    </div>
+    <div class="item-actions">
+      ${hasVideos ? `<button class="btn btn-ghost btn-sm" onclick="openVideoModal('${col}','${item.id}')"><i class="fa-solid fa-film"></i> Videos</button>` : ''}
+      <button class="btn btn-ghost btn-sm" onclick="openModal('${col}','${item.id}')"><i class="fa-solid fa-pen"></i> Edit</button>
+      <button class="btn btn-danger btn-sm btn-icon" onclick="deleteItem('${col}','${item.id}','${item.image||''}')"><i class="fa-solid fa-trash"></i></button>
+    </div>
+  </div>`;
 }
 
-async function saveSiteInfo() {
+// ── Save functions ────────────────────────────────────────────────────────────
+window.saveStats = async function() {
+  const stats = (DATA.stats||[]).map((s,i) => ({
+    id: s.id || `s${i+1}`,
+    value: document.getElementById('stat-val-'+i).value,
+    label: document.getElementById('stat-lbl-'+i).value
+  }));
+  setStatus('Saving…', 'saving');
+  try {
+    await setDoc(doc(db, 'config', 'stats'), { items: stats });
+    setStatus('Saved', 'saved');
+    toast('Impact stats saved');
+    await loadAll();
+  } catch(e) { setStatus('Error', 'error'); toast('Save failed', 'error'); }
+};
+
+window.saveSiteInfo = async function() {
   const body = {};
   ['title','tagline','email','phone','address','facebook','twitter','instagram','youtube'].forEach(k => {
-    const el = document.getElementById('si-' + k);
+    const el = document.getElementById('si-'+k);
     if (el) body[k] = el.value;
   });
-  await api('PUT', '/site', body);
-  toast('Site information saved');
-}
+  setStatus('Saving…', 'saving');
+  try {
+    await setDoc(doc(db, 'config', 'site'), body);
+    setStatus('Saved', 'saved');
+    toast('Site information saved');
+    await loadAll();
+  } catch(e) { setStatus('Error', 'error'); toast('Save failed', 'error'); }
+};
 
-// ── Modal ──────────────────────────────────────────────────────────────────────
-function openModal(collection, editId) {
+// ── Modal ─────────────────────────────────────────────────────────────────────
+window.openModal = function(collection, editId) {
   modalCtx = { collection, editId };
-  const item = editId ? (DATA[collection] || []).find(i => i.id === editId) : null;
-  const isEdit = !!item;
-
-  document.getElementById('modal-title').textContent = (isEdit ? 'Edit' : 'Add') + ' — ' + collection.charAt(0).toUpperCase() + collection.slice(1);
+  const item = editId ? (DATA[collection]||[]).find(i => i.id===editId) : null;
+  document.getElementById('modal-title').textContent = (item?'Edit':'Add') + ' — ' + collection.charAt(0).toUpperCase()+collection.slice(1);
   document.getElementById('modal-body').innerHTML = buildForm(collection, item);
   document.getElementById('modal').classList.add('open');
-}
-
-function closeModal() { document.getElementById('modal').classList.remove('open'); }
+};
+window.closeModal = function() { document.getElementById('modal').classList.remove('open'); };
 
 function buildForm(col, item) {
-  const v = (k, def='') => item ? (item[k] || def) : def;
-
-  if (col === 'campaigns') return `
+  const v = (k, def='') => item ? (item[k]||def) : def;
+  if (col==='campaigns') return `
     <div class="form-group"><label>Campaign Title</label><input type="text" id="f-title" value="${v('title')}" placeholder="Campaign name"></div>
-    <div class="form-group"><label>Status</label>
-      <select id="f-status"><option value="current" ${v('status')==='current'?'selected':''}>Current</option><option value="historical" ${v('status')==='historical'?'selected':''}>Historical</option></select>
-    </div>
-    <div class="form-group full"><label>Summary</label><textarea id="f-summary" rows="4" placeholder="What is this campaign fighting for?">${v('summary')}</textarea></div>
-    <div class="form-group full"><label>Campaign Image</label>${makeUploadField('main', v('image'))}` ;
+    <div class="form-group"><label>Status</label><select id="f-status"><option value="current" ${v('status')==='current'?'selected':''}>Current</option><option value="historical" ${v('status')==='historical'?'selected':''}>Historical</option></select></div>
+    <div class="form-group full"><label>Summary</label><textarea id="f-summary" rows="4">${v('summary')}</textarea></div>
+    <div class="form-group full"><label>Campaign Image</label>${makeUploadField('main', v('image'), 'campaigns')}`;
 
-  if (col === 'programmes') return `
-    <div class="form-group full"><label>Programme Title</label><input type="text" id="f-title" value="${v('title')}" placeholder="Programme name"></div>
-    <div class="form-group full"><label>Summary</label><textarea id="f-summary" rows="4" placeholder="What does this programme do?">${v('summary')}</textarea></div>
-    <div class="form-group full"><label>Programme Image</label>${makeUploadField('main', v('image'))}`;
+  if (col==='programmes') return `
+    <div class="form-group full"><label>Programme Title</label><input type="text" id="f-title" value="${v('title')}"></div>
+    <div class="form-group full"><label>Summary</label><textarea id="f-summary" rows="4">${v('summary')}</textarea></div>
+    <div class="form-group full"><label>Image</label>${makeUploadField('main', v('image'), 'programmes')}`;
 
-  if (col === 'policy') return `
-    <div class="form-group full"><label>Policy Area / Title</label><input type="text" id="f-title" value="${v('title')}" placeholder="e.g. Waste Picker Integration Guideline"></div>
-    <div class="form-group full"><label>Summary</label><textarea id="f-summary" rows="4" placeholder="Describe ARO's engagement and position">${v('summary')}</textarea></div>
-    <div class="form-group full"><label>Image</label>${makeUploadField('main', v('image'))}`;
+  if (col==='policy') return `
+    <div class="form-group full"><label>Policy Area / Title</label><input type="text" id="f-title" value="${v('title')}"></div>
+    <div class="form-group full"><label>Summary</label><textarea id="f-summary" rows="4">${v('summary')}</textarea></div>
+    <div class="form-group full"><label>Image</label>${makeUploadField('main', v('image'), 'policy')}`;
 
-  if (col === 'international') return `
-    <div class="form-group full"><label>Title</label><input type="text" id="f-title" value="${v('title')}" placeholder="e.g. IAWP Membership"></div>
-    <div class="form-group full"><label>Summary</label><textarea id="f-summary" rows="4" placeholder="Describe this international relationship or work">${v('summary')}</textarea></div>
-    <div class="form-group full"><label>Image</label>${makeUploadField('main', v('image'))}`;
+  if (col==='international') return `
+    <div class="form-group full"><label>Title</label><input type="text" id="f-title" value="${v('title')}"></div>
+    <div class="form-group full"><label>Summary</label><textarea id="f-summary" rows="4">${v('summary')}</textarea></div>
+    <div class="form-group full"><label>Image</label>${makeUploadField('main', v('image'), 'international')}`;
 
-  if (col === 'films') return `
-    <div class="form-group full"><label>Film / Video Title</label><input type="text" id="f-title" value="${v('title')}" placeholder="Title of the film"></div>
-    <div class="form-group"><label>Type</label>
-      <select id="f-type"><option value="documentary" ${v('type')==='documentary'?'selected':''}>Documentary</option><option value="animation" ${v('type')==='animation'?'selected':''}>Animation / Explainer</option><option value="campaign" ${v('type')==='campaign'?'selected':''}>Campaign Video</option><option value="other" ${v('type')==='other'?'selected':''}>Other</option></select>
-    </div>
-    <div class="form-group"><label>Year</label><input type="text" id="f-year" value="${v('year')}" placeholder="e.g. 2024"></div>
+  if (col==='films') return `
+    <div class="form-group full"><label>Film / Video Title</label><input type="text" id="f-title" value="${v('title')}"></div>
+    <div class="form-group"><label>Type</label><select id="f-type"><option value="documentary" ${v('type')==='documentary'?'selected':''}>Documentary</option><option value="animation" ${v('type')==='animation'?'selected':''}>Animation / Explainer</option><option value="campaign" ${v('type')==='campaign'?'selected':''}>Campaign Video</option><option value="other">Other</option></select></div>
+    <div class="form-group"><label>Year</label><input type="text" id="f-year" value="${v('year')}"></div>
     <div class="form-group full"><label>YouTube or Vimeo URL</label><input type="url" id="f-embed" value="${v('embed')}" placeholder="https://youtu.be/..."></div>
-    <div class="form-group full"><label>Description</label><textarea id="f-description" rows="3" placeholder="Short description of the film">${v('description')}</textarea></div>
-    <div class="form-group full"><label>Production Credit (e.g. UJ FADA students)</label><input type="text" id="f-credit" value="${v('credit')}" placeholder="Produced by..."></div>`;
+    <div class="form-group full"><label>Description</label><textarea id="f-description" rows="3">${v('description')}</textarea></div>
+    <div class="form-group full"><label>Production Credit</label><input type="text" id="f-credit" value="${v('credit')}">`;
 
-  if (col === 'news') return `
-    <div class="form-group full"><label>Article Headline</label><input type="text" id="f-title" value="${v('title')}" placeholder="News headline"></div>
-    <div class="form-group"><label>Category</label>
-      <select id="f-category">
-        ${['Campaigns','Programmes','Policy','International','General'].map(c => `<option value="${c}" ${v('category')===c?'selected':''}>${c}</option>`).join('')}
-      </select>
-    </div>
+  if (col==='news') return `
+    <div class="form-group full"><label>Headline</label><input type="text" id="f-title" value="${v('title')}"></div>
+    <div class="form-group"><label>Category</label><select id="f-category">${['Campaigns','Programmes','Policy','International','General'].map(c=>`<option value="${c}" ${v('category')===c?'selected':''}>${c}</option>`).join('')}</select></div>
     <div class="form-group"><label>Date</label><input type="date" id="f-date" value="${v('date')}"></div>
-    <div class="form-group full"><label>Article Body</label><textarea id="f-body" rows="8" placeholder="Write the full article here…">${v('body')}</textarea></div>
-    <div class="form-group full"><label>Article Image</label>${makeUploadField('main', v('image'))}
-    <div class="form-group full" style="margin-top:0.75rem">
-      <label class="toggle"><input type="checkbox" id="f-published" ${v('published')?'checked':''}><div class="toggle-track"><div class="toggle-thumb"></div></div><span style="font-family:var(--font-m);font-size:0.7rem;color:var(--grey);letter-spacing:0.08em">Published (visible on site)</span></label>
-    </div>`;
+    <div class="form-group full"><label>Article Body</label><textarea id="f-body" rows="8">${v('body')}</textarea></div>
+    <div class="form-group full"><label>Article Image</label>${makeUploadField('main', v('image'), 'news')}
+    <div class="form-group full" style="margin-top:0.5rem"><label class="toggle"><input type="checkbox" id="f-published" ${v('published')?'checked':''}><div class="toggle-track"><div class="toggle-thumb"></div></div><span style="font-family:var(--font-m);font-size:0.7rem;color:var(--ink-soft);margin-left:0.3rem">Published</span></label></div>`;
 
-  if (col === 'reclaimers') return `
-    <div class="form-group"><label>Full Name</label><input type="text" id="f-name" value="${v('name')}" placeholder="Reclaimer's name"></div>
-    <div class="form-group"><label>Role in ARO</label><input type="text" id="f-role" value="${v('role')}" placeholder="e.g. Chairperson"></div>
-    <div class="form-group"><label>Area / Depot</label><input type="text" id="f-area" value="${v('area')}" placeholder="e.g. Johannesburg"></div>
-    <div class="form-group full"><label>Quote (shown on site)</label><input type="text" id="f-quote" value="${v('quote')}" placeholder="A short quote in their own words"></div>
-    <div class="form-group full"><label>Biography</label><textarea id="f-bio" rows="4" placeholder="2–3 sentences about their work and role in ARO">${v('bio')}</textarea></div>
-    <div class="form-group full"><label>Portrait Photo</label>${makeUploadField('main', v('image'))}`;
+  if (col==='reclaimers') return `
+    <div class="form-group"><label>Full Name</label><input type="text" id="f-name" value="${v('name')}"></div>
+    <div class="form-group"><label>Role in ARO</label><input type="text" id="f-role" value="${v('role')}"></div>
+    <div class="form-group"><label>Area / Depot</label><input type="text" id="f-area" value="${v('area')}"></div>
+    <div class="form-group full"><label>Quote</label><input type="text" id="f-quote" value="${v('quote')}"></div>
+    <div class="form-group full"><label>Biography</label><textarea id="f-bio" rows="4">${v('bio')}</textarea></div>
+    <div class="form-group full"><label>Portrait Photo</label>${makeUploadField('main', v('image'), 'reclaimers')}`;
 
-  if (col === 'partners') return `
-    <div class="form-group full"><label>Organisation Name</label><input type="text" id="f-name" value="${v('name')}" placeholder="Partner or funder name"></div>
-    <div class="form-group full"><label>Website URL (optional)</label><input type="url" id="f-url" value="${v('url')}" placeholder="https://..."></div>
-    <div class="form-group full"><label>Logo (optional)</label>${makeUploadField('main', v('logo'))}`;
+  if (col==='partners') return `
+    <div class="form-group full"><label>Organisation Name</label><input type="text" id="f-name" value="${v('name')}"></div>
+    <div class="form-group full"><label>Website URL</label><input type="url" id="f-url" value="${v('url')}"></div>
+    <div class="form-group full"><label>Logo</label>${makeUploadField('main', v('logo'), 'partners')}`;
 
-  return '<p style="color:var(--grey)">Unknown collection.</p>';
+  return '<p style="color:var(--ink-soft)">Unknown collection.</p>';
 }
 
 function collectForm(col) {
-  const g = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+  const g = id => { const el=document.getElementById(id); return el?el.value:''; };
   const img = document.getElementById('imgurl-main') ? document.getElementById('imgurl-main').value : '';
-
-  if (col === 'campaigns') return { title: g('f-title'), status: g('f-status'), summary: g('f-summary'), image: img };
-  if (col === 'programmes') return { title: g('f-title'), summary: g('f-summary'), image: img };
-  if (col === 'policy') return { title: g('f-title'), summary: g('f-summary'), image: img };
-  if (col === 'international') return { title: g('f-title'), summary: g('f-summary'), image: img };
-  if (col === 'films') return { title: g('f-title'), type: g('f-type'), year: g('f-year'), embed: g('f-embed'), description: g('f-description'), credit: g('f-credit') };
-  if (col === 'news') return { title: g('f-title'), category: g('f-category'), date: g('f-date'), body: g('f-body'), image: img, published: document.getElementById('f-published')?.checked || false };
-  if (col === 'reclaimers') return { name: g('f-name'), role: g('f-role'), area: g('f-area'), quote: g('f-quote'), bio: g('f-bio'), image: img };
-  if (col === 'partners') return { name: g('f-name'), url: g('f-url'), logo: img };
+  if (col==='campaigns')    return { title:g('f-title'), status:g('f-status'), summary:g('f-summary'), image:img };
+  if (col==='programmes')   return { title:g('f-title'), summary:g('f-summary'), image:img };
+  if (col==='policy')       return { title:g('f-title'), summary:g('f-summary'), image:img };
+  if (col==='international')return { title:g('f-title'), summary:g('f-summary'), image:img };
+  if (col==='films')        return { title:g('f-title'), type:g('f-type'), year:g('f-year'), embed:g('f-embed'), description:g('f-description'), credit:g('f-credit') };
+  if (col==='news')         return { title:g('f-title'), category:g('f-category'), date:g('f-date'), body:g('f-body'), image:img, published:document.getElementById('f-published')?.checked||false };
+  if (col==='reclaimers')   return { name:g('f-name'), role:g('f-role'), area:g('f-area'), quote:g('f-quote'), bio:g('f-bio'), image:img };
+  if (col==='partners')     return { name:g('f-name'), url:g('f-url'), logo:img };
 }
 
-async function modalSave() {
-  const { collection, editId } = modalCtx;
-  const body = collectForm(collection);
+window.modalSave = async function() {
+  const { collection: col, editId } = modalCtx;
+  const body = collectForm(col);
   if (!body) return;
-  if (editId) {
-    await api('PUT', `/${collection}/${editId}`, body);
-    toast('Updated successfully');
-  } else {
-    await api('POST', `/${collection}`, body);
-    toast('Added successfully');
-  }
+  await saveItem(col, editId, body);
   closeModal();
-  renderPage(collection);
-}
-
-async function deleteItem(col, id) {
-  if (!confirm('Delete this item? This cannot be undone.')) return;
-  await api('DELETE', `/${col}/${id}`);
-  toast('Item deleted');
   renderPage(col);
-}
+};
 
 // ── Video modal ───────────────────────────────────────────────────────────────
-function openVideoModal(collection, itemId) {
+window.openVideoModal = function(collection, itemId) {
   videoCtx = { collection, itemId };
-  const item = (DATA[collection] || []).find(i => i.id === itemId);
+  const item = (DATA[collection]||[]).find(i => i.id===itemId);
   if (!item) return;
   document.getElementById('videoModal-title').textContent = `Videos — ${item.title}`;
   renderVideoModal(item);
   document.getElementById('videoModal').classList.add('open');
-}
-
-function closeVideoModal() {
+};
+window.closeVideoModal = function() {
   document.getElementById('videoModal').classList.remove('open');
   renderPage(videoCtx.collection);
-}
+};
 
 function renderVideoModal(item) {
   const videos = item.videos || [];
@@ -849,46 +775,44 @@ function renderVideoModal(item) {
       ${videos.length ? videos.map(v => `
         <div class="video-row">
           <div class="video-row-info">
-            <div class="video-row-title">${v.title || 'Untitled'}</div>
+            <div class="video-row-title">${v.title||'Untitled'}</div>
             <div class="video-row-url">${v.url}</div>
           </div>
-          <button class="btn btn-danger btn-sm btn-icon" onclick="deleteVideo('${v.id}')">✕</button>
-        </div>`).join('') : '<p style="color:var(--grey);font-size:0.85rem">No videos added yet.</p>'}
+          <button class="btn btn-danger btn-sm btn-icon" onclick="deleteVideo('${v.id}')"><i class="fa-solid fa-trash"></i></button>
+        </div>`).join('') : '<p style="color:var(--ink-soft);font-size:0.85rem">No videos added yet.</p>'}
     </div>
     <div class="sep"></div>
-    <p style="font-family:var(--font-m);font-size:0.65rem;color:var(--grey);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem">Add New Video</p>
+    <p style="font-family:var(--font-m);font-size:0.63rem;color:var(--ink-soft);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem">Add New Video</p>
     <div class="form-group"><label>Video Title</label><input type="text" id="new-vid-title" placeholder="e.g. Campaign Documentary 2024"></div>
     <div class="form-group" style="margin-top:0.75rem"><label>YouTube or Vimeo URL</label><input type="url" id="new-vid-url" placeholder="https://youtu.be/..."></div>
-    <button class="btn btn-primary" style="margin-top:0.75rem" onclick="addVideo()">+ Add Video</button>`;
+    <button class="btn btn-primary" style="margin-top:0.75rem" onclick="addVideo()"><i class="fa-solid fa-plus"></i> Add Video</button>`;
 }
 
-async function addVideo() {
-  const { collection, itemId } = videoCtx;
+window.addVideo = async function() {
+  const { collection: col, itemId } = videoCtx;
   const title = document.getElementById('new-vid-title').value;
-  const url = document.getElementById('new-vid-url').value;
+  const url   = document.getElementById('new-vid-url').value;
   if (!url) { toast('Please enter a video URL', 'error'); return; }
-  await api('POST', `/${collection}/${itemId}/videos`, { title, url });
-  await reload();
-  const item = (DATA[collection] || []).find(i => i.id === itemId);
-  renderVideoModal(item);
+  const item = (DATA[col]||[]).find(i => i.id===itemId);
+  if (!item) return;
+  const videos = [...(item.videos||[]), { id: Date.now().toString(), title, url }];
+  await saveItem(col, itemId, { ...item, videos });
+  const updated = (DATA[col]||[]).find(i => i.id===itemId);
+  renderVideoModal(updated||item);
   toast('Video added');
-}
+};
 
-async function deleteVideo(videoId) {
-  const { collection, itemId } = videoCtx;
+window.deleteVideo = async function(videoId) {
+  const { collection: col, itemId } = videoCtx;
   if (!confirm('Remove this video?')) return;
-  await api('DELETE', `/${collection}/${itemId}/videos/${videoId}`);
-  await reload();
-  const item = (DATA[collection] || []).find(i => i.id === itemId);
-  renderVideoModal(item);
+  const item = (DATA[col]||[]).find(i => i.id===itemId);
+  if (!item) return;
+  const videos = (item.videos||[]).filter(v => v.id!==videoId);
+  await saveItem(col, itemId, { ...item, videos });
+  const updated = (DATA[col]||[]).find(i => i.id===itemId);
+  renderVideoModal(updated||item);
   toast('Video removed');
-}
-
-// ── Init ──────────────────────────────────────────────────────────────────────
-(async () => {
-  await reload();
-  renderDashboard();
-})();
+};
 </script>
 </body>
 </html>
