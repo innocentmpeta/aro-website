@@ -2,6 +2,11 @@
   "rewrites": [
     { "source": "/admin", "destination": "/admin/index.html" },
     { "source": "/admin/(.*)", "destination": "/admin/index.html" },
+    { "source": "/pages/campaign.html", "destination": "/site/pages/campaign.html" },
+    { "source": "/pages/showcase.html", "destination": "/site/pages/showcase.html" },
+    { "source": "/pages/film.html", "destination": "/site/pages/film.html" },
+    { "source": "/pages/news.html", "destination": "/site/pages/news.html" },
+    { "source": "/pages/reclaimer.html", "destination": "/site/pages/reclaimer.html" },
     { "source": "/(.*)", "destination": "/site/index.html" }
   ],
   "headers": [

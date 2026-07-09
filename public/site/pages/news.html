@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News — African Reclaimers Organisation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --green:#2A7A2A; --green-mid:#3A6E3A; --green-bright:#3DAA3D; --green-dim:#1A4D1A;
+  --white-base:#F2F5F2; --white-surface:#FFFFFF; --white-border:#DDE8DD;
+  --ink:#1A1F1A; --ink-mid:#3A443A; --ink-soft:#5C6B5C;
+  --grey:#7A8A7A;
+  --font-display:'Barlow Condensed',sans-serif;
+  --font-body:'Barlow',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+html { scroll-behavior:smooth; }
+body { background:var(--white-base); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.6; }
+img { max-width:100%; display:block; }
+a { color:inherit; text-decoration:none; }
+
+nav { background:var(--green-mid); border-bottom:2px solid var(--green-dim); padding:0 2.5rem; height:84px; display:flex; align-items:center; justify-content:space-between; }
+.nav-logo { display:flex; align-items:center; gap:1rem; }
+.nav-logo img { height:56px; }
+.nav-logo-text { font-family:var(--font-display); font-weight:800; font-size:1.05rem; letter-spacing:0.05em; text-transform:uppercase; color:#fff; line-height:1.2; }
+.nav-logo-text span { color:#a8e6a8; display:block; font-size:0.7rem; font-weight:600; letter-spacing:0.16em; }
+.nav-back { font-family:var(--font-display); font-size:0.85rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.7); display:flex; align-items:center; gap:0.5rem; transition:color 0.2s; }
+.nav-back:hover { color:#fff; }
+
+/* ── Article header ── */
+.article-header { background:var(--white-surface); border-bottom:1px solid var(--white-border); padding:4rem 2rem 0; }
+.article-header-inner { max-width:780px; margin:0 auto; }
+.article-meta { display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+.article-cat { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--green); border:1px solid #c0d8c0; padding:0.2rem 0.6rem; }
+.article-date { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.1em; color:var(--ink-soft); }
+.article-headline { font-family:var(--font-display); font-size:clamp(2.2rem,6vw,4rem); font-weight:900; text-transform:uppercase; line-height:0.95; color:var(--ink); margin-bottom:2rem; }
+.article-hero-img { width:100%; max-height:480px; object-fit:cover; margin-top:2rem; }
+
+/* ── Article body ── */
+.article-body-wrap { max-width:780px; margin:0 auto; padding:3rem 2rem 5rem; }
+.article-body { font-size:1.05rem; color:var(--ink-mid); line-height:1.9; }
+.article-body p { margin-bottom:1.5rem; }
+.article-body p:last-child { margin-bottom:0; }
+
+/* Pull quote — inserted by CMS via || delimiter */
+.article-pull-quote { border-left:4px solid var(--green); padding:1rem 1.5rem; margin:2rem 0; }
+.article-pull-quote p { font-family:var(--font-display); font-size:1.6rem; font-weight:700; color:var(--ink); line-height:1.3; font-style:italic; }
+
+/* Share strip */
+.share-strip { display:flex; align-items:center; gap:1rem; padding:1.5rem 0; border-top:1px solid var(--white-border); border-bottom:1px solid var(--white-border); margin:2.5rem 0; flex-wrap:wrap; }
+.share-label { font-family:var(--font-mono); font-size:0.63rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft); }
+.share-btn { font-family:var(--font-display); font-size:0.8rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:0.5rem 1rem; border:1px solid var(--white-border); color:var(--ink-soft); display:inline-flex; align-items:center; gap:0.4rem; transition:all 0.2s; cursor:pointer; background:transparent; }
+.share-btn:hover { border-color:var(--green); color:var(--green); }
+
+/* ── Related articles ── */
+.related-section { background:var(--white-surface); border-top:1px solid var(--white-border); padding:4rem 2rem; }
+.related-inner { max-width:1100px; margin:0 auto; }
+.related-label { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green); margin-bottom:2rem; display:flex; align-items:center; gap:0.75rem; }
+.related-label::after { content:''; flex:1; height:1px; background:var(--white-border); }
+.related-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:2rem; }
+.related-card { background:var(--white-base); border:1px solid var(--white-border); overflow:hidden; transition:box-shadow 0.2s,transform 0.2s; cursor:pointer; }
+.related-card:hover { box-shadow:0 4px 20px rgba(0,0,0,0.08); transform:translateY(-2px); }
+.related-card-img { width:100%; aspect-ratio:16/9; object-fit:cover; }
+.related-card-body { padding:1.25rem; }
+.related-card-cat { font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--green); margin-bottom:0.4rem; }
+.related-card h3 { font-family:var(--font-display); font-size:1.1rem; font-weight:700; text-transform:uppercase; color:var(--ink); line-height:1.2; }
+
+/* ── Footer ── */
+.page-footer { background:var(--green-mid); border-top:2px solid var(--green-dim); padding:2rem 2.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+.page-footer img { height:44px; }
+.page-footer-text { font-family:var(--font-mono); font-size:0.62rem; color:rgba(255,255,255,0.4); letter-spacing:0.08em; }
+
+.loading-state { display:flex; align-items:center; justify-content:center; min-height:50vh; font-family:var(--font-mono); font-size:0.75rem; color:var(--grey); letter-spacing:0.15em; text-transform:uppercase; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img src="/aro-logo.png" alt="ARO">
+    <div class="nav-logo-text">African Reclaimers Organisation<span>Reclaiming The Future</span></div>
+  </div>
+  <a href="/#news" class="nav-back"><i class="fa-solid fa-arrow-left"></i> News & Updates</a>
+</nav>
+
+<div id="content"><div class="loading-state">Loading article…</div></div>
+
+<footer class="page-footer">
+  <img src="/aro-logo.png" alt="ARO">
+  <div class="page-footer-text">© 2026 African Reclaimers Organisation</div>
+</footer>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const app = initializeApp({
+  apiKey:"AIzaSyDGPVYiQa5_s_zNqMwfSk3eSKULRpxf20g",
+  authDomain:"aro-website-be081.firebaseapp.com",
+  projectId:"aro-website-be081",
+  storageBucket:"aro-website-be081.firebasestorage.app",
+  messagingSenderId:"434573758758",
+  appId:"1:434573758758:web:6dae0903f50ad8a852b1e7"
+});
+const db = getFirestore(app);
+
+function formatDate(d) {
+  if (!d) return '';
+  return new Date(d).toLocaleDateString('en-ZA', { year:'numeric', month:'long', day:'numeric' });
+}
+
+// Body text: paragraphs split by newline, || triggers a pull quote
+function renderArticleBody(text) {
+  if (!text) return '';
+  return text.split('\n').filter(p => p.trim()).map(p => {
+    if (p.startsWith('||') && p.endsWith('||')) {
+      const quote = p.slice(2, -2).trim();
+      return `<div class="article-pull-quote"><p>${quote}</p></div>`;
+    }
+    return `<p>${p}</p>`;
+  }).join('');
+}
+
+async function init() {
+  const id = new URLSearchParams(location.search).get('id');
+  if (!id) { document.getElementById('content').innerHTML = '<div class="loading-state">Article not found.</div>'; return; }
+
+  const [snap, allNewsSnap] = await Promise.all([
+    getDoc(doc(db, 'news', id)),
+    getDocs(collection(db, 'news'))
+  ]);
+
+  if (!snap.exists()) { document.getElementById('content').innerHTML = '<div class="loading-state">Article not found.</div>'; return; }
+  const article = { id: snap.id, ...snap.data() };
+  document.title = `${article.title} — ARO News`;
+
+  // Related — other published articles, excluding current
+  const related = allNewsSnap.docs
+    .map(d => ({ id: d.id, ...d.data() }))
+    .filter(a => a.published && a.id !== id)
+    .slice(0, 3);
+
+  document.getElementById('content').innerHTML = `
+    <div class="article-header">
+      <div class="article-header-inner">
+        <div class="article-meta">
+          ${article.category ? `<span class="article-cat">${article.category}</span>` : ''}
+          <span class="article-date">${formatDate(article.date)}</span>
+        </div>
+        <h1 class="article-headline">${article.title}</h1>
+        ${article.image ? `<img class="article-hero-img" src="${article.image}" alt="${article.title}">` : ''}
+      </div>
+    </div>
+
+    <div class="article-body-wrap">
+      <div class="article-body">${renderArticleBody(article.body)}</div>
+
+      <div class="share-strip">
+        <span class="share-label">Share this article</span>
+        <button class="share-btn" onclick="navigator.share ? navigator.share({title:'${article.title.replace(/'/g,"\\'")}',url:location.href}) : navigator.clipboard.writeText(location.href).then(()=>alert('Link copied!'))">
+          <i class="fa-solid fa-share-nodes"></i> Share
+        </button>
+        <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(location.href)}" target="_blank" class="share-btn">
+          <i class="fa-brands fa-x-twitter"></i> Twitter
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}" target="_blank" class="share-btn">
+          <i class="fa-brands fa-facebook-f"></i> Facebook
+        </a>
+      </div>
+    </div>
+
+    ${related.length ? `
+    <div class="related-section">
+      <div class="related-inner">
+        <div class="related-label"><i class="fa-solid fa-newspaper"></i> More from ARO</div>
+        <div class="related-grid">
+          ${related.map(r => `
+            <div class="related-card" onclick="location.href='/pages/news.html?id=${r.id}'">
+              ${r.image ? `<img class="related-card-img" src="${r.image}" alt="${r.title}" loading="lazy">` : ''}
+              <div class="related-card-body">
+                ${r.category ? `<div class="related-card-cat">${r.category}</div>` : ''}
+                <h3>${r.title}</h3>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>` : ''}
+  `;
+}
+
+init();
+</script>
+</body>
+</html>

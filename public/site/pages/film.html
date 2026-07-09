@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Films & Media — African Reclaimers Organisation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --base:#111810; --surface:#0D1410; --card-bg:#1a221a; --border:#263026; --border-dim:#1c221c;
+  --green:#2A7A2A; --green-mid:#3A6E3A; --green-bright:#3DAA3D; --green-dim:#1A4D1A;
+  --white:#E8EDE8; --white-hi:#F4F7F4; --grey:#7A8A7A; --grey-mid:#9AA89A;
+  --font-display:'Barlow Condensed',sans-serif;
+  --font-body:'Barlow',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+html { scroll-behavior:smooth; }
+body { background:var(--surface); color:var(--white); font-family:var(--font-body); font-size:16px; line-height:1.6; }
+img { max-width:100%; display:block; }
+a { color:inherit; text-decoration:none; }
+
+nav { background:var(--green-mid); border-bottom:2px solid var(--green-dim); padding:0 2.5rem; height:84px; display:flex; align-items:center; justify-content:space-between; }
+.nav-logo { display:flex; align-items:center; gap:1rem; }
+.nav-logo img { height:56px; }
+.nav-logo-text { font-family:var(--font-display); font-weight:800; font-size:1.05rem; letter-spacing:0.05em; text-transform:uppercase; color:#fff; line-height:1.2; }
+.nav-logo-text span { color:#a8e6a8; display:block; font-size:0.7rem; font-weight:600; letter-spacing:0.16em; }
+.nav-back { font-family:var(--font-display); font-size:0.85rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.7); display:flex; align-items:center; gap:0.5rem; transition:color 0.2s; }
+.nav-back:hover { color:#fff; }
+
+/* ── Featured film ── */
+.screening-room { max-width:1000px; margin:0 auto; padding:4rem 2rem; }
+
+.film-type-badge { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-bright); display:flex; align-items:center; gap:0.5rem; margin-bottom:1rem; }
+.film-title { font-family:var(--font-display); font-size:clamp(2.5rem,6vw,5rem); font-weight:900; text-transform:uppercase; line-height:0.92; color:var(--white-hi); margin-bottom:1.5rem; }
+.film-meta-row { display:flex; align-items:center; gap:2rem; margin-bottom:2.5rem; flex-wrap:wrap; }
+.film-meta-item { font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--grey); }
+.film-meta-item span { color:var(--white-hi); margin-left:0.4rem; }
+
+/* Main embed */
+.main-embed-wrap { position:relative; padding-bottom:56.25%; height:0; overflow:hidden; background:var(--base); border:1px solid var(--border); margin-bottom:2rem; }
+.main-embed-wrap iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
+.embed-placeholder { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:1rem; color:var(--grey); font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; }
+.embed-placeholder i { font-size:2.5rem; color:var(--border); }
+
+/* Description */
+.film-description { font-size:1.05rem; color:var(--grey-mid); line-height:1.85; margin-bottom:3rem; }
+.film-description p { margin-bottom:1.25rem; }
+
+/* Credit bar */
+.credit-bar { border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:1rem 0; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:3rem; }
+.credit-item { display:flex; flex-direction:column; gap:0.2rem; }
+.credit-label { font-family:var(--font-mono); font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--grey); }
+.credit-value { font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--white-hi); }
+
+/* Trailer section */
+.trailer-section { margin-bottom:3rem; }
+.trailer-label { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-bright); margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+.trailer-label::after { content:''; flex:1; height:1px; background:var(--border); }
+.trailer-embed { position:relative; padding-bottom:56.25%; height:0; overflow:hidden; background:var(--base); }
+.trailer-embed iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
+
+/* Body text section */
+.film-body { margin-bottom:3rem; }
+.film-body h3 { font-family:var(--font-display); font-size:1.5rem; font-weight:800; text-transform:uppercase; color:var(--white-hi); margin-bottom:1rem; }
+.film-body-text { font-size:0.95rem; color:var(--grey-mid); line-height:1.85; }
+.film-body-text p { margin-bottom:1.25rem; }
+
+/* ── Gallery ── */
+.gallery-section { border-top:1px solid var(--border-dim); padding-top:3rem; margin-bottom:3rem; }
+.gallery-label { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-bright); margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem; }
+.gallery-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:0.5rem; }
+.gallery-img { width:100%; aspect-ratio:16/9; object-fit:cover; filter:brightness(0.8); transition:filter 0.3s; cursor:pointer; }
+.gallery-img:hover { filter:brightness(1); }
+
+/* ── Footer ── */
+.page-footer { background:var(--green-mid); border-top:2px solid var(--green-dim); padding:2rem 2.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+.page-footer img { height:44px; }
+.page-footer-text { font-family:var(--font-mono); font-size:0.62rem; color:rgba(255,255,255,0.4); letter-spacing:0.08em; }
+
+.loading-state { display:flex; align-items:center; justify-content:center; min-height:50vh; font-family:var(--font-mono); font-size:0.75rem; color:var(--grey); letter-spacing:0.15em; text-transform:uppercase; }
+
+@media(max-width:768px) {
+  .film-meta-row { gap:1rem; }
+  .credit-bar { flex-direction:column; align-items:flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img src="/aro-logo.png" alt="ARO">
+    <div class="nav-logo-text">African Reclaimers Organisation<span>Reclaiming The Future</span></div>
+  </div>
+  <a href="/#films" class="nav-back"><i class="fa-solid fa-arrow-left"></i> Films & Media</a>
+</nav>
+
+<div id="content"><div class="loading-state">Loading film…</div></div>
+
+<footer class="page-footer">
+  <img src="/aro-logo.png" alt="ARO">
+  <div class="page-footer-text">© 2026 African Reclaimers Organisation</div>
+</footer>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const app = initializeApp({
+  apiKey:"AIzaSyDGPVYiQa5_s_zNqMwfSk3eSKULRpxf20g",
+  authDomain:"aro-website-be081.firebaseapp.com",
+  projectId:"aro-website-be081",
+  storageBucket:"aro-website-be081.firebasestorage.app",
+  messagingSenderId:"434573758758",
+  appId:"1:434573758758:web:6dae0903f50ad8a852b1e7"
+});
+const db = getFirestore(app);
+
+function embedSrc(url) {
+  if (!url) return null;
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  if (yt) return `https://www.youtube.com/embed/${yt[1]}`;
+  const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vm) return `https://player.vimeo.com/video/${vm[1]}`;
+  return null;
+}
+
+function renderBody(text) {
+  if (!text) return '';
+  return text.split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('');
+}
+
+const TYPE_LABELS = {
+  documentary: 'Documentary Film',
+  animation: 'Animation & Explainer',
+  campaign: 'Campaign Video',
+  other: 'Film & Media'
+};
+
+async function init() {
+  const id = new URLSearchParams(location.search).get('id');
+  if (!id) { document.getElementById('content').innerHTML = '<div class="loading-state">Film not found.</div>'; return; }
+  const snap = await getDoc(doc(db, 'films', id));
+  if (!snap.exists()) { document.getElementById('content').innerHTML = '<div class="loading-state">Film not found.</div>'; return; }
+  const f = { id: snap.id, ...snap.data() };
+
+  document.title = `${f.title} — ARO Films`;
+
+  const mainSrc   = embedSrc(f.embed);
+  const trailerSrc = embedSrc(f.trailer);
+  const images = f.images || [];
+
+  document.getElementById('content').innerHTML = `
+    <div class="screening-room">
+      <div class="film-type-badge">
+        <i class="fa-solid fa-clapperboard"></i>
+        ${TYPE_LABELS[f.type] || 'Film'}
+        ${f.year ? `<span style="color:var(--grey);margin-left:0.5rem">· ${f.year}</span>` : ''}
+      </div>
+
+      <h1 class="film-title">${f.title}</h1>
+
+      <div class="film-meta-row">
+        ${f.type ? `<div class="film-meta-item">Type <span>${TYPE_LABELS[f.type] || f.type}</span></div>` : ''}
+        ${f.year  ? `<div class="film-meta-item">Year <span>${f.year}</span></div>` : ''}
+        ${f.credit? `<div class="film-meta-item">Production <span>${f.credit}</span></div>` : ''}
+      </div>
+
+      <!-- Main video -->
+      <div class="main-embed-wrap">
+        ${mainSrc
+          ? `<iframe src="${mainSrc}" allowfullscreen loading="lazy"></iframe>`
+          : `<div class="embed-placeholder"><i class="fa-solid fa-film"></i><span>Video coming soon</span></div>`}
+      </div>
+
+      ${f.description ? `<div class="film-description">${renderBody(f.description)}</div>` : ''}
+
+      ${(f.credit || f.year || f.type) ? `
+      <div class="credit-bar">
+        ${f.type   ? `<div class="credit-item"><div class="credit-label">Format</div><div class="credit-value">${TYPE_LABELS[f.type]||f.type}</div></div>` : ''}
+        ${f.year   ? `<div class="credit-item"><div class="credit-label">Year</div><div class="credit-value">${f.year}</div></div>` : ''}
+        ${f.credit ? `<div class="credit-item"><div class="credit-label">Produced by</div><div class="credit-value">${f.credit}</div></div>` : ''}
+      </div>` : ''}
+
+      ${trailerSrc ? `
+      <div class="trailer-section">
+        <div class="trailer-label"><i class="fa-solid fa-play"></i> Official Trailer</div>
+        <div class="trailer-embed">
+          <iframe src="${trailerSrc}" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>` : ''}
+
+      ${f.body ? `
+      <div class="film-body">
+        <h3>About This Film</h3>
+        <div class="film-body-text">${renderBody(f.body)}</div>
+      </div>` : ''}
+
+      ${images.length ? `
+      <div class="gallery-section">
+        <div class="gallery-label"><i class="fa-solid fa-images"></i> Production Stills</div>
+        <div class="gallery-grid">
+          ${images.map(img => `<img class="gallery-img" src="${img}" alt="" loading="lazy">`).join('')}
+        </div>
+      </div>` : ''}
+    </div>
+  `;
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campaign — African Reclaimers Organisation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+:root {
+  --base:#111810; --surface:#161d16; --card-bg:#1a221a;
+  --border:#263026; --border-dim:#1c221c;
+  --green:#2A7A2A; --green-mid:#3A6E3A; --green-bright:#3DAA3D; --green-dim:#1A4D1A;
+  --white:#E8EDE8; --white-hi:#F4F7F4; --grey:#7A8A7A; --grey-mid:#9AA89A;
+  --ink:#1A1F1A; --ink-soft:#5C6B5C;
+  --font-display:'Barlow Condensed',sans-serif;
+  --font-body:'Barlow',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+html { scroll-behavior:smooth; }
+body { background:var(--base); color:var(--white); font-family:var(--font-body); font-size:16px; line-height:1.6; }
+img { max-width:100%; display:block; }
+a { color:inherit; text-decoration:none; }
+
+/* ── Nav ── */
+nav { background:var(--green-mid); border-bottom:2px solid var(--green-dim); padding:0 2.5rem; height:84px; display:flex; align-items:center; justify-content:space-between; }
+.nav-logo { display:flex; align-items:center; gap:1rem; }
+.nav-logo img { height:56px; }
+.nav-logo-text { font-family:var(--font-display); font-weight:800; font-size:1.05rem; letter-spacing:0.05em; text-transform:uppercase; color:#fff; line-height:1.2; }
+.nav-logo-text span { color:#a8e6a8; display:block; font-size:0.7rem; font-weight:600; letter-spacing:0.16em; }
+.nav-back { font-family:var(--font-display); font-size:0.85rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.7); display:flex; align-items:center; gap:0.5rem; transition:color 0.2s; }
+.nav-back:hover { color:#fff; }
+
+/* ── Hero ── */
+.campaign-hero {
+  min-height:70vh; position:relative; display:flex; flex-direction:column; justify-content:flex-end;
+  overflow:hidden;
+}
+.campaign-hero-bg { position:absolute; inset:0; background-size:cover; background-position:center; background-color:var(--surface); }
+.campaign-hero-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(10,18,10,0.97) 0%, rgba(10,18,10,0.5) 60%, rgba(10,18,10,0.2) 100%); }
+.campaign-hero-content { position:relative; z-index:2; max-width:1100px; margin:0 auto; padding:4rem 2rem; width:100%; }
+.campaign-status { display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; padding:0.3rem 0.8rem; border:1px solid var(--green-bright); color:var(--green-bright); margin-bottom:1.25rem; }
+.campaign-status.historical { border-color:var(--grey); color:var(--grey); }
+.campaign-hero h1 { font-family:var(--font-display); font-size:clamp(3rem,8vw,6.5rem); font-weight:900; text-transform:uppercase; line-height:0.92; color:var(--white-hi); max-width:900px; }
+
+/* ── Body ── */
+.campaign-body { max-width:1100px; margin:0 auto; padding:4rem 2rem; display:grid; grid-template-columns:2fr 1fr; gap:4rem; }
+.campaign-text { display:flex; flex-direction:column; gap:2rem; }
+.campaign-section-label { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-bright); margin-bottom:0.5rem; }
+.campaign-summary { font-size:1.15rem; color:var(--grey-mid); line-height:1.8; font-weight:500; }
+.campaign-body-text { font-size:1rem; color:var(--grey-mid); line-height:1.85; }
+.campaign-body-text p { margin-bottom:1.25rem; }
+.campaign-body-text p:last-child { margin-bottom:0; }
+
+/* Pull quote */
+.pull-quote { border-left:4px solid var(--green-bright); padding:1rem 1.5rem; margin:1.5rem 0; }
+.pull-quote p { font-family:var(--font-display); font-size:1.6rem; font-weight:700; color:var(--white-hi); line-height:1.25; font-style:italic; }
+
+/* Sidebar */
+.campaign-sidebar { display:flex; flex-direction:column; gap:2rem; }
+.sidebar-card { background:var(--surface); border:1px solid var(--border); padding:1.5rem; }
+.sidebar-card h3 { font-family:var(--font-display); font-size:1rem; font-weight:800; text-transform:uppercase; color:var(--white-hi); margin-bottom:1rem; letter-spacing:0.05em; }
+.sidebar-card p { font-size:0.88rem; color:var(--grey-mid); line-height:1.65; }
+.cta-btn { display:block; text-align:center; font-family:var(--font-display); font-size:0.9rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:0.9rem; background:var(--green); color:#fff; transition:background 0.2s; }
+.cta-btn:hover { background:var(--green-bright); }
+.cta-btn.outline { background:transparent; border:2px solid var(--border); color:var(--grey-mid); margin-top:0.5rem; }
+.cta-btn.outline:hover { border-color:var(--green); color:var(--green-bright); }
+
+/* ── Gallery ── */
+.campaign-gallery { background:var(--surface); padding:4rem 2rem; border-top:1px solid var(--border-dim); }
+.campaign-gallery .container { max-width:1100px; margin:0 auto; }
+.gallery-label { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-bright); margin-bottom:1.5rem; }
+.gallery-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:0.75rem; }
+.gallery-img { width:100%; aspect-ratio:16/9; object-fit:cover; filter:brightness(0.88) saturate(0.85); transition:filter 0.3s; cursor:pointer; }
+.gallery-img:hover { filter:brightness(1) saturate(1); }
+
+/* ── Videos ── */
+.campaign-videos { padding:4rem 2rem; border-top:1px solid var(--border-dim); }
+.campaign-videos .container { max-width:1100px; margin:0 auto; }
+.section-label { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-bright); margin-bottom:1.5rem; }
+.videos-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(420px,1fr)); gap:2rem; }
+.video-item h4 { font-family:var(--font-display); font-size:1rem; font-weight:700; text-transform:uppercase; color:var(--white-hi); margin-bottom:0.75rem; }
+.embed-wrap { position:relative; padding-bottom:56.25%; height:0; overflow:hidden; background:var(--surface); }
+.embed-wrap iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
+
+/* ── Footer strip ── */
+.page-footer { background:var(--green-mid); border-top:2px solid var(--green-dim); padding:2rem 2.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+.page-footer img { height:44px; }
+.page-footer-text { font-family:var(--font-mono); font-size:0.62rem; color:rgba(255,255,255,0.4); letter-spacing:0.08em; }
+
+/* ── Loading ── */
+.loading-state { display:flex; align-items:center; justify-content:center; min-height:50vh; font-family:var(--font-mono); font-size:0.75rem; color:var(--grey); letter-spacing:0.15em; text-transform:uppercase; }
+
+@media(max-width:768px) {
+  .campaign-body { grid-template-columns:1fr; gap:2rem; }
+  .videos-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img src="/aro-logo.png" alt="ARO">
+    <div class="nav-logo-text">African Reclaimers Organisation<span>Reclaiming The Future</span></div>
+  </div>
+  <a href="/" class="nav-back"><i class="fa-solid fa-arrow-left"></i> Back to site</a>
+</nav>
+
+<div id="content"><div class="loading-state">Loading campaign…</div></div>
+
+<footer class="page-footer">
+  <img src="/aro-logo.png" alt="ARO">
+  <div class="page-footer-text">© 2026 African Reclaimers Organisation</div>
+</footer>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const app = initializeApp({
+  apiKey:"AIzaSyDGPVYiQa5_s_zNqMwfSk3eSKULRpxf20g",
+  authDomain:"aro-website-be081.firebaseapp.com",
+  projectId:"aro-website-be081",
+  storageBucket:"aro-website-be081.firebasestorage.app",
+  messagingSenderId:"434573758758",
+  appId:"1:434573758758:web:6dae0903f50ad8a852b1e7"
+});
+const db = getFirestore(app);
+
+function embedSrc(url) {
+  if (!url) return null;
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  if (yt) return `https://www.youtube.com/embed/${yt[1]}`;
+  const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vm) return `https://player.vimeo.com/video/${vm[1]}`;
+  return null;
+}
+
+function renderBody(text) {
+  if (!text) return '';
+  return text.split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('');
+}
+
+async function init() {
+  const id = new URLSearchParams(location.search).get('id');
+  if (!id) { document.getElementById('content').innerHTML = '<div class="loading-state">Campaign not found.</div>'; return; }
+
+  const snap = await getDoc(doc(db, 'campaigns', id));
+  if (!snap.exists()) { document.getElementById('content').innerHTML = '<div class="loading-state">Campaign not found.</div>'; return; }
+  const c = { id: snap.id, ...snap.data() };
+
+  document.title = `${c.title} — ARO`;
+
+  const images = c.images || [];
+  const videos = c.videos || [];
+
+  document.getElementById('content').innerHTML = `
+    <section class="campaign-hero">
+      <div class="campaign-hero-bg" ${c.image ? `style="background-image:url('${c.image}')"` : ''}></div>
+      <div class="campaign-hero-content">
+        <div class="campaign-status ${c.status === 'historical' ? 'historical' : ''}">
+          <i class="fa-solid fa-circle" style="font-size:0.5rem"></i>
+          ${c.status === 'current' ? 'Current Campaign' : 'Historical Campaign'}
+        </div>
+        <h1>${c.title}</h1>
+      </div>
+    </section>
+
+    <div class="campaign-body">
+      <div class="campaign-text">
+        <div>
+          <div class="campaign-section-label">The Campaign</div>
+          <p class="campaign-summary">${c.summary || ''}</p>
+        </div>
+        ${c.body ? `
+        <div>
+          <div class="campaign-section-label">Background</div>
+          <div class="campaign-body-text">${renderBody(c.body)}</div>
+        </div>` : ''}
+      </div>
+      <div class="campaign-sidebar">
+        <div class="sidebar-card">
+          <h3>Get Involved</h3>
+          <p>ARO campaigns only succeed when people stand together. Find out how you can support this campaign.</p>
+          <a href="/#contact" class="cta-btn" style="margin-top:1rem">Contact ARO</a>
+          <a href="/" class="cta-btn outline">See All Campaigns</a>
+        </div>
+        <div class="sidebar-card">
+          <h3>Status</h3>
+          <p style="font-family:var(--font-mono);font-size:0.75rem;color:${c.status === 'current' ? 'var(--green-bright)' : 'var(--grey)'}">
+            <i class="fa-solid fa-circle" style="font-size:0.5rem;margin-right:0.4rem"></i>
+            ${c.status === 'current' ? 'This campaign is currently active' : 'This campaign has been completed'}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    ${images.length ? `
+    <div class="campaign-gallery">
+      <div class="container">
+        <div class="gallery-label"><i class="fa-solid fa-images"></i> Campaign Photography</div>
+        <div class="gallery-grid">
+          ${images.map(img => `<img class="gallery-img" src="${img}" alt="Campaign image" loading="lazy">`).join('')}
+        </div>
+      </div>
+    </div>` : ''}
+
+    ${videos.length ? `
+    <div class="campaign-videos">
+      <div class="container">
+        <div class="section-label"><i class="fa-solid fa-film"></i> Campaign Videos</div>
+        <div class="videos-grid">
+          ${videos.map(v => {
+            const src = embedSrc(v.url);
+            return src ? `<div class="video-item">
+              ${v.title ? `<h4>${v.title}</h4>` : ''}
+              <div class="embed-wrap"><iframe src="${src}" allowfullscreen loading="lazy"></iframe></div>
+            </div>` : '';
+          }).join('')}
+        </div>
+      </div>
+    </div>` : ''}
+  `;
+}
+
+init();
+</script>
+</body>
+</html>

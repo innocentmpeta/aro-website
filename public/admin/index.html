@@ -204,7 +204,7 @@ textarea { resize:vertical; min-height:90px; }
 <div id="appShell">
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <img src="/aro-logo.png" alt="ARO">
+      <img src="images/aro-logo.png" alt="ARO">
       <div class="logo-text-wrap">
         <div class="logo-title">ARO Content Manager</div>
         <div class="logo-sub">African Reclaimers</div>
@@ -671,6 +671,7 @@ window.saveSiteInfo = async function() {
 window.openModal = function(collection, editId) {
   modalCtx = { collection, editId };
   const item = editId ? (DATA[collection]||[]).find(i => i.id===editId) : null;
+  window._editingItem = item || {};
   document.getElementById('modal-title').textContent = (item?'Edit':'Add') + ' — ' + collection.charAt(0).toUpperCase()+collection.slice(1);
   document.getElementById('modal-body').innerHTML = buildForm(collection, item);
   document.getElementById('modal').classList.add('open');
@@ -679,41 +680,55 @@ window.closeModal = function() { document.getElementById('modal').classList.remo
 
 function buildForm(col, item) {
   const v = (k, def='') => item ? (item[k]||def) : def;
+  const bodyHint = `<p style="font-family:var(--font-m);font-size:0.6rem;color:var(--ink-ghost);margin-top:0.3rem">Each paragraph on a new line. For news articles, wrap text in ||like this|| to create a pull quote.</p>`;
+  const imgHint  = `<p style="font-family:var(--font-m);font-size:0.6rem;color:var(--ink-ghost);margin-top:0.3rem">Additional gallery images — upload one at a time. Each upload adds to the gallery on the detail page.</p>`;
+
   if (col==='campaigns') return `
     <div class="form-group"><label>Campaign Title</label><input type="text" id="f-title" value="${v('title')}" placeholder="Campaign name"></div>
     <div class="form-group"><label>Status</label><select id="f-status"><option value="current" ${v('status')==='current'?'selected':''}>Current</option><option value="historical" ${v('status')==='historical'?'selected':''}>Historical</option></select></div>
-    <div class="form-group full"><label>Summary</label><textarea id="f-summary" rows="4">${v('summary')}</textarea></div>
-    <div class="form-group full"><label>Campaign Image</label>${makeUploadField('main', v('image'), 'campaigns')}`;
+    <div class="form-group full"><label>Summary (shown on homepage card)</label><textarea id="f-summary" rows="3">${v('summary')}</textarea></div>
+    <div class="form-group full"><label>Full Body Text (shown on detail page)</label><textarea id="f-body" rows="6">${v('body')}</textarea>${bodyHint}</div>
+    <div class="form-group full"><label>Hero Image</label>${makeUploadField('main', v('image'), 'campaigns')}
+    <div class="form-group full" style="margin-top:0.75rem"><label>Additional Gallery Images</label>${makeUploadField('gallery', '', 'campaigns/gallery')}${imgHint}</div>`;
 
   if (col==='programmes') return `
     <div class="form-group full"><label>Programme Title</label><input type="text" id="f-title" value="${v('title')}"></div>
-    <div class="form-group full"><label>Summary</label><textarea id="f-summary" rows="4">${v('summary')}</textarea></div>
-    <div class="form-group full"><label>Image</label>${makeUploadField('main', v('image'), 'programmes')}`;
+    <div class="form-group full"><label>Summary (shown on homepage card)</label><textarea id="f-summary" rows="3">${v('summary')}</textarea></div>
+    <div class="form-group full"><label>Full Body Text (shown on detail page)</label><textarea id="f-body" rows="6">${v('body')}</textarea>${bodyHint}</div>
+    <div class="form-group full"><label>Hero Image</label>${makeUploadField('main', v('image'), 'programmes')}
+    <div class="form-group full" style="margin-top:0.75rem"><label>Additional Gallery Images</label>${makeUploadField('gallery', '', 'programmes/gallery')}${imgHint}</div>`;
 
   if (col==='policy') return `
     <div class="form-group full"><label>Policy Area / Title</label><input type="text" id="f-title" value="${v('title')}"></div>
-    <div class="form-group full"><label>Summary</label><textarea id="f-summary" rows="4">${v('summary')}</textarea></div>
-    <div class="form-group full"><label>Image</label>${makeUploadField('main', v('image'), 'policy')}`;
+    <div class="form-group full"><label>Summary (shown on homepage card)</label><textarea id="f-summary" rows="3">${v('summary')}</textarea></div>
+    <div class="form-group full"><label>Full Body Text (shown on detail page)</label><textarea id="f-body" rows="6">${v('body')}</textarea>${bodyHint}</div>
+    <div class="form-group full"><label>Hero Image</label>${makeUploadField('main', v('image'), 'policy')}
+    <div class="form-group full" style="margin-top:0.75rem"><label>Additional Gallery Images</label>${makeUploadField('gallery', '', 'policy/gallery')}${imgHint}</div>`;
 
   if (col==='international') return `
     <div class="form-group full"><label>Title</label><input type="text" id="f-title" value="${v('title')}"></div>
-    <div class="form-group full"><label>Summary</label><textarea id="f-summary" rows="4">${v('summary')}</textarea></div>
-    <div class="form-group full"><label>Image</label>${makeUploadField('main', v('image'), 'international')}`;
+    <div class="form-group full"><label>Summary (shown on homepage card)</label><textarea id="f-summary" rows="3">${v('summary')}</textarea></div>
+    <div class="form-group full"><label>Full Body Text (shown on detail page)</label><textarea id="f-body" rows="6">${v('body')}</textarea>${bodyHint}</div>
+    <div class="form-group full"><label>Hero Image</label>${makeUploadField('main', v('image'), 'international')}
+    <div class="form-group full" style="margin-top:0.75rem"><label>Additional Gallery Images</label>${makeUploadField('gallery', '', 'international/gallery')}${imgHint}</div>`;
 
   if (col==='films') return `
     <div class="form-group full"><label>Film / Video Title</label><input type="text" id="f-title" value="${v('title')}"></div>
     <div class="form-group"><label>Type</label><select id="f-type"><option value="documentary" ${v('type')==='documentary'?'selected':''}>Documentary</option><option value="animation" ${v('type')==='animation'?'selected':''}>Animation / Explainer</option><option value="campaign" ${v('type')==='campaign'?'selected':''}>Campaign Video</option><option value="other">Other</option></select></div>
     <div class="form-group"><label>Year</label><input type="text" id="f-year" value="${v('year')}"></div>
-    <div class="form-group full"><label>YouTube or Vimeo URL</label><input type="url" id="f-embed" value="${v('embed')}" placeholder="https://youtu.be/..."></div>
-    <div class="form-group full"><label>Description</label><textarea id="f-description" rows="3">${v('description')}</textarea></div>
-    <div class="form-group full"><label>Production Credit</label><input type="text" id="f-credit" value="${v('credit')}">`;
+    <div class="form-group full"><label>Main Film URL (YouTube or Vimeo)</label><input type="url" id="f-embed" value="${v('embed')}" placeholder="https://youtu.be/..."></div>
+    <div class="form-group full"><label>Trailer URL (YouTube or Vimeo — optional)</label><input type="url" id="f-trailer" value="${v('trailer')}" placeholder="https://youtu.be/..."></div>
+    <div class="form-group full"><label>Short Description (homepage)</label><textarea id="f-description" rows="3">${v('description')}</textarea></div>
+    <div class="form-group full"><label>Full Body Text (detail page)</label><textarea id="f-body" rows="5">${v('body')}</textarea>${bodyHint}</div>
+    <div class="form-group full"><label>Production Credit</label><input type="text" id="f-credit" value="${v('credit')}">
+    <div class="form-group full" style="margin-top:0.75rem"><label>Production Stills (Gallery)</label>${makeUploadField('gallery', '', 'films/stills')}${imgHint}</div>`;
 
   if (col==='news') return `
     <div class="form-group full"><label>Headline</label><input type="text" id="f-title" value="${v('title')}"></div>
     <div class="form-group"><label>Category</label><select id="f-category">${['Campaigns','Programmes','Policy','International','General'].map(c=>`<option value="${c}" ${v('category')===c?'selected':''}>${c}</option>`).join('')}</select></div>
     <div class="form-group"><label>Date</label><input type="date" id="f-date" value="${v('date')}"></div>
-    <div class="form-group full"><label>Article Body</label><textarea id="f-body" rows="8">${v('body')}</textarea></div>
-    <div class="form-group full"><label>Article Image</label>${makeUploadField('main', v('image'), 'news')}
+    <div class="form-group full"><label>Article Body</label><textarea id="f-body" rows="10">${v('body')}</textarea>${bodyHint}</div>
+    <div class="form-group full"><label>Hero Image</label>${makeUploadField('main', v('image'), 'news')}
     <div class="form-group full" style="margin-top:0.5rem"><label class="toggle"><input type="checkbox" id="f-published" ${v('published')?'checked':''}><div class="toggle-track"><div class="toggle-thumb"></div></div><span style="font-family:var(--font-m);font-size:0.7rem;color:var(--ink-soft);margin-left:0.3rem">Published</span></label></div>`;
 
   if (col==='reclaimers') return `
@@ -721,8 +736,9 @@ function buildForm(col, item) {
     <div class="form-group"><label>Role in ARO</label><input type="text" id="f-role" value="${v('role')}"></div>
     <div class="form-group"><label>Area / Depot</label><input type="text" id="f-area" value="${v('area')}"></div>
     <div class="form-group full"><label>Quote</label><input type="text" id="f-quote" value="${v('quote')}"></div>
-    <div class="form-group full"><label>Biography</label><textarea id="f-bio" rows="4">${v('bio')}</textarea></div>
-    <div class="form-group full"><label>Portrait Photo</label>${makeUploadField('main', v('image'), 'reclaimers')}`;
+    <div class="form-group full"><label>Biography</label><textarea id="f-bio" rows="5">${v('bio')}</textarea>${bodyHint}</div>
+    <div class="form-group full"><label>Portrait Photo</label>${makeUploadField('main', v('image'), 'reclaimers')}
+    <div class="form-group full" style="margin-top:0.75rem"><label>Additional Photos (Gallery)</label>${makeUploadField('gallery', '', 'reclaimers/gallery')}${imgHint}</div>`;
 
   if (col==='partners') return `
     <div class="form-group full"><label>Organisation Name</label><input type="text" id="f-name" value="${v('name')}"></div>
@@ -735,13 +751,24 @@ function buildForm(col, item) {
 function collectForm(col) {
   const g = id => { const el=document.getElementById(id); return el?el.value:''; };
   const img = document.getElementById('imgurl-main') ? document.getElementById('imgurl-main').value : '';
-  if (col==='campaigns')    return { title:g('f-title'), status:g('f-status'), summary:g('f-summary'), image:img };
-  if (col==='programmes')   return { title:g('f-title'), summary:g('f-summary'), image:img };
-  if (col==='policy')       return { title:g('f-title'), summary:g('f-summary'), image:img };
-  if (col==='international')return { title:g('f-title'), summary:g('f-summary'), image:img };
-  if (col==='films')        return { title:g('f-title'), type:g('f-type'), year:g('f-year'), embed:g('f-embed'), description:g('f-description'), credit:g('f-credit') };
-  if (col==='news')         return { title:g('f-title'), category:g('f-category'), date:g('f-date'), body:g('f-body'), image:img, published:document.getElementById('f-published')?.checked||false };
-  if (col==='reclaimers')   return { name:g('f-name'), role:g('f-role'), area:g('f-area'), quote:g('f-quote'), bio:g('f-bio'), image:img };
+  // Gallery image — appended to existing images array
+  const galleryImg = document.getElementById('imgurl-gallery') ? document.getElementById('imgurl-gallery').value : '';
+
+  function mergeImages(existing, newImg) {
+    if (!newImg) return existing || [];
+    const arr = existing || [];
+    return arr.includes(newImg) ? arr : [...arr, newImg];
+  }
+
+  const existing = window._editingItem || {};
+
+  if (col==='campaigns')    return { title:g('f-title'), status:g('f-status'), summary:g('f-summary'), body:g('f-body'), image:img||existing.image||'', images:mergeImages(existing.images, galleryImg) };
+  if (col==='programmes')   return { title:g('f-title'), summary:g('f-summary'), body:g('f-body'), image:img||existing.image||'', images:mergeImages(existing.images, galleryImg) };
+  if (col==='policy')       return { title:g('f-title'), summary:g('f-summary'), body:g('f-body'), image:img||existing.image||'', images:mergeImages(existing.images, galleryImg) };
+  if (col==='international')return { title:g('f-title'), summary:g('f-summary'), body:g('f-body'), image:img||existing.image||'', images:mergeImages(existing.images, galleryImg) };
+  if (col==='films')        return { title:g('f-title'), type:g('f-type'), year:g('f-year'), embed:g('f-embed'), trailer:g('f-trailer'), description:g('f-description'), body:g('f-body'), credit:g('f-credit'), images:mergeImages(existing.images, galleryImg) };
+  if (col==='news')         return { title:g('f-title'), category:g('f-category'), date:g('f-date'), body:g('f-body'), image:img||existing.image||'', published:document.getElementById('f-published')?.checked||false };
+  if (col==='reclaimers')   return { name:g('f-name'), role:g('f-role'), area:g('f-area'), quote:g('f-quote'), bio:g('f-bio'), image:img||existing.image||'', images:mergeImages(existing.images, galleryImg) };
   if (col==='partners')     return { name:g('f-name'), url:g('f-url'), logo:img };
 }
 

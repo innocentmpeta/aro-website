@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reclaimer Profile — African Reclaimers Organisation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --base:#111810; --surface:#161d16; --border:#263026; --border-dim:#1c221c;
+  --green:#2A7A2A; --green-mid:#3A6E3A; --green-bright:#3DAA3D; --green-dim:#1A4D1A;
+  --white-base:#F2F5F2; --white-surface:#FFFFFF; --white-border:#DDE8DD;
+  --ink:#1A1F1A; --ink-soft:#5C6B5C;
+  --grey:#7A8A7A; --grey-mid:#9AA89A; --white-hi:#F4F7F4; --white:#E8EDE8;
+  --font-display:'Barlow Condensed',sans-serif;
+  --font-body:'Barlow',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+html { scroll-behavior:smooth; }
+body { background:var(--white-base); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.6; }
+img { max-width:100%; display:block; }
+a { color:inherit; text-decoration:none; }
+
+nav { background:var(--green-mid); border-bottom:2px solid var(--green-dim); padding:0 2.5rem; height:84px; display:flex; align-items:center; justify-content:space-between; }
+.nav-logo { display:flex; align-items:center; gap:1rem; }
+.nav-logo img { height:56px; }
+.nav-logo-text { font-family:var(--font-display); font-weight:800; font-size:1.05rem; letter-spacing:0.05em; text-transform:uppercase; color:#fff; line-height:1.2; }
+.nav-logo-text span { color:#a8e6a8; display:block; font-size:0.7rem; font-weight:600; letter-spacing:0.16em; }
+.nav-back { font-family:var(--font-display); font-size:0.85rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.7); display:flex; align-items:center; gap:0.5rem; transition:color 0.2s; }
+.nav-back:hover { color:#fff; }
+
+/* ── Profile hero — split layout ── */
+.profile-hero { background:var(--base); min-height:60vh; display:grid; grid-template-columns:1fr 1fr; }
+
+.profile-portrait { position:relative; overflow:hidden; min-height:480px; }
+.profile-portrait img { width:100%; height:100%; object-fit:cover; object-position:top; filter:brightness(0.85) saturate(0.9); }
+.profile-portrait-placeholder { width:100%; height:100%; min-height:480px; background:linear-gradient(135deg,var(--surface) 0%,var(--base) 100%); display:flex; align-items:center; justify-content:center; }
+.portrait-initials { font-family:var(--font-display); font-size:8rem; font-weight:900; color:var(--green-dim); }
+.portrait-overlay { position:absolute; inset:0; background:linear-gradient(to right, transparent 60%, var(--base) 100%); }
+
+.profile-hero-text { padding:4rem 3rem 4rem 2rem; display:flex; flex-direction:column; justify-content:center; gap:1.5rem; }
+.profile-eyebrow { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-bright); }
+.profile-name { font-family:var(--font-display); font-size:clamp(3rem,6vw,5rem); font-weight:900; text-transform:uppercase; line-height:0.92; color:var(--white-hi); }
+.profile-role { font-family:var(--font-display); font-size:1.1rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--green-bright); }
+.profile-area { font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--grey); display:flex; align-items:center; gap:0.4rem; }
+.profile-quote { font-family:var(--font-display); font-size:1.4rem; font-weight:700; font-style:italic; color:var(--white-hi); line-height:1.3; border-left:3px solid var(--green-bright); padding-left:1rem; max-width:500px; }
+
+/* ── Bio section ── */
+.profile-bio { background:var(--white-surface); padding:5rem 2rem; border-bottom:1px solid var(--white-border); }
+.profile-bio-inner { max-width:900px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr; gap:4rem; align-items:start; }
+.bio-label { font-family:var(--font-mono); font-size:0.63rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green); margin-bottom:1rem; }
+.bio-text { font-size:1.05rem; color:var(--ink-soft); line-height:1.9; }
+.bio-text p { margin-bottom:1.25rem; }
+.bio-text p:last-child { margin-bottom:0; }
+
+/* Stat pills */
+.profile-stats { display:flex; flex-direction:column; gap:1rem; }
+.stat-pill { background:var(--white-base); border:1px solid var(--white-border); border-left:3px solid var(--green); padding:1rem 1.25rem; }
+.stat-pill-label { font-family:var(--font-mono); font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:0.25rem; }
+.stat-pill-value { font-family:var(--font-display); font-size:1.1rem; font-weight:800; text-transform:uppercase; color:var(--ink); }
+
+/* ── Quote band ── */
+.quote-band { background:var(--green); padding:4rem 2rem; text-align:center; }
+.quote-band blockquote { font-family:var(--font-display); font-size:clamp(1.8rem,4vw,3rem); font-weight:900; font-style:italic; color:#fff; line-height:1.2; max-width:800px; margin:0 auto; }
+.quote-band cite { display:block; font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-top:1.5rem; font-style:normal; }
+
+/* ── Gallery ── */
+.profile-gallery { padding:4rem 2rem; background:var(--white-base); border-bottom:1px solid var(--white-border); }
+.profile-gallery-inner { max-width:1100px; margin:0 auto; }
+.gallery-label { font-family:var(--font-mono); font-size:0.63rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green); margin-bottom:1.5rem; display:flex; align-items:center; gap:0.5rem; }
+.gallery-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:0.75rem; }
+.gallery-img { width:100%; aspect-ratio:3/4; object-fit:cover; filter:brightness(0.92) saturate(0.88); transition:filter 0.3s; cursor:pointer; }
+.gallery-img:hover { filter:brightness(1) saturate(1); }
+
+/* ── Footer ── */
+.page-footer { background:var(--green-mid); border-top:2px solid var(--green-dim); padding:2rem 2.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+.page-footer img { height:44px; }
+.page-footer-text { font-family:var(--font-mono); font-size:0.62rem; color:rgba(255,255,255,0.4); letter-spacing:0.08em; }
+
+.loading-state { display:flex; align-items:center; justify-content:center; min-height:50vh; font-family:var(--font-mono); font-size:0.75rem; color:var(--grey); letter-spacing:0.15em; text-transform:uppercase; }
+
+@media(max-width:768px) {
+  .profile-hero { grid-template-columns:1fr; }
+  .profile-portrait { min-height:350px; }
+  .portrait-overlay { background:linear-gradient(to bottom, transparent 50%, var(--base) 100%); }
+  .profile-bio-inner { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img src="/aro-logo.png" alt="ARO">
+    <div class="nav-logo-text">African Reclaimers Organisation<span>Reclaiming The Future</span></div>
+  </div>
+  <a href="/#reclaimers" class="nav-back"><i class="fa-solid fa-arrow-left"></i> The Reclaimers</a>
+</nav>
+
+<div id="content"><div class="loading-state">Loading profile…</div></div>
+
+<footer class="page-footer">
+  <img src="/aro-logo.png" alt="ARO">
+  <div class="page-footer-text">© 2026 African Reclaimers Organisation</div>
+</footer>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const app = initializeApp({
+  apiKey:"AIzaSyDGPVYiQa5_s_zNqMwfSk3eSKULRpxf20g",
+  authDomain:"aro-website-be081.firebaseapp.com",
+  projectId:"aro-website-be081",
+  storageBucket:"aro-website-be081.firebasestorage.app",
+  messagingSenderId:"434573758758",
+  appId:"1:434573758758:web:6dae0903f50ad8a852b1e7"
+});
+const db = getFirestore(app);
+
+function initials(name) {
+  return (name||'').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+}
+
+function renderBio(text) {
+  if (!text) return '';
+  return text.split('\n').filter(p=>p.trim()).map(p=>`<p>${p}</p>`).join('');
+}
+
+async function init() {
+  const id = new URLSearchParams(location.search).get('id');
+  if (!id) { document.getElementById('content').innerHTML = '<div class="loading-state">Profile not found.</div>'; return; }
+  const snap = await getDoc(doc(db, 'reclaimers', id));
+  if (!snap.exists()) { document.getElementById('content').innerHTML = '<div class="loading-state">Profile not found.</div>'; return; }
+  const r = { id: snap.id, ...snap.data() };
+  document.title = `${r.name} — ARO Reclaimers`;
+
+  const images = r.images || [];
+
+  document.getElementById('content').innerHTML = `
+    <div class="profile-hero">
+      <div class="profile-portrait">
+        ${r.image
+          ? `<img src="${r.image}" alt="${r.name}"><div class="portrait-overlay"></div>`
+          : `<div class="profile-portrait-placeholder"><span class="portrait-initials">${initials(r.name)}</span></div>`}
+      </div>
+      <div class="profile-hero-text">
+        <div class="profile-eyebrow"><i class="fa-solid fa-recycle"></i> ARO Member</div>
+        <h1 class="profile-name">${r.name}</h1>
+        ${r.role ? `<div class="profile-role">${r.role}</div>` : ''}
+        ${r.area ? `<div class="profile-area"><i class="fa-solid fa-location-dot"></i> ${r.area}</div>` : ''}
+        ${r.quote ? `<div class="profile-quote">${r.quote}</div>` : ''}
+      </div>
+    </div>
+
+    ${r.quote ? `
+    <div class="quote-band">
+      <blockquote>"${r.quote}"</blockquote>
+      <cite>— ${r.name}${r.role ? ', ' + r.role : ''}</cite>
+    </div>` : ''}
+
+    <div class="profile-bio">
+      <div class="profile-bio-inner">
+        <div>
+          <div class="bio-label"><i class="fa-solid fa-user"></i> About ${r.name.split(' ')[0]}</div>
+          <div class="bio-text">${renderBio(r.bio)}</div>
+        </div>
+        <div class="profile-stats">
+          ${r.role ? `<div class="stat-pill"><div class="stat-pill-label">Role in ARO</div><div class="stat-pill-value">${r.role}</div></div>` : ''}
+          ${r.area ? `<div class="stat-pill"><div class="stat-pill-label">Operating Area</div><div class="stat-pill-value">${r.area}</div></div>` : ''}
+          <div class="stat-pill"><div class="stat-pill-label">Organisation</div><div class="stat-pill-value">African Reclaimers Organisation</div></div>
+        </div>
+      </div>
+    </div>
+
+    ${images.length ? `
+    <div class="profile-gallery">
+      <div class="profile-gallery-inner">
+        <div class="gallery-label"><i class="fa-solid fa-images"></i> Photography</div>
+        <div class="gallery-grid">
+          ${images.map(img => `<img class="gallery-img" src="${img}" alt="${r.name}" loading="lazy">`).join('')}
+        </div>
+      </div>
+    </div>` : ''}
+  `;
+}
+
+init();
+</script>
+</body>
+</html>

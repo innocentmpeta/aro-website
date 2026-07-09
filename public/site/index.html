@@ -446,56 +446,53 @@ async function init() {
       `<div class="stat-item"><div class="stat-value">${s.value}</div><div class="stat-label">${s.label}</div></div>`
     ).join('');
 
-    // Dark card renderer
-    function darkCards(id, items, tagFn) {
+    // Dark card renderer — links to detail page
+    function darkCards(id, items, tagFn, pageUrl, colParam) {
       const el = document.getElementById(id);
       if (!items.length) { el.innerHTML = '<div class="empty-state">Content coming soon</div>'; return; }
       el.innerHTML = items.map(item => `
-        <div class="card">
+        <a class="card" href="${pageUrl}?id=${item.id}${colParam ? '&col='+colParam : ''}" style="cursor:pointer">
           ${cardImg(item.image, item.title)}
           <div class="card-body">
             <span class="card-tag">${tagFn(item)}</span>
             <h3>${item.title}</h3>
             <p>${item.summary||''}</p>
-            ${renderVideos(item.videos, false)}
           </div>
-        </div>`).join('');
+        </a>`).join('');
     }
 
-    // White card renderer
-    function whiteCards(id, items, tagFn) {
+    // White card renderer — links to detail page
+    function whiteCards(id, items, tagFn, pageUrl, colParam) {
       const el = document.getElementById(id);
       if (!items.length) { el.innerHTML = '<div class="empty-state">Content coming soon</div>'; return; }
       el.innerHTML = items.map(item => `
-        <div class="card-w">
+        <a class="card-w" href="${pageUrl}?id=${item.id}${colParam ? '&col='+colParam : ''}" style="cursor:pointer">
           ${cardImg(item.image, item.title)}
           <div class="card-w-body">
             <span class="card-w-tag">${tagFn(item)}</span>
             <h3>${item.title}</h3>
             <p>${item.summary||''}</p>
-            ${renderVideos(item.videos, true)}
           </div>
-        </div>`).join('');
+        </a>`).join('');
     }
 
-    darkCards('campaignsGrid',     campaigns,    c => c.status==='current' ? 'Current Campaign' : 'Historical Campaign');
-    whiteCards('programmesGrid',   programmes,   () => 'Programme');
-    darkCards('policyGrid',        policy,       () => 'Policy Engagement');
-    whiteCards('internationalGrid',international,() => 'International Work');
+    darkCards('campaignsGrid',     campaigns,    c => c.status==='current' ? 'Current Campaign' : 'Historical Campaign', '/pages/campaign.html');
+    whiteCards('programmesGrid',   programmes,   () => 'Programme',         '/pages/showcase.html', 'programmes');
+    darkCards('policyGrid',        policy,       () => 'Policy Engagement', '/pages/showcase.html', 'policy');
+    whiteCards('internationalGrid',international,() => 'International Work', '/pages/showcase.html', 'international');
 
     // Films
     const filmsEl = document.getElementById('filmsGrid');
     if (!films.length) { filmsEl.innerHTML = '<div class="empty-state">Films coming soon</div>'; }
     else { filmsEl.innerHTML = films.map(f => {
-      const src = embedSrc(f.embed);
-      return `<div class="film-card">
-        <div class="film-embed-wrap">${src ? `<iframe src="${src}" allowfullscreen loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0"></iframe>` : '<div class="film-placeholder">Video coming soon</div>'}</div>
+      return `<a class="film-card" href="/pages/film.html?id=${f.id}" style="cursor:pointer;text-decoration:none">
+        <div class="film-embed-wrap"><div class="film-placeholder"><i class="fa-solid fa-play" style="font-size:2rem;color:var(--green-bright);margin-bottom:0.5rem"></i><span>Watch Film</span></div></div>
         <div class="film-meta">
           <span class="film-type">${f.type||'Film'}${f.year?' · '+f.year:''}</span>
           <h3>${f.title}</h3>
           ${f.description?`<p>${f.description}</p>`:''}
           ${f.credit?`<span class="film-credit">Produced by ${f.credit}</span>`:''}
-        </div></div>`;
+        </div></a>`;
     }).join(''); }
 
     // News
@@ -503,26 +500,26 @@ async function init() {
     const published = news.filter(n=>n.published);
     if (!published.length) { newsEl.innerHTML = '<div class="empty-state">News coming soon</div>'; }
     else { newsEl.innerHTML = published.map(n => `
-      <div class="news-card">
+      <a class="news-card" href="/pages/news.html?id=${n.id}" style="cursor:pointer;text-decoration:none">
         ${n.image?`<img class="news-card-img" src="${n.image}" alt="${n.title}" loading="lazy">`:''}
         <div class="news-card-body">
           <span class="news-cat">${n.category||''}</span>
           <span class="news-date">${formatDate(n.date)}</span>
           <h3>${n.title}</h3>
           <p>${(n.body||'').substring(0,200)}${(n.body||'').length>200?'…':''}</p>
-        </div></div>`).join(''); }
+        </div></a>`).join(''); }
 
     // Reclaimers
     const rGrid = document.getElementById('reclaimersGrid');
     if (!reclaimers.length) { rGrid.innerHTML = '<div class="empty-state">Profiles coming soon</div>'; }
     else { rGrid.innerHTML = reclaimers.map(r => `
-      <div class="reclaimer-card">
+      <a class="reclaimer-card" href="/pages/reclaimer.html?id=${r.id}" style="cursor:pointer;text-decoration:none">
         <div class="reclaimer-img">${r.image?`<img src="${r.image}" alt="${r.name}" style="width:100%;height:100%;object-fit:cover">`:`<span class="reclaimer-img-placeholder">${initials(r.name)}</span>`}</div>
         ${r.quote?`<div class="reclaimer-quote">${r.quote}</div>`:''}
         <div class="reclaimer-name">${r.name}</div>
         <div class="reclaimer-role">${r.role||''}${r.area?' · '+r.area:''}</div>
         ${r.bio?`<p class="reclaimer-bio">${r.bio}</p>`:''}
-      </div>`).join(''); }
+      </a>`).join(''); }
 
     // Partners
     document.getElementById('partnersGrid').innerHTML = partners.map(p =>

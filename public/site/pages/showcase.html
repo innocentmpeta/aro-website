@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARO — Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --base:#111810; --surface:#161d16; --card-bg:#1a221a; --border:#263026; --border-dim:#1c221c;
+  --green:#2A7A2A; --green-mid:#3A6E3A; --green-bright:#3DAA3D; --green-dim:#1A4D1A;
+  --white:#E8EDE8; --white-hi:#F4F7F4; --grey:#7A8A7A; --grey-mid:#9AA89A;
+  --white-base:#F2F5F2; --white-surface:#FFFFFF; --white-border:#DDE8DD;
+  --ink:#1A1F1A; --ink-mid:#3A443A; --ink-soft:#5C6B5C;
+  --font-display:'Barlow Condensed',sans-serif;
+  --font-body:'Barlow',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+html { scroll-behavior:smooth; }
+body { background:var(--white-base); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.6; }
+img { max-width:100%; display:block; }
+a { color:inherit; text-decoration:none; }
+
+nav { background:var(--green-mid); border-bottom:2px solid var(--green-dim); padding:0 2.5rem; height:84px; display:flex; align-items:center; justify-content:space-between; }
+.nav-logo { display:flex; align-items:center; gap:1rem; }
+.nav-logo img { height:56px; }
+.nav-logo-text { font-family:var(--font-display); font-weight:800; font-size:1.05rem; letter-spacing:0.05em; text-transform:uppercase; color:#fff; line-height:1.2; }
+.nav-logo-text span { color:#a8e6a8; display:block; font-size:0.7rem; font-weight:600; letter-spacing:0.16em; }
+.nav-back { font-family:var(--font-display); font-size:0.85rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.7); display:flex; align-items:center; gap:0.5rem; transition:color 0.2s; }
+.nav-back:hover { color:#fff; }
+
+/* ── Hero — white with image offset ── */
+.showcase-hero { background:var(--white-surface); border-bottom:1px solid var(--white-border); }
+.showcase-hero-inner { max-width:1100px; margin:0 auto; padding:4rem 2rem; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+.showcase-hero-text { display:flex; flex-direction:column; gap:1.25rem; }
+.showcase-type { font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green); }
+.showcase-hero h1 { font-family:var(--font-display); font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; text-transform:uppercase; line-height:0.95; color:var(--ink); }
+.showcase-hero-summary { font-size:1.1rem; color:var(--ink-soft); line-height:1.8; }
+.showcase-hero-img { width:100%; aspect-ratio:4/3; object-fit:cover; }
+.showcase-hero-img-placeholder { width:100%; aspect-ratio:4/3; background:linear-gradient(135deg,#e0ece0 0%,#f0f5f0 100%); display:flex; align-items:center; justify-content:center; color:#aab8aa; font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.1em; }
+
+/* ── Body ── */
+.showcase-body { max-width:1100px; margin:0 auto; padding:4rem 2rem; display:grid; grid-template-columns:2fr 1fr; gap:4rem; }
+.showcase-main { display:flex; flex-direction:column; gap:3rem; }
+
+/* Body text */
+.body-section h2 { font-family:var(--font-display); font-size:1.75rem; font-weight:800; text-transform:uppercase; color:var(--ink); margin-bottom:1rem; }
+.body-text { font-size:1rem; color:var(--ink-soft); line-height:1.85; }
+.body-text p { margin-bottom:1.25rem; }
+.body-text p:last-child { margin-bottom:0; }
+
+/* Key outcomes */
+.outcomes-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.outcome-card { background:var(--white-surface); border:1px solid var(--white-border); border-left:3px solid var(--green); padding:1.25rem; }
+.outcome-card p { font-size:0.9rem; color:var(--ink-soft); line-height:1.65; }
+
+/* Gallery */
+.gallery-strip { overflow-x:auto; display:flex; gap:0.75rem; padding-bottom:0.5rem; scroll-snap-type:x mandatory; }
+.gallery-strip::-webkit-scrollbar { height:4px; }
+.gallery-strip::-webkit-scrollbar-track { background:var(--white-border); }
+.gallery-strip::-webkit-scrollbar-thumb { background:var(--green); }
+.gallery-thumb { flex-shrink:0; width:320px; aspect-ratio:16/9; object-fit:cover; scroll-snap-align:start; filter:brightness(0.93); transition:filter 0.3s; cursor:pointer; }
+.gallery-thumb:hover { filter:brightness(1); }
+
+/* Section label */
+.sec-label { font-family:var(--font-mono); font-size:0.63rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green); margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+
+/* Sidebar */
+.showcase-sidebar { display:flex; flex-direction:column; gap:1.5rem; }
+.info-card { background:var(--white-surface); border:1px solid var(--white-border); padding:1.5rem; }
+.info-card h3 { font-family:var(--font-display); font-size:0.95rem; font-weight:800; text-transform:uppercase; color:var(--ink); margin-bottom:0.75rem; letter-spacing:0.04em; }
+.info-card p { font-size:0.87rem; color:var(--ink-soft); line-height:1.65; }
+.cta-btn { display:block; text-align:center; font-family:var(--font-display); font-size:0.88rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:0.85rem; background:var(--green); color:#fff; transition:background 0.2s; margin-top:0.75rem; }
+.cta-btn:hover { background:var(--green-bright); }
+.cta-btn.outline { background:transparent; border:1px solid var(--white-border); color:var(--ink-soft); }
+.cta-btn.outline:hover { border-color:var(--green); color:var(--green); }
+
+/* ── Videos — dark band ── */
+.videos-band { background:var(--base); padding:4rem 2rem; margin-top:2rem; }
+.videos-band .container { max-width:1100px; margin:0 auto; }
+.videos-band .sec-label { color:var(--green-bright); }
+.videos-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(400px,1fr)); gap:2rem; margin-top:1.5rem; }
+.video-item h4 { font-family:var(--font-display); font-size:1rem; font-weight:700; text-transform:uppercase; color:var(--white-hi); margin-bottom:0.75rem; }
+.embed-wrap { position:relative; padding-bottom:56.25%; height:0; overflow:hidden; background:var(--surface); }
+.embed-wrap iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
+
+/* ── Footer ── */
+.page-footer { background:var(--green-mid); border-top:2px solid var(--green-dim); padding:2rem 2.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+.page-footer img { height:44px; }
+.page-footer-text { font-family:var(--font-mono); font-size:0.62rem; color:rgba(255,255,255,0.4); letter-spacing:0.08em; }
+
+.loading-state { display:flex; align-items:center; justify-content:center; min-height:50vh; font-family:var(--font-mono); font-size:0.75rem; color:var(--grey); letter-spacing:0.15em; text-transform:uppercase; }
+
+@media(max-width:768px) {
+  .showcase-hero-inner { grid-template-columns:1fr; }
+  .showcase-body { grid-template-columns:1fr; }
+  .outcomes-grid { grid-template-columns:1fr; }
+  .videos-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img src="/aro-logo.png" alt="ARO">
+    <div class="nav-logo-text">African Reclaimers Organisation<span>Reclaiming The Future</span></div>
+  </div>
+  <a class="nav-back" id="navBack" href="/"><i class="fa-solid fa-arrow-left"></i> Back</a>
+</nav>
+
+<div id="content"><div class="loading-state">Loading…</div></div>
+
+<footer class="page-footer">
+  <img src="/aro-logo.png" alt="ARO">
+  <div class="page-footer-text">© 2026 African Reclaimers Organisation</div>
+</footer>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const app = initializeApp({
+  apiKey:"AIzaSyDGPVYiQa5_s_zNqMwfSk3eSKULRpxf20g",
+  authDomain:"aro-website-be081.firebaseapp.com",
+  projectId:"aro-website-be081",
+  storageBucket:"aro-website-be081.firebasestorage.app",
+  messagingSenderId:"434573758758",
+  appId:"1:434573758758:web:6dae0903f50ad8a852b1e7"
+});
+const db = getFirestore(app);
+
+// Determine collection and section label from URL param
+const params = new URLSearchParams(location.search);
+const id  = params.get('id');
+const col = params.get('col') || 'programmes';
+
+const META = {
+  programmes:  { label:'Programme',        back:'/#programmes',  cta:'See All Programmes' },
+  policy:      { label:'Policy Engagement', back:'/#policy',      cta:'See All Policy Work' },
+  international:{ label:'International Work',back:'/#international',cta:'See All International Work' }
+};
+const meta = META[col] || META['programmes'];
+
+document.getElementById('navBack').href = meta.back;
+document.getElementById('navBack').innerHTML = `<i class="fa-solid fa-arrow-left"></i> ${meta.cta}`;
+
+function embedSrc(url) {
+  if (!url) return null;
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  if (yt) return `https://www.youtube.com/embed/${yt[1]}`;
+  const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vm) return `https://player.vimeo.com/video/${vm[1]}`;
+  return null;
+}
+
+function renderBody(text) {
+  if (!text) return '';
+  return text.split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('');
+}
+
+async function init() {
+  if (!id) { document.getElementById('content').innerHTML = '<div class="loading-state">Item not found.</div>'; return; }
+  const snap = await getDoc(doc(db, col, id));
+  if (!snap.exists()) { document.getElementById('content').innerHTML = '<div class="loading-state">Item not found.</div>'; return; }
+  const item = { id: snap.id, ...snap.data() };
+
+  document.title = `${item.title} — ARO`;
+  const images = item.images || [];
+  const videos = item.videos || [];
+
+  document.getElementById('content').innerHTML = `
+    <div class="showcase-hero">
+      <div class="showcase-hero-inner">
+        <div class="showcase-hero-text">
+          <div class="showcase-type"><i class="fa-solid fa-circle" style="font-size:0.45rem;margin-right:0.4rem"></i>${meta.label}</div>
+          <h1>${item.title}</h1>
+          <p class="showcase-hero-summary">${item.summary || ''}</p>
+        </div>
+        ${item.image
+          ? `<img class="showcase-hero-img" src="${item.image}" alt="${item.title}">`
+          : `<div class="showcase-hero-img-placeholder">Image coming soon</div>`}
+      </div>
+    </div>
+
+    <div class="showcase-body">
+      <div class="showcase-main">
+        ${item.body ? `
+        <div class="body-section">
+          <h2>About This ${meta.label}</h2>
+          <div class="body-text">${renderBody(item.body)}</div>
+        </div>` : ''}
+
+        ${images.length ? `
+        <div>
+          <div class="sec-label"><i class="fa-solid fa-images"></i> Photography</div>
+          <div class="gallery-strip">
+            ${images.map(img => `<img class="gallery-thumb" src="${img}" alt="" loading="lazy">`).join('')}
+          </div>
+        </div>` : ''}
+      </div>
+
+      <div class="showcase-sidebar">
+        <div class="info-card">
+          <h3>About ARO</h3>
+          <p>ARO is a democratic organisation representing over 6,000 reclaimers across South Africa, fighting for recognition, fair pay, and justice.</p>
+          <a href="/#contact" class="cta-btn">Get Involved</a>
+          <a href="/" class="cta-btn outline">${meta.cta}</a>
+        </div>
+      </div>
+    </div>
+
+    ${videos.length ? `
+    <div class="videos-band">
+      <div class="container">
+        <div class="sec-label"><i class="fa-solid fa-film"></i> Related Videos</div>
+        <div class="videos-grid">
+          ${videos.map(v => {
+            const src = embedSrc(v.url);
+            return src ? `<div class="video-item">
+              ${v.title ? `<h4>${v.title}</h4>` : ''}
+              <div class="embed-wrap"><iframe src="${src}" allowfullscreen loading="lazy"></iframe></div>
+            </div>` : '';
+          }).join('')}
+        </div>
+      </div>
+    </div>` : ''}
+  `;
+}
+
+init();
+</script>
+</body>
+</html>
