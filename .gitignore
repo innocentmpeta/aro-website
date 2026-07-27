@@ -1,4 +1,5 @@
 scripts/serviceAccount.json
+serviceAccount-aro.json
 node_modules/
 .env
 .vercel

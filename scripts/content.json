@@ -19,25 +19,58 @@
   "campaigns": [
     {
       "id": "c1",
-      "title": "Buy from Reclaimers",
-      "status": "current",
-      "summary": "When you need recyclable materials collected, contact ARO and buy from a reclaimer. This campaign challenges the practice of awarding recycling contracts to private companies at the expense of reclaimers who already do this work.",
-      "videos": [],
-      "image": ""
-    },
-    {
-      "id": "c2",
-      "title": "Separation at Source (S@S)",
+      "title": "Separation at Source",
       "status": "current",
       "summary": "ARO advocates for a model of Separation at Source that includes and pays reclaimers, rather than one that uses private companies to displace them.",
       "videos": [],
       "image": ""
     },
     {
+      "id": "c2",
+      "title": "Membership",
+      "status": "current",
+      "summary": "ARO organises reclaimers into a mass-based, democratic membership movement — building the collective power needed to win recognition, fair pay, and rights.",
+      "videos": [],
+      "image": ""
+    },
+    {
       "id": "c3",
-      "title": "The Founding March — Against S@S Private Contracts",
+      "title": "Landfill Action Plans",
+      "status": "current",
+      "summary": "According to Pikitup, all of Johannesburg's landfills will be full before the end of 2026 — putting thousands of reclaimers out of work and leaving the city drowning in its own waste. ARO's demand for social plans for landfill reclaimers solves both problems by providing reclaimer-led separation-at-source work that diverts waste from landfills.",
+      "body": "According to Pikitup, all of the landfills in Johannesburg will be full before the end of 2026. This will put thousands of reclaimers out of work and leave the city drowning in its own waste. ARO's demand for social plans for landfill reclaimers can solve both of these problems by providing work for landfill reclaimers in reclaimer-led separation at source programmes that divert waste from landfills.\n\n[ARO's Position on Social Plans — document to be attached once received from Melanie/Luyanda]",
+      "videos": [],
+      "image": ""
+    },
+    {
+      "id": "c4",
+      "title": "Health",
+      "status": "current",
+      "summary": "ARO campaigns for the health and safety of reclaimers, who face daily occupational hazards with little protection or support.",
+      "videos": [],
+      "image": ""
+    },
+    {
+      "id": "c5",
+      "title": "COVID-19 Support",
       "status": "historical",
-      "summary": "In 2017, reclaimers organised the first-ever march of Johannesburg's landfill and street reclaimers. The campaign succeeded in halting two of the four private contracts that threatened reclaimer livelihoods.",
+      "summary": "During the COVID-19 pandemic, ARO organised emergency support for reclaimers who lost income when lockdowns halted their work.",
+      "videos": [],
+      "image": ""
+    },
+    {
+      "id": "c6",
+      "title": "R50 Campaign",
+      "status": "historical",
+      "summary": "ARO's R50 Campaign mobilised reclaimers and allies around a concrete demand for fair payment for recyclable materials.",
+      "videos": [],
+      "image": ""
+    },
+    {
+      "id": "c7",
+      "title": "Missing Persons Campaign",
+      "status": "historical",
+      "summary": "ARO campaigned to locate and support reclaimers who went missing while working, highlighting the dangers reclaimers face and the need for proper safety systems.",
       "videos": [],
       "image": ""
     }
@@ -45,22 +78,65 @@
   "programmes": [
     {
       "id": "p1",
-      "title": "Recycling with Reclaimers",
-      "summary": "ARO's Resident Reclaimer Recycling Programme integrates reclaimers into the formal waste management system at neighbourhood level across Johannesburg — including Auckland Park, Brixton, and surrounding areas.",
+      "title": "SAWPRS Registration & Service Fee Payment",
+      "status": "current",
+      "summary": "ARO is central to the development of the South African Waste Picker Registration System (SAWPRS), which grants reclaimers formal proof of occupation and connects them to service-fee payment from Producer Responsibility Organisations.",
       "videos": [],
       "image": ""
     },
     {
       "id": "p2",
-      "title": "The Mpumalanga Project",
+      "title": "Mpumalanga Project",
+      "status": "current",
       "summary": "ARO has expanded beyond Johannesburg to support reclaimers in Msukaligwa and Chief Albert Luthuli Local Municipalities in Mpumalanga — empowering them with knowledge, market connections, and formal registration.",
       "videos": [],
       "image": ""
     },
     {
       "id": "p3",
-      "title": "Waste Picker Registration & SAWPRS",
-      "summary": "ARO is central to the development of the South African Waste Picker Registration System (SAWPRS), which grants reclaimers formal proof of occupation and connects them to payment from Producer Responsibility Organisations.",
+      "title": "Support for Kenyan Reclaimers",
+      "status": "current",
+      "summary": "Placeholder text — ARO to provide details of its support work with reclaimers in Kenya.",
+      "videos": [],
+      "image": ""
+    },
+    {
+      "id": "p4",
+      "title": "Supporting Waste Picker Integration in Lesotho",
+      "status": "current",
+      "summary": "Placeholder text — ARO to provide details of its support work with waste picker integration in Lesotho.",
+      "videos": [],
+      "image": ""
+    },
+    {
+      "id": "p5",
+      "title": "World Bank SAWPRS Registration Campaign",
+      "status": "completed",
+      "summary": "A World Bank-supported campaign that drove reclaimer registration onto the South African Waste Picker Registration System.",
+      "videos": [],
+      "image": ""
+    },
+    {
+      "id": "p6",
+      "title": "Recycling with Reclaimers Pilot Project — Brixton & Auckland Park",
+      "status": "completed",
+      "summary": "ARO's Resident Reclaimer Recycling pilot integrated reclaimers into the formal waste management system at neighbourhood level in Brixton and Auckland Park, Johannesburg.",
+      "videos": [],
+      "image": ""
+    },
+    {
+      "id": "p7",
+      "title": "[Completed Project Placeholder]",
+      "status": "completed",
+      "summary": "Placeholder text — space reserved for an additional completed project.",
+      "videos": [],
+      "image": ""
+    },
+    {
+      "id": "p8",
+      "title": "[Completed Project Placeholder]",
+      "status": "completed",
+      "summary": "Placeholder text — space reserved for an additional completed project.",
       "videos": [],
       "image": ""
     }
@@ -81,22 +157,6 @@
       "image": ""
     }
   ],
-  "international": [
-    {
-      "id": "i1",
-      "title": "International Alliance of Waste Pickers (IAWP)",
-      "summary": "ARO is a member of the IAWP, the global network bringing together waste picker organisations worldwide. Through the IAWP, ARO participates in international advocacy and ensures African reclaimers have a voice in global debates.",
-      "videos": [],
-      "image": ""
-    },
-    {
-      "id": "i2",
-      "title": "Global Plastics Treaty Negotiations",
-      "summary": "ARO participates in international negotiations for a global plastics treaty, ensuring that informal waste workers — who handle the majority of plastic recycling in the Global South — are not sidelined in global solutions.",
-      "videos": [],
-      "image": ""
-    }
-  ],
   "films": [
     {
       "id": "f1",
@@ -113,7 +173,7 @@
       "id": "n1",
       "title": "ARO Participates in Global Plastics Treaty Negotiations",
       "date": "2024-11-15",
-      "category": "International",
+      "category": "General",
       "body": "ARO representatives joined waste picker organisations from across the Global South at the latest round of international negotiations toward a binding global plastics treaty. ARO's presence ensured that the voices of informal reclaimers — who handle the majority of plastic recycling — were heard in the drafting process.",
       "image": "",
       "published": true
@@ -122,7 +182,7 @@
       "id": "n2",
       "title": "SAWPRS Registration Expands to Mpumalanga",
       "date": "2024-09-03",
-      "category": "Programmes",
+      "category": "Projects",
       "body": "ARO's South African Waste Picker Registration System has extended its reach into Mpumalanga province, formally registering reclaimers in Msukaligwa and Chief Albert Luthuli municipalities for the first time. Registration grants reclaimers official proof of occupation and connects them to payment from Producer Responsibility Organisations.",
       "image": "",
       "published": true

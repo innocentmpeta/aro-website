@@ -40,7 +40,6 @@ const ARRAY_COLLECTIONS = [
   'campaigns',
   'programmes',
   'policy',
-  'international',
   'films',
   'news',
   'reclaimers',

@@ -214,10 +214,9 @@ textarea { resize:vertical; min-height:90px; }
     <ul class="sidebar-nav">
       <li><a href="#" class="active" data-page="dashboard"><span class="nav-icon"><i class="fa-solid fa-gauge"></i></span>Dashboard</a></li>
       <li><a href="#" data-page="campaigns"><span class="nav-icon"><i class="fa-solid fa-bullhorn"></i></span>Campaigns</a></li>
-      <li><a href="#" data-page="programmes"><span class="nav-icon"><i class="fa-solid fa-gears"></i></span>Programmes</a></li>
+      <li><a href="#" data-page="programmes"><span class="nav-icon"><i class="fa-solid fa-gears"></i></span>Projects</a></li>
       <li><a href="#" data-page="policy"><span class="nav-icon"><i class="fa-solid fa-scale-balanced"></i></span>Policy</a></li>
-      <li><a href="#" data-page="international"><span class="nav-icon"><i class="fa-solid fa-earth-africa"></i></span>International</a></li>
-      <li><a href="#" data-page="films"><span class="nav-icon"><i class="fa-solid fa-film"></i></span>Films & Media</a></li>
+      <li><a href="#" data-page="films"><span class="nav-icon"><i class="fa-solid fa-film"></i></span>Videos</a></li>
       <li><a href="#" data-page="news"><span class="nav-icon"><i class="fa-solid fa-newspaper"></i></span>News & Stories</a></li>
       <li><a href="#" data-page="reclaimers"><span class="nav-icon"><i class="fa-solid fa-person"></i></span>Reclaimers</a></li>
     </ul>
@@ -269,7 +268,7 @@ textarea { resize:vertical; min-height:90px; }
     <!-- PROGRAMMES -->
     <div class="page" id="page-programmes">
       <div class="cms-card">
-        <div class="cms-card-header"><div class="cms-card-title">Programmes</div><button class="btn btn-primary" onclick="openModal('programmes')"><i class="fa-solid fa-plus"></i> Add Programme</button></div>
+        <div class="cms-card-header"><div class="cms-card-title">Projects</div><button class="btn btn-primary" onclick="openModal('programmes')"><i class="fa-solid fa-plus"></i> Add Project</button></div>
         <div class="cms-card-body"><div class="item-list" id="programmes-list"></div></div>
       </div>
     </div>
@@ -282,18 +281,10 @@ textarea { resize:vertical; min-height:90px; }
       </div>
     </div>
 
-    <!-- INTERNATIONAL -->
-    <div class="page" id="page-international">
-      <div class="cms-card">
-        <div class="cms-card-header"><div class="cms-card-title">International Work</div><button class="btn btn-primary" onclick="openModal('international')"><i class="fa-solid fa-plus"></i> Add Item</button></div>
-        <div class="cms-card-body"><div class="item-list" id="international-list"></div></div>
-      </div>
-    </div>
-
     <!-- FILMS -->
     <div class="page" id="page-films">
       <div class="cms-card">
-        <div class="cms-card-header"><div class="cms-card-title">Films & Media</div><button class="btn btn-primary" onclick="openModal('films')"><i class="fa-solid fa-plus"></i> Add Film / Video</button></div>
+        <div class="cms-card-header"><div class="cms-card-title">Videos</div><button class="btn btn-primary" onclick="openModal('films')"><i class="fa-solid fa-plus"></i> Add Video</button></div>
         <div class="cms-card-body"><div class="item-list" id="films-list"></div></div>
       </div>
     </div>
@@ -473,8 +464,8 @@ async function getCol(col) {
 }
 
 async function loadAll() {
-  const [campaigns, programmes, policy, international, films, news, reclaimers, partners] = await Promise.all([
-    getCol('campaigns'), getCol('programmes'), getCol('policy'), getCol('international'),
+  const [campaigns, programmes, policy, films, news, reclaimers, partners] = await Promise.all([
+    getCol('campaigns'), getCol('programmes'), getCol('policy'),
     getCol('films'), getCol('news'), getCol('reclaimers'), getCol('partners')
   ]);
   const [siteSnap, statsSnap] = await Promise.all([
@@ -482,7 +473,7 @@ async function loadAll() {
     getDoc(doc(db, 'config', 'stats'))
   ]);
   DATA = {
-    campaigns, programmes, policy, international, films, news, reclaimers, partners,
+    campaigns, programmes, policy, films, news, reclaimers, partners,
     site:  siteSnap.exists()  ? siteSnap.data()  : {},
     stats: statsSnap.exists() ? (statsSnap.data().items || []) : []
   };
@@ -586,7 +577,7 @@ async function renderPage(page) {
 }
 
 function renderDashboard() {
-  const cols = { campaigns:'Campaigns', programmes:'Programmes', policy:'Policy', international:'International', films:'Films', news:'News', reclaimers:'Reclaimers', partners:'Partners' };
+  const cols = { campaigns:'Campaigns', programmes:'Projects', policy:'Policy', films:'Videos', news:'News', reclaimers:'Reclaimers', partners:'Partners' };
   document.getElementById('dashSummary').innerHTML = Object.entries(cols).map(([k,v]) =>
     `<div class="dash-card"><div class="dash-count">${(DATA[k]||[]).length}</div><div class="dash-label">${v}</div></div>`
   ).join('');
@@ -611,10 +602,11 @@ function renderSiteInfo() {
 }
 
 function renderItemRow(col, item) {
-  const hasVideos = ['campaigns','programmes','policy','international'].includes(col);
+  const hasVideos = ['campaigns','programmes','policy'].includes(col);
   const videoCount = hasVideos ? (item.videos||[]).length : 0;
   let meta = '';
   if (col==='campaigns') meta = `<span class="badge ${item.status==='current'?'badge-green':'badge-grey'}">${item.status||'current'}</span>`;
+  if (col==='programmes') meta = `<span class="badge ${item.status==='completed'?'badge-grey':'badge-green'}">${item.status==='completed'?'completed':'current'}</span>`;
   if (col==='news') meta = `<span class="badge ${item.published?'badge-green':'badge-orange'}">${item.published?'Published':'Draft'}</span> <span style="font-family:var(--font-m);font-size:0.62rem;color:var(--ink-soft);margin-left:0.4rem">${item.date||''}</span>`;
   if (col==='films') meta = `<span class="badge badge-grey">${item.type||'film'}</span>${item.year?` <span style="font-family:var(--font-m);font-size:0.62rem;color:var(--ink-soft);margin-left:0.4rem">${item.year}</span>`:''}`;
   if (col==='reclaimers') meta = `<span style="font-family:var(--font-m);font-size:0.62rem;color:var(--ink-soft)">${item.role||''}${item.area?' · '+item.area:''}</span>`;
@@ -692,7 +684,8 @@ function buildForm(col, item) {
     <div class="form-group full" style="margin-top:0.75rem"><label>Additional Gallery Images</label>${makeUploadField('gallery', '', 'campaigns/gallery')}${imgHint}</div>`;
 
   if (col==='programmes') return `
-    <div class="form-group full"><label>Programme Title</label><input type="text" id="f-title" value="${v('title')}"></div>
+    <div class="form-group full"><label>Project Title</label><input type="text" id="f-title" value="${v('title')}"></div>
+    <div class="form-group"><label>Status</label><select id="f-status"><option value="current" ${v('status','current')==='current'?'selected':''}>Current</option><option value="completed" ${v('status')==='completed'?'selected':''}>Completed</option></select></div>
     <div class="form-group full"><label>Summary (shown on homepage card)</label><textarea id="f-summary" rows="3">${v('summary')}</textarea></div>
     <div class="form-group full"><label>Full Body Text (shown on detail page)</label><textarea id="f-body" rows="6">${v('body')}</textarea>${bodyHint}</div>
     <div class="form-group full"><label>Hero Image</label>${makeUploadField('main', v('image'), 'programmes')}
@@ -704,13 +697,6 @@ function buildForm(col, item) {
     <div class="form-group full"><label>Full Body Text (shown on detail page)</label><textarea id="f-body" rows="6">${v('body')}</textarea>${bodyHint}</div>
     <div class="form-group full"><label>Hero Image</label>${makeUploadField('main', v('image'), 'policy')}
     <div class="form-group full" style="margin-top:0.75rem"><label>Additional Gallery Images</label>${makeUploadField('gallery', '', 'policy/gallery')}${imgHint}</div>`;
-
-  if (col==='international') return `
-    <div class="form-group full"><label>Title</label><input type="text" id="f-title" value="${v('title')}"></div>
-    <div class="form-group full"><label>Summary (shown on homepage card)</label><textarea id="f-summary" rows="3">${v('summary')}</textarea></div>
-    <div class="form-group full"><label>Full Body Text (shown on detail page)</label><textarea id="f-body" rows="6">${v('body')}</textarea>${bodyHint}</div>
-    <div class="form-group full"><label>Hero Image</label>${makeUploadField('main', v('image'), 'international')}
-    <div class="form-group full" style="margin-top:0.75rem"><label>Additional Gallery Images</label>${makeUploadField('gallery', '', 'international/gallery')}${imgHint}</div>`;
 
   if (col==='films') return `
     <div class="form-group full"><label>Film / Video Title</label><input type="text" id="f-title" value="${v('title')}"></div>
@@ -725,7 +711,7 @@ function buildForm(col, item) {
 
   if (col==='news') return `
     <div class="form-group full"><label>Headline</label><input type="text" id="f-title" value="${v('title')}"></div>
-    <div class="form-group"><label>Category</label><select id="f-category">${['Campaigns','Programmes','Policy','International','General'].map(c=>`<option value="${c}" ${v('category')===c?'selected':''}>${c}</option>`).join('')}</select></div>
+    <div class="form-group"><label>Category</label><select id="f-category">${['Campaigns','Projects','Policy','General'].map(c=>`<option value="${c}" ${v('category')===c?'selected':''}>${c}</option>`).join('')}</select></div>
     <div class="form-group"><label>Date</label><input type="date" id="f-date" value="${v('date')}"></div>
     <div class="form-group full"><label>Article Body</label><textarea id="f-body" rows="10">${v('body')}</textarea>${bodyHint}</div>
     <div class="form-group full"><label>Hero Image</label>${makeUploadField('main', v('image'), 'news')}
@@ -763,9 +749,8 @@ function collectForm(col) {
   const existing = window._editingItem || {};
 
   if (col==='campaigns')    return { title:g('f-title'), status:g('f-status'), summary:g('f-summary'), body:g('f-body'), image:img||existing.image||'', images:mergeImages(existing.images, galleryImg) };
-  if (col==='programmes')   return { title:g('f-title'), summary:g('f-summary'), body:g('f-body'), image:img||existing.image||'', images:mergeImages(existing.images, galleryImg) };
+  if (col==='programmes')   return { title:g('f-title'), status:g('f-status'), summary:g('f-summary'), body:g('f-body'), image:img||existing.image||'', images:mergeImages(existing.images, galleryImg) };
   if (col==='policy')       return { title:g('f-title'), summary:g('f-summary'), body:g('f-body'), image:img||existing.image||'', images:mergeImages(existing.images, galleryImg) };
-  if (col==='international')return { title:g('f-title'), summary:g('f-summary'), body:g('f-body'), image:img||existing.image||'', images:mergeImages(existing.images, galleryImg) };
   if (col==='films')        return { title:g('f-title'), type:g('f-type'), year:g('f-year'), embed:g('f-embed'), trailer:g('f-trailer'), description:g('f-description'), body:g('f-body'), credit:g('f-credit'), images:mergeImages(existing.images, galleryImg) };
   if (col==='news')         return { title:g('f-title'), category:g('f-category'), date:g('f-date'), body:g('f-body'), image:img||existing.image||'', published:document.getElementById('f-published')?.checked||false };
   if (col==='reclaimers')   return { name:g('f-name'), role:g('f-role'), area:g('f-area'), quote:g('f-quote'), bio:g('f-bio'), image:img||existing.image||'', images:mergeImages(existing.images, galleryImg) };

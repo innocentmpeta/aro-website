@@ -53,13 +53,20 @@ nav {
 .nav-logo img { height: 56px; width: auto; }
 .nav-logo-text { font-family: var(--font-display); font-weight: 800; font-size: 1.05rem; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.2; color: #fff; }
 .nav-logo-text span { color: #a8e6a8; display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; margin-top: 0.1rem; }
-.nav-links { display: flex; align-items: center; gap: 0.2rem; list-style: none; }
-.nav-links a { font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.45rem 0.8rem; border-radius: 2px; transition: color 0.2s, background 0.2s; color: rgba(255,255,255,0.72); }
+.nav-links { display: flex; align-items: center; gap: 0.05rem; list-style: none; }
+.nav-links > li { position: relative; }
+.nav-links a { font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.45rem 0.6rem; border-radius: 2px; transition: color 0.2s, background 0.2s; color: rgba(255,255,255,0.72); display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; }
 .nav-links a:hover { color: #fff; background: rgba(0,0,0,0.2); }
+.nav-caret { font-size: 0.6rem; opacity: 0.7; }
 .nav-cta { background: var(--ink) !important; color: #fff !important; padding: 0.5rem 1.2rem !important; border-radius: 2px !important; margin-left: 0.5rem !important; }
 .nav-cta:hover { background: #000 !important; }
 .nav-hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
 .nav-hamburger span { display: block; width: 26px; height: 2px; background: #fff; }
+
+.dropdown { list-style: none; position: absolute; top: 100%; left: 0; min-width: 230px; background: var(--green-mid); border: 1px solid var(--green-dim); box-shadow: 0 12px 28px rgba(0,0,0,0.35); padding: 0.4rem; display: none; flex-direction: column; gap: 0.1rem; z-index: 200; }
+.has-dropdown:hover .dropdown, .has-dropdown.dropdown-open .dropdown { display: flex; }
+.dropdown a { font-size: 0.76rem; padding: 0.55rem 0.75rem; width: 100%; }
+.dropdown-toggle { display: none; }
 
 .ticker { position: fixed; top: 84px; left: 0; right: 0; z-index: 99; background: var(--green-dim); border-bottom: 1px solid var(--green); height: 38px; overflow: hidden; display: flex; align-items: center; }
 .ticker-track { display: flex; animation: ticker-scroll 50s linear infinite; white-space: nowrap; }
@@ -75,7 +82,7 @@ nav {
 .hero-content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 4rem 2rem 5rem; width: 100%; }
 .hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-bright); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
 .hero-eyebrow::after { content:''; flex: 0 0 40px; height: 1px; background: var(--green-bright); }
-.hero h1 { font-family: var(--font-display); font-size: clamp(3.5rem, 10vw, 8.5rem); font-weight: 900; line-height: 0.92; text-transform: uppercase; letter-spacing: -0.01em; max-width: 900px; color: var(--white-hi); }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.6rem, 7vw, 6rem); font-weight: 900; line-height: 0.95; text-transform: uppercase; letter-spacing: -0.01em; max-width: 900px; color: var(--white-hi); }
 .hero h1 .accent { color: var(--green-bright); }
 .hero h1 .line-indent { padding-left: 4rem; }
 .hero-sub { font-size: 1.1rem; color: var(--grey-mid); max-width: 540px; margin-top: 2rem; line-height: 1.75; }
@@ -109,7 +116,21 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .sec-white .section-intro, .sec-white-alt .section-intro { color: var(--ink-soft); }
 .section-intro { max-width: 640px; margin-bottom: 3.5rem; font-size: 1.05rem; line-height: 1.75; }
 
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: var(--border-dim); }
+.subsection-block { margin-bottom: 3.5rem; }
+.subsection-block:last-child { margin-bottom: 0; }
+.subsection-title { font-family: var(--font-display); font-size: clamp(1.3rem, 2.4vw, 1.7rem); font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 1rem; }
+.sec-dark .subsection-title, .sec-dark-alt .subsection-title { color: var(--green-bright); }
+.sec-white .subsection-title, .sec-white-alt .subsection-title { color: var(--green); }
+.subsection-text { font-size: 0.98rem; line-height: 1.8; max-width: 760px; }
+.sec-dark .subsection-text, .sec-dark-alt .subsection-text { color: var(--grey-mid); }
+.sec-white .subsection-text, .sec-white-alt .subsection-text { color: var(--ink-soft); }
+.subsection-text p { margin-bottom: 1rem; }
+.subsection-text p:last-child { margin-bottom: 0; }
+.subsection-text ul { padding-left: 1.2rem; margin-top: 0.5rem; }
+.subsection-text li { margin-bottom: 0.4rem; }
+.placeholder-note { display: inline-block; margin-top: 0.75rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; padding: 0.35rem 0.7rem; border: 1px dashed currentColor; opacity: 0.75; }
+
+.card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-dim); }
 .card { background: var(--card-bg); display: flex; flex-direction: column; transition: background 0.2s; overflow: hidden; }
 .card:hover { background: var(--card-hover); }
 .card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; filter: brightness(0.88) saturate(0.85); transition: filter 0.3s; }
@@ -121,7 +142,7 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .card h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; text-transform: uppercase; line-height: 1.15; color: var(--white-hi); }
 .card p { color: var(--grey-mid); font-size: 0.92rem; line-height: 1.72; flex: 1; }
 
-.card-grid-white { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: var(--white-border-dim); }
+.card-grid-white { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--white-border-dim); }
 .card-w { background: var(--white-card); display: flex; flex-direction: column; transition: box-shadow 0.2s, transform 0.2s; overflow: hidden; }
 .card-w:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
 .card-w .card-img { filter: brightness(0.95) saturate(0.9); }
@@ -138,7 +159,7 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .video-embed-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: var(--border); border-radius: 2px; }
 .video-embed-wrap iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
 
-.films-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem; }
+.films-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
 .film-card { display: flex; flex-direction: column; gap: 1rem; text-decoration:none; }
 .film-card:hover .film-thumb { filter: brightness(1) saturate(1); }
 .film-card:hover .film-play-btn { background: var(--green-bright); transform: scale(1.1); }
@@ -166,7 +187,7 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .film-meta p { color: var(--grey-mid); font-size: 0.88rem; }
 .film-credit { font-family: var(--font-mono); font-size: 0.62rem; color: var(--grey); }
 
-.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; }
+.news-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
 .news-card { background: #fff; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--white-border); transition: box-shadow 0.2s, transform 0.2s; }
 .news-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.09); transform: translateY(-2px); }
 .news-card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
@@ -175,6 +196,13 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .news-cat { font-family: var(--font-mono); font-size: 0.63rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; }
 .news-card h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; text-transform: uppercase; line-height: 1.15; color: var(--ink); }
 .news-card p { color: var(--ink-soft); font-size: 0.9rem; line-height: 1.7; }
+
+@media (max-width: 1080px) {
+  .card-grid, .card-grid-white, .films-grid, .news-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .card-grid, .card-grid-white, .films-grid, .news-grid { grid-template-columns: 1fr; }
+}
 
 .reclaimers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
 .reclaimer-card { background: #fff; padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem; border: 1px solid var(--white-border); transition: box-shadow 0.2s; }
@@ -202,6 +230,35 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .social-link { font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.5rem 1rem; border: 1px solid #c0d0c0; transition: all 0.2s; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 0.4rem; }
 .social-link:hover { border-color: var(--green); color: var(--green); }
 
+/* ── About ARO / Structures ── */
+.structure-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px; background: var(--border-dim); margin: 1.5rem 0; }
+.structure-stat { background: var(--surface); padding: 1.25rem; text-align: center; }
+.structure-stat-value { font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; color: var(--green-bright); line-height: 1; }
+.structure-stat-label { font-size: 0.78rem; color: var(--grey-mid); margin-top: 0.4rem; }
+.bearer-list { list-style: none; margin-top: 0.75rem; }
+.bearer-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border-dim); display: flex; justify-content: space-between; gap: 1rem; font-size: 0.92rem; }
+.bearer-list li:last-child { border-bottom: none; }
+.bearer-name { color: var(--white-hi); font-weight: 600; }
+.bearer-role { font-family: var(--font-mono); font-size: 0.72rem; color: var(--grey); letter-spacing: 0.05em; }
+
+/* ── Support ── */
+.support-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--white-border-dim); }
+.support-card { background: #fff; padding: 2rem; display: flex; flex-direction: column; gap: 0.9rem; }
+.support-card i { color: var(--green); font-size: 1.6rem; }
+.support-card h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; text-transform: uppercase; color: var(--ink); }
+.support-card p { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.7; flex: 1; }
+@media (max-width: 900px) { .support-grid { grid-template-columns: 1fr; } }
+
+/* ── FAQ accordion ── */
+.faq-list { display: flex; flex-direction: column; gap: 0.6rem; max-width: 860px; }
+.faq-item { border: 1px solid var(--white-border); background: #fff; }
+.faq-question { width: 100%; text-align: left; background: none; border: none; cursor: pointer; padding: 1.1rem 1.4rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--ink); text-transform: uppercase; }
+.faq-question i { color: var(--green); transition: transform 0.2s; flex-shrink: 0; }
+.faq-item.open .faq-question i { transform: rotate(45deg); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
+.faq-item.open .faq-answer { max-height: 400px; }
+.faq-answer p { padding: 0 1.4rem 1.25rem; color: var(--ink-soft); font-size: 0.92rem; line-height: 1.75; }
+
 footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
 .footer-logo { display: flex; align-items: center; gap: 1rem; }
 .footer-logo img { height: 52px; width: auto; }
@@ -223,10 +280,24 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
 
 .loading { display: flex; align-items: center; justify-content: center; min-height: 40vh; font-family: var(--font-mono); font-size: 0.75rem; color: var(--grey); letter-spacing: 0.15em; text-transform: uppercase; }
 
-@media (max-width: 768px) {
-  .nav-links { display: none; flex-direction: column; position: absolute; top: 84px; left: 0; right: 0; background: var(--green-mid); padding: 1rem; border-bottom: 2px solid var(--green-dim); }
+@media (max-width: 1100px) {
+  .nav-links a { font-size: 0.7rem; padding: 0.4rem 0.45rem; }
+  .nav-logo-text { display: none; }
+}
+
+@media (max-width: 900px) {
+  .nav-links { display: none; flex-direction: column; align-items: stretch; position: absolute; top: 84px; left: 0; right: 0; max-height: calc(100vh - 84px); overflow-y: auto; background: var(--green-mid); padding: 1rem; border-bottom: 2px solid var(--green-dim); gap: 0; }
   .nav-links.open { display: flex; }
+  .nav-links > li { width: 100%; }
+  .nav-links a { width: 100%; padding: 0.75rem 0.6rem; }
   .nav-hamburger { display: flex; }
+  .has-dropdown { display: flex; flex-direction: column; }
+  .has-dropdown > a { flex: 1; }
+  .dropdown-toggle { display: flex; align-items: center; justify-content: center; width: 40px; cursor: pointer; color: rgba(255,255,255,0.72); background: transparent; border: none; font-size: 0.8rem; }
+  .dropdown { position: static; display: none; box-shadow: none; border: none; background: rgba(0,0,0,0.15); margin: 0 0 0.3rem 0.75rem; }
+  .has-dropdown.dropdown-open .dropdown { display: flex; }
+  .has-dropdown:hover .dropdown { display: none; }
+  .has-dropdown.dropdown-open:hover .dropdown { display: flex; }
   .hero h1 .line-indent { padding-left: 1.5rem; }
   .contact-grid { grid-template-columns: 1fr; }
   .footer-right { align-items: flex-start; }
@@ -241,14 +312,63 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
     <div class="nav-logo-text">African Reclaimers Organisation<span>Reclaiming The Future</span></div>
   </div>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#campaigns">Campaigns</a></li>
-    <li><a href="#programmes">Programmes</a></li>
+    <li class="has-dropdown">
+      <a href="#about-aro">About ARO <i class="fa-solid fa-chevron-down nav-caret"></i></a>
+      <button class="dropdown-toggle" aria-label="Toggle About ARO submenu" onclick="this.closest('li').classList.toggle('dropdown-open')"><i class="fa-solid fa-chevron-down"></i></button>
+      <ul class="dropdown">
+        <li><a href="#about-aro">About ARO</a></li>
+        <li><a href="#about-aro-history">History</a></li>
+        <li><a href="#about-aro-structures">Structures</a></li>
+        <li><a href="#about-aro-recycling">ARO Recycling</a></li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <a href="#about-reclaimers">About Reclaimers <i class="fa-solid fa-chevron-down nav-caret"></i></a>
+      <button class="dropdown-toggle" aria-label="Toggle About Reclaimers submenu" onclick="this.closest('li').classList.toggle('dropdown-open')"><i class="fa-solid fa-chevron-down"></i></button>
+      <ul class="dropdown">
+        <li><a href="#about-reclaimers">Who Are Reclaimers</a></li>
+        <li><a href="#reclaimers-contributions">Reclaimers' Contributions</a></li>
+        <li><a href="#meet-reclaimers">Meet Some Reclaimers</a></li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <a href="#campaigns">Campaigns <i class="fa-solid fa-chevron-down nav-caret"></i></a>
+      <button class="dropdown-toggle" aria-label="Toggle Campaigns submenu" onclick="this.closest('li').classList.toggle('dropdown-open')"><i class="fa-solid fa-chevron-down"></i></button>
+      <ul class="dropdown">
+        <li><a href="#campaigns">Current Campaigns</a></li>
+        <li><a href="#campaigns-historical">Historical Campaigns</a></li>
+      </ul>
+    </li>
+    <li class="has-dropdown">
+      <a href="#projects">Projects <i class="fa-solid fa-chevron-down nav-caret"></i></a>
+      <button class="dropdown-toggle" aria-label="Toggle Projects submenu" onclick="this.closest('li').classList.toggle('dropdown-open')"><i class="fa-solid fa-chevron-down"></i></button>
+      <ul class="dropdown">
+        <li><a href="#projects">Current Projects</a></li>
+        <li><a href="#projects-completed">Completed Projects</a></li>
+      </ul>
+    </li>
     <li><a href="#policy">Policy</a></li>
-    <li><a href="#international">International</a></li>
-    <li><a href="#films">Films</a></li>
-    <li><a href="#news">News</a></li>
-    <li><a href="#reclaimers">Reclaimers</a></li>
-    <li><a href="#contact" class="nav-cta btn">Get Involved</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li class="has-dropdown">
+      <a href="#news">News <i class="fa-solid fa-chevron-down nav-caret"></i></a>
+      <button class="dropdown-toggle" aria-label="Toggle News submenu" onclick="this.closest('li').classList.toggle('dropdown-open')"><i class="fa-solid fa-chevron-down"></i></button>
+      <ul class="dropdown">
+        <li><a href="#news">ARO News</a></li>
+        <li><a href="#news-media">In The Media</a></li>
+      </ul>
+    </li>
+    <li><a href="#partners">Partners</a></li>
+    <li class="has-dropdown">
+      <a href="#support">Support <i class="fa-solid fa-chevron-down nav-caret"></i></a>
+      <button class="dropdown-toggle" aria-label="Toggle Support submenu" onclick="this.closest('li').classList.toggle('dropdown-open')"><i class="fa-solid fa-chevron-down"></i></button>
+      <ul class="dropdown">
+        <li><a href="#support-recycling">Recycling with Reclaimers</a></li>
+        <li><a href="#support-solidarity">Solidarity Support</a></li>
+        <li><a href="#support-donate">Donate</a></li>
+      </ul>
+    </li>
+    <li><a href="#faqs">FAQs</a></li>
+    <li><a href="#join" class="nav-cta btn">Join</a></li>
   </ul>
   <div class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
     <span></span><span></span><span></span>
@@ -265,9 +385,10 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
     <h1>Reclaimers<br>Keep South<br><span class="accent line-indent">Africa Clean.</span></h1>
     <p class="hero-sub">ARO is a democratic organisation of over 6,000 reclaimers. We fight for recognition, fair pay, and justice — because the people who recycle South Africa's waste deserve to be treated with dignity.</p>
     <div class="hero-actions">
+      <a href="#about-aro" class="btn btn-outline">About</a>
       <a href="#campaigns" class="btn btn-primary">Our Campaigns</a>
-      <a href="#reclaimers" class="btn btn-outline">Meet the Reclaimers</a>
-      <a href="#contact" class="btn btn-outline">Get Involved</a>
+      <a href="#about-reclaimers" class="btn btn-outline">Who Are Reclaimers</a>
+      <a href="#support" class="btn btn-outline">Support ARO</a>
     </div>
   </div>
 </section>
@@ -275,22 +396,116 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
 <div class="stats-strip"><div class="stats-strip-inner" id="statsStrip"><div class="loading">Loading…</div></div></div>
 <div class="section-divider section-divider-dark"></div>
 
+<section id="about-aro" class="sec-dark">
+  <div class="container">
+    <div class="section-eyebrow">Who We Are</div>
+    <h2 class="section-title">About ARO</h2>
+    <p class="section-intro">The African Reclaimers Organisation is a mass-based, democratic organisation built and led by reclaimers themselves.</p>
+
+    <div class="subsection-block">
+      <h3 class="subsection-title">About ARO</h3>
+      <div class="subsection-text"><p>ARO is a mass-based democratic organisation of reclaimers, established in 2018. We call ourselves "reclaimers" — not "waste pickers" — because we are reclaiming both the recyclable materials that would otherwise go to landfill, and our dignity as workers doing essential work for South Africa. Our vision is a waste economy that recognises, includes, and fairly pays the reclaimers who already do most of the work. ARO Recycling operates alongside the organisation to put this vision into practice.</p>
+      <span class="placeholder-note">Placeholder text — to be revised by ARO</span></div>
+    </div>
+
+    <div class="subsection-block" id="about-aro-history">
+      <h3 class="subsection-title">History</h3>
+      <div class="subsection-text"><p>Reclaimers began organising in 2016 in response to threats against their livelihoods, culminating in the first-ever march of Johannesburg's landfill and street reclaimers. That founding action grew into the mass-based movement that is ARO today.</p>
+      <span class="placeholder-note">Placeholder text — to be revised by ARO</span></div>
+    </div>
+
+    <div class="subsection-block" id="about-aro-structures">
+      <h3 class="subsection-title">Structures</h3>
+      <div class="subsection-text">
+        <p>ARO is organised through 42 local branches across Johannesburg, each electing 2 representatives to sit on ARO's coordinating committee, which in turn elects an executive committee. ARO also has members organising in Mpumalanga and the Cape Town area.</p>
+        <span class="placeholder-note">Mpumalanga & Cape Town structures — pending detail from Luyanda</span>
+        <div class="structure-stats">
+          <div class="structure-stat"><div class="structure-stat-value">42</div><div class="structure-stat-label">Johannesburg branches</div></div>
+          <div class="structure-stat"><div class="structure-stat-value">2</div><div class="structure-stat-label">Reps per branch</div></div>
+          <div class="structure-stat"><div class="structure-stat-value">1</div><div class="structure-stat-label">Coordinating committee</div></div>
+          <div class="structure-stat"><div class="structure-stat-value">1</div><div class="structure-stat-label">Executive committee</div></div>
+        </div>
+        <p style="margin-top:1.5rem"><strong>Current Office Bearers</strong> <span class="placeholder-note">List pending from Ernestine</span></p>
+        <ul class="bearer-list">
+          <li><span class="bearer-name">[Office Bearer Name]</span><span class="bearer-role">Chairperson</span></li>
+          <li><span class="bearer-name">[Office Bearer Name]</span><span class="bearer-role">Deputy Chairperson</span></li>
+          <li><span class="bearer-name">[Office Bearer Name]</span><span class="bearer-role">Secretary</span></li>
+          <li><span class="bearer-name">[Office Bearer Name]</span><span class="bearer-role">Treasurer</span></li>
+        </ul>
+        <p style="margin-top:1.5rem"><strong>NPC Staff</strong></p>
+        <ul class="bearer-list">
+          <li><span class="bearer-name">Eli [Surname]</span><span class="bearer-role">NPC Staff</span></li>
+          <li><span class="bearer-name">Luyanda [Surname]</span><span class="bearer-role">NPC Staff</span></li>
+          <li><span class="bearer-name">[Organising Team Member]</span><span class="bearer-role">Organising Team</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subsection-block" id="about-aro-recycling">
+      <h3 class="subsection-title">ARO Recycling</h3>
+      <div class="subsection-text"><p>ARO Recycling is the trading arm connected to the organisation, helping put ARO's vision of reclaimer-led recycling into practice on the ground.</p>
+      <a href="#" class="placeholder-note" style="text-decoration:none">Link to ARO Recycling website — to be added</a></div>
+    </div>
+  </div>
+</section>
+<div class="section-divider section-divider-mix"></div>
+
+<section id="about-reclaimers" class="sec-white">
+  <div class="container">
+    <div class="section-eyebrow">The Movement's Heart</div>
+    <h2 class="section-title">About Reclaimers</h2>
+    <p class="section-intro">Close to 90,000 South Africans work as informal reclaimers, doing close to 90% of all recycling in this country.</p>
+
+    <div class="subsection-block">
+      <h3 class="subsection-title">Who Are Reclaimers</h3>
+      <div class="subsection-text"><p>Reclaimers are the people who collect, sort, and sell recyclable materials from streets, depots, and landfills — work that keeps South Africa's cities clean and its recycling industry running, largely without recognition or fair pay.</p>
+      <span class="placeholder-note">Placeholder text — more detail to be drawn from wastepickerintegration.org</span></div>
+    </div>
+
+    <div class="subsection-block" id="reclaimers-contributions">
+      <h3 class="subsection-title">Reclaimers' Contributions</h3>
+      <div class="subsection-text"><p>Reclaimers do an estimated 80–90% of all recycling in South Africa, saving municipalities hundreds of millions of rands in landfill costs every year while diverting waste that would otherwise pollute the environment.</p>
+      <span class="placeholder-note">Placeholder text — to be revised by ARO</span></div>
+    </div>
+
+    <div class="subsection-block" id="meet-reclaimers">
+      <h3 class="subsection-title">Meet Some Reclaimers</h3>
+      <div class="reclaimers-grid" id="reclaimersGrid"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
+    </div>
+  </div>
+</section>
+<div class="section-divider section-divider-mix"></div>
+
 <section id="campaigns" class="sec-dark">
   <div class="container">
     <div class="section-eyebrow">Fighting for Change</div>
     <h2 class="section-title">Campaigns</h2>
     <p class="section-intro">ARO is a campaigning organisation. Our campaigns build pressure on government and industry, mobilise our members, and win recognition and rights for reclaimers.</p>
-    <div class="card-grid" id="campaignsGrid"><div class="loading">Loading…</div></div>
+    <div class="subsection-block">
+      <h3 class="subsection-title">Current Campaigns</h3>
+      <div class="card-grid" id="campaignsCurrentGrid"><div class="loading">Loading…</div></div>
+    </div>
+    <div class="subsection-block" id="campaigns-historical">
+      <h3 class="subsection-title">Historical Campaigns</h3>
+      <div class="card-grid" id="campaignsHistoricalGrid"><div class="loading">Loading…</div></div>
+    </div>
   </div>
 </section>
 <div class="section-divider section-divider-mix"></div>
 
-<section id="programmes" class="sec-white">
+<section id="projects" class="sec-white">
   <div class="container">
     <div class="section-eyebrow">Putting Vision Into Practice</div>
-    <h2 class="section-title">Programmes</h2>
-    <p class="section-intro">ARO's programmes demonstrate concretely that a reclaimer-inclusive model of waste management works better for everyone.</p>
-    <div class="card-grid-white" id="programmesGrid"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
+    <h2 class="section-title">Projects</h2>
+    <p class="section-intro">ARO's projects demonstrate concretely that a reclaimer-inclusive model of waste management works better for everyone.</p>
+    <div class="subsection-block">
+      <h3 class="subsection-title">Current Projects</h3>
+      <div class="card-grid-white" id="projectsCurrentGrid"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
+    </div>
+    <div class="subsection-block" id="projects-completed">
+      <h3 class="subsection-title">Completed Projects</h3>
+      <div class="card-grid-white" id="projectsCompletedGrid"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
+    </div>
   </div>
 </section>
 <div class="section-divider section-divider-mix"></div>
@@ -305,20 +520,10 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
 </section>
 <div class="section-divider section-divider-mix"></div>
 
-<section id="international" class="sec-white-alt">
-  <div class="container">
-    <div class="section-eyebrow">Global Solidarity</div>
-    <h2 class="section-title">International Work</h2>
-    <p class="section-intro">The struggle for reclaimer rights is not only a South African struggle. ARO has built genuine relationships across the world.</p>
-    <div class="card-grid-white" id="internationalGrid"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
-  </div>
-</section>
-<div class="section-divider section-divider-mix"></div>
-
-<section id="films" class="sec-dark">
+<section id="videos" class="sec-dark">
   <div class="container">
     <div class="section-eyebrow">Documented. Witnessed. Archived.</div>
-    <h2 class="section-title">Films & Media</h2>
+    <h2 class="section-title">Videos</h2>
     <p class="section-intro">ARO's story has been documented by filmmakers, students, and researchers. These films are the visual record of a movement.</p>
     <div class="films-grid" id="filmsGrid"><div class="loading">Loading…</div></div>
   </div>
@@ -330,20 +535,18 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
     <div class="section-eyebrow">Latest from the Movement</div>
     <h2 class="section-title">News & Updates</h2>
     <p class="section-intro">Campaign wins, policy developments, international events — what ARO has been doing and fighting for.</p>
-    <div class="news-grid" id="newsGrid"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
+    <div class="subsection-block">
+      <h3 class="subsection-title">ARO News</h3>
+      <div class="news-grid" id="newsGrid"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
+    </div>
+    <div class="subsection-block" id="news-media">
+      <h3 class="subsection-title">In The Media</h3>
+      <p class="subsection-text">Recent third-party media coverage of ARO, surfaced automatically.</p>
+      <div class="empty-state" style="padding:2.5rem 2rem">Coming soon — this section will need a separate news-aggregation build.</div>
+    </div>
   </div>
 </section>
 <div class="section-divider section-divider-mix"></div>
-
-<section id="reclaimers" class="sec-white-alt">
-  <div class="container">
-    <div class="section-eyebrow">The Movement's Heart</div>
-    <h2 class="section-title">The Reclaimers</h2>
-    <p class="section-intro">Close to 90,000 South Africans work as informal reclaimers, doing close to 90% of all recycling in this country.</p>
-    <div class="reclaimers-grid" id="reclaimersGrid"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
-  </div>
-</section>
-<div class="section-divider section-divider-dark"></div>
 
 <section id="partners" class="sec-dark-alt" style="padding:5rem 2rem">
   <div class="container" style="text-align:center">
@@ -354,10 +557,78 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
 </section>
 <div class="section-divider section-divider-mix"></div>
 
-<section id="contact" class="sec-white">
+<section id="support" class="sec-white">
+  <div class="container">
+    <div class="section-eyebrow">Stand With Reclaimers</div>
+    <h2 class="section-title">Support</h2>
+    <p class="section-intro">There are several ways to support ARO and the reclaimers who keep South Africa clean.</p>
+    <div class="support-grid">
+      <div class="support-card" id="support-recycling">
+        <i class="fa-solid fa-recycle"></i>
+        <h3>Recycling with Reclaimers</h3>
+        <p>Put out your recyclables in a way that reclaimers can access, or contact ARO to join the Recycling with Reclaimers programme in your area.</p>
+        <span class="placeholder-note">Placeholder text — to be revised by ARO</span>
+      </div>
+      <div class="support-card" id="support-solidarity">
+        <i class="fa-solid fa-people-group"></i>
+        <h3>Solidarity Support</h3>
+        <p>Businesses and organisations can partner with ARO, buy from reclaimers, and ensure recycling contracts support the people already doing the work.</p>
+        <span class="placeholder-note">Placeholder text — to be revised by ARO</span>
+      </div>
+      <div class="support-card" id="support-donate">
+        <i class="fa-solid fa-hand-holding-heart"></i>
+        <h3>Donate</h3>
+        <p>Financial support helps ARO organise, campaign, and run programmes for reclaimers nationally. Contact us to find out how to donate.</p>
+        <a href="mailto:info@africanreclaimers.org" class="cta-btn" style="display:inline-block;margin-top:0.25rem;background:var(--green);color:#fff;padding:0.6rem 1.1rem;font-family:var(--font-display);font-size:0.8rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase">Contact Us to Donate</a>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="section-divider section-divider-mix"></div>
+
+<section id="faqs" class="sec-white-alt">
+  <div class="container">
+    <div class="section-eyebrow">Common Questions</div>
+    <h2 class="section-title">FAQs</h2>
+    <p class="section-intro">Answers to the questions we're asked most often. More will be added over time.</p>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Why was ARO formed? <i class="fa-solid fa-plus"></i></button>
+        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">What do reclaimers do? <i class="fa-solid fa-plus"></i></button>
+        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">How much do reclaimers earn? <i class="fa-solid fa-plus"></i></button>
+        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Why should we support reclaimers? <i class="fa-solid fa-plus"></i></button>
+        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">How are reclaimers affected by separation at source? <i class="fa-solid fa-plus"></i></button>
+        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">What is the EPR Service Fee? <i class="fa-solid fa-plus"></i></button>
+        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">What is SAWPRS? <i class="fa-solid fa-plus"></i></button>
+        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="section-divider section-divider-mix"></div>
+
+<section id="join" class="sec-white">
   <div class="container">
     <div class="section-eyebrow">Join the Movement</div>
-    <h2 class="section-title">Get Involved</h2>
+    <h2 class="section-title">Join</h2>
     <p class="section-intro">Whether you are a resident, a business, a researcher, or a reclaimer — there is a role for you in this struggle.</p>
     <div class="contact-grid">
       <div class="contact-detail" id="contactDetail"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
@@ -451,9 +722,9 @@ async function init() {
     const stats = statsSnap.exists() ? (statsSnap.data().items || []) : [];
 
     // Collections
-    const [campaigns, programmes, policy, international, films, news, reclaimers, partners] = await Promise.all([
+    const [campaigns, programmes, policy, films, news, reclaimers, partners] = await Promise.all([
       getCol('campaigns'), getCol('programmes'), getCol('policy'),
-      getCol('international'), getCol('films'), getCol('news'),
+      getCol('films'), getCol('news'),
       getCol('reclaimers'), getCol('partners')
     ]);
 
@@ -502,10 +773,11 @@ async function init() {
         </a>`).join('');
     }
 
-    darkCards('campaignsGrid',     campaigns,    c => c.status==='current' ? 'Current Campaign' : 'Historical Campaign', '/pages/campaign.html');
-    whiteCards('programmesGrid',   programmes,   () => 'Programme',         '/pages/showcase.html', 'programmes');
-    darkCards('policyGrid',        policy,       () => 'Policy Engagement', '/pages/showcase.html', 'policy');
-    whiteCards('internationalGrid',international,() => 'International Work', '/pages/showcase.html', 'international');
+    darkCards('campaignsCurrentGrid',    campaigns.filter(c=>c.status!=='historical'), () => 'Current Campaign',    '/pages/campaign.html');
+    darkCards('campaignsHistoricalGrid', campaigns.filter(c=>c.status==='historical'), () => 'Historical Campaign', '/pages/campaign.html');
+    whiteCards('projectsCurrentGrid',    programmes.filter(p=>p.status!=='completed'), () => 'Current Project',    '/pages/showcase.html', 'programmes');
+    whiteCards('projectsCompletedGrid',  programmes.filter(p=>p.status==='completed'), () => 'Completed Project',  '/pages/showcase.html', 'programmes');
+    darkCards('policyGrid',              policy,                                       () => 'Policy Engagement',  '/pages/showcase.html', 'policy');
 
     // Films
     const filmsEl = document.getElementById('filmsGrid');
