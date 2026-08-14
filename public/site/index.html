@@ -656,6 +656,7 @@ async function init() {
     const site  = siteSnap.exists()  ? siteSnap.data()  : {};
     const stats = statsSnap.exists() ? (statsSnap.data().items || []) : [];
     const pc    = pageContentSnap.exists() ? pageContentSnap.data() : {};
+    const pcSaved = pageContentSnap.exists();
 
     // Collections
     const [campaigns, programmes, policy, films, news, reclaimers, faqs] = await Promise.all([
@@ -669,8 +670,11 @@ async function init() {
     if (heroImg) document.getElementById('heroBg').style.backgroundImage = `url('${heroImg}')`;
 
     // Page content (hero, About ARO, About Reclaimers, Support)
-    const setText = (id, val) => { const el = document.getElementById(id); if (el && val) el.textContent = val; };
-    const setHTML = (id, html) => { const el = document.getElementById(id); if (el && html) el.innerHTML = html; };
+    // Once config/pageContent has been saved at least once from /admin, its stored
+    // values are authoritative — including intentionally-cleared (empty) fields.
+    // Only fall back to the copy baked into this HTML if that doc doesn't exist yet.
+    const setText = (id, val) => { const el = document.getElementById(id); if (el && pcSaved) el.textContent = val || ''; };
+    const setHTML = (id, html) => { const el = document.getElementById(id); if (el && pcSaved) el.innerHTML = html; };
     setText('heroHeading', pc.heroHeading);
     setText('heroExplanation', pc.heroExplanation);
     setHTML('aboutAroText', renderBody(pc.aboutAroText));
