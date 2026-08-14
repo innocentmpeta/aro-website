@@ -80,12 +80,8 @@ nav {
 .hero-bg-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(10,18,10,0.84) 0%, rgba(10,18,10,0.55) 50%, rgba(10,18,10,0.9) 100%); }
 .hero-pattern { position: absolute; inset: 0; z-index: 1; opacity: 0.03; background-image: repeating-linear-gradient(0deg, transparent, transparent 60px, var(--green) 60px, var(--green) 61px), repeating-linear-gradient(90deg, transparent, transparent 60px, var(--green) 60px, var(--green) 61px); }
 .hero-content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 4rem 2rem 5rem; width: 100%; }
-.hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-bright); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
-.hero-eyebrow::after { content:''; flex: 0 0 40px; height: 1px; background: var(--green-bright); }
-.hero h1 { font-family: var(--font-display); font-size: clamp(2.6rem, 7vw, 6rem); font-weight: 900; line-height: 0.95; text-transform: uppercase; letter-spacing: -0.01em; max-width: 900px; color: var(--white-hi); }
-.hero h1 .accent { color: var(--green-bright); }
-.hero h1 .line-indent { padding-left: 4rem; }
-.hero-sub { font-size: 1.1rem; color: var(--grey-mid); max-width: 540px; margin-top: 2rem; line-height: 1.75; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.6rem, 6.5vw, 5.75rem); font-weight: 900; line-height: 0.98; text-transform: uppercase; letter-spacing: -0.01em; max-width: 960px; color: var(--white-hi); }
+.hero-sub { font-size: clamp(1.15rem, 1.8vw, 1.4rem); color: var(--grey-mid); max-width: 680px; margin-top: 1.75rem; line-height: 1.7; }
 .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
 .btn { font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.8rem 1.8rem; border: 2px solid transparent; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
 .btn-primary { background: var(--green); color: #fff; border-color: var(--green); }
@@ -128,7 +124,6 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .subsection-text p:last-child { margin-bottom: 0; }
 .subsection-text ul { padding-left: 1.2rem; margin-top: 0.5rem; }
 .subsection-text li { margin-bottom: 0.4rem; }
-.placeholder-note { display: inline-block; margin-top: 0.75rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; padding: 0.35rem 0.7rem; border: 1px dashed currentColor; opacity: 0.75; }
 
 .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-dim); }
 .card { background: var(--card-bg); display: flex; flex-direction: column; transition: background 0.2s; overflow: hidden; }
@@ -215,10 +210,6 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .reclaimer-role { font-family: var(--font-mono); font-size: 0.63rem; color: var(--green); letter-spacing: 0.1em; }
 .reclaimer-bio { color: var(--ink-soft); font-size: 0.88rem; line-height: 1.65; }
 
-.partners-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 2rem; }
-.partner-chip { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.6rem 1.4rem; border: 1px solid var(--border); color: var(--grey); transition: all 0.2s; }
-.partner-chip:hover { border-color: var(--green-bright); color: var(--green-bright); }
-
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
 .contact-detail { display: flex; flex-direction: column; gap: 1.5rem; }
 .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
@@ -231,10 +222,6 @@ h2.section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6v
 .social-link:hover { border-color: var(--green); color: var(--green); }
 
 /* ── About ARO / Structures ── */
-.structure-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px; background: var(--border-dim); margin: 1.5rem 0; }
-.structure-stat { background: var(--surface); padding: 1.25rem; text-align: center; }
-.structure-stat-value { font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; color: var(--green-bright); line-height: 1; }
-.structure-stat-label { font-size: 0.78rem; color: var(--grey-mid); margin-top: 0.4rem; }
 .bearer-list { list-style: none; margin-top: 0.75rem; }
 .bearer-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border-dim); display: flex; justify-content: space-between; gap: 1rem; font-size: 0.92rem; }
 .bearer-list li:last-child { border-bottom: none; }
@@ -298,7 +285,6 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
   .has-dropdown.dropdown-open .dropdown { display: flex; }
   .has-dropdown:hover .dropdown { display: none; }
   .has-dropdown.dropdown-open:hover .dropdown { display: flex; }
-  .hero h1 .line-indent { padding-left: 1.5rem; }
   .contact-grid { grid-template-columns: 1fr; }
   .footer-right { align-items: flex-start; }
 }
@@ -357,7 +343,6 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
         <li><a href="#news-media">In The Media</a></li>
       </ul>
     </li>
-    <li><a href="#partners">Partners</a></li>
     <li class="has-dropdown">
       <a href="#support">Support <i class="fa-solid fa-chevron-down nav-caret"></i></a>
       <button class="dropdown-toggle" aria-label="Toggle Support submenu" onclick="this.closest('li').classList.toggle('dropdown-open')"><i class="fa-solid fa-chevron-down"></i></button>
@@ -381,9 +366,8 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
   <div class="hero-bg-img" id="heroBg"></div>
   <div class="hero-pattern"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">African Reclaimers Organisation — Johannesburg</div>
-    <h1>Reclaimers<br>Keep South<br><span class="accent line-indent">Africa Clean.</span></h1>
-    <p class="hero-sub">ARO is a democratic organisation of over 6,000 reclaimers. We fight for recognition, fair pay, and justice — because the people who recycle South Africa's waste deserve to be treated with dignity.</p>
+    <h1 id="heroHeading">African Reclaimers Organisation</h1>
+    <p class="hero-sub" id="heroExplanation">ARO is a democratic organisation of over 6,000 reclaimers. We fight for recognition, fair pay, and justice — because the people who recycle South Africa's waste deserve to be treated with dignity.</p>
     <div class="hero-actions">
       <a href="#about-aro" class="btn btn-outline">About</a>
       <a href="#campaigns" class="btn btn-primary">Our Campaigns</a>
@@ -404,47 +388,28 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
 
     <div class="subsection-block">
       <h3 class="subsection-title">About ARO</h3>
-      <div class="subsection-text"><p>ARO is a mass-based democratic organisation of reclaimers, established in 2018. We call ourselves "reclaimers" — not "waste pickers" — because we are reclaiming both the recyclable materials that would otherwise go to landfill, and our dignity as workers doing essential work for South Africa. Our vision is a waste economy that recognises, includes, and fairly pays the reclaimers who already do most of the work. ARO Recycling operates alongside the organisation to put this vision into practice.</p>
-      <span class="placeholder-note">Placeholder text — to be revised by ARO</span></div>
+      <div class="subsection-text" id="aboutAroText"><p>ARO is a mass-based democratic organisation of reclaimers, established in 2018. We call ourselves "reclaimers" — not "waste pickers" — because we are reclaiming both the recyclable materials that would otherwise go to landfill, and our dignity as workers doing essential work for South Africa. Our vision is a waste economy that recognises, includes, and fairly pays the reclaimers who already do most of the work. ARO Recycling operates alongside the organisation to put this vision into practice.</p></div>
     </div>
 
     <div class="subsection-block" id="about-aro-history">
       <h3 class="subsection-title">History</h3>
-      <div class="subsection-text"><p>Reclaimers began organising in 2016 in response to threats against their livelihoods, culminating in the first-ever march of Johannesburg's landfill and street reclaimers. That founding action grew into the mass-based movement that is ARO today.</p>
-      <span class="placeholder-note">Placeholder text — to be revised by ARO</span></div>
+      <div class="subsection-text" id="historyText"><p>Reclaimers began organising in 2016 in response to threats against their livelihoods, culminating in the first-ever march of Johannesburg's landfill and street reclaimers. That founding action grew into the mass-based movement that is ARO today.</p></div>
     </div>
 
     <div class="subsection-block" id="about-aro-structures">
       <h3 class="subsection-title">Structures</h3>
       <div class="subsection-text">
-        <p>ARO is organised through 42 local branches across Johannesburg, each electing 2 representatives to sit on ARO's coordinating committee, which in turn elects an executive committee. ARO also has members organising in Mpumalanga and the Cape Town area.</p>
-        <span class="placeholder-note">Mpumalanga & Cape Town structures — pending detail from Luyanda</span>
-        <div class="structure-stats">
-          <div class="structure-stat"><div class="structure-stat-value">42</div><div class="structure-stat-label">Johannesburg branches</div></div>
-          <div class="structure-stat"><div class="structure-stat-value">2</div><div class="structure-stat-label">Reps per branch</div></div>
-          <div class="structure-stat"><div class="structure-stat-value">1</div><div class="structure-stat-label">Coordinating committee</div></div>
-          <div class="structure-stat"><div class="structure-stat-value">1</div><div class="structure-stat-label">Executive committee</div></div>
-        </div>
-        <p style="margin-top:1.5rem"><strong>Current Office Bearers</strong> <span class="placeholder-note">List pending from Ernestine</span></p>
-        <ul class="bearer-list">
-          <li><span class="bearer-name">[Office Bearer Name]</span><span class="bearer-role">Chairperson</span></li>
-          <li><span class="bearer-name">[Office Bearer Name]</span><span class="bearer-role">Deputy Chairperson</span></li>
-          <li><span class="bearer-name">[Office Bearer Name]</span><span class="bearer-role">Secretary</span></li>
-          <li><span class="bearer-name">[Office Bearer Name]</span><span class="bearer-role">Treasurer</span></li>
-        </ul>
+        <div id="structuresText"><p>ARO is organised through 42 local branches across Johannesburg, each electing 2 representatives to sit on ARO's coordinating committee, which in turn elects an executive committee. ARO also has members organising in Mpumalanga and the Cape Town area.</p><p>Mpumalanga & Cape Town structures — pending detail from Luyanda.</p></div>
+        <p style="margin-top:1.5rem"><strong>Current Office Bearers</strong></p>
+        <ul class="bearer-list" id="officeBearersList"><li><span class="bearer-name">[Office Bearer Name]</span><span class="bearer-role">Chairperson</span></li><li><span class="bearer-name">[Office Bearer Name]</span><span class="bearer-role">Deputy Chairperson</span></li><li><span class="bearer-name">[Office Bearer Name]</span><span class="bearer-role">Secretary</span></li><li><span class="bearer-name">[Office Bearer Name]</span><span class="bearer-role">Treasurer</span></li></ul>
         <p style="margin-top:1.5rem"><strong>NPC Staff</strong></p>
-        <ul class="bearer-list">
-          <li><span class="bearer-name">Eli [Surname]</span><span class="bearer-role">NPC Staff</span></li>
-          <li><span class="bearer-name">Luyanda [Surname]</span><span class="bearer-role">NPC Staff</span></li>
-          <li><span class="bearer-name">[Organising Team Member]</span><span class="bearer-role">Organising Team</span></li>
-        </ul>
+        <ul class="bearer-list" id="npcStaffList"><li><span class="bearer-name">Eli [Surname]</span><span class="bearer-role">NPC Staff</span></li><li><span class="bearer-name">Luyanda [Surname]</span><span class="bearer-role">NPC Staff</span></li><li><span class="bearer-name">[Organising Team Member]</span><span class="bearer-role">Organising Team</span></li></ul>
       </div>
     </div>
 
     <div class="subsection-block" id="about-aro-recycling">
       <h3 class="subsection-title">ARO Recycling</h3>
-      <div class="subsection-text"><p>ARO Recycling is the trading arm connected to the organisation, helping put ARO's vision of reclaimer-led recycling into practice on the ground.</p>
-      <a href="#" class="placeholder-note" style="text-decoration:none">Link to ARO Recycling website — to be added</a></div>
+      <div class="subsection-text" id="recyclingText"><p>ARO Recycling is the trading arm connected to the organisation, helping put ARO's vision of reclaimer-led recycling into practice on the ground.</p></div>
     </div>
   </div>
 </section>
@@ -454,18 +419,16 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
   <div class="container">
     <div class="section-eyebrow">The Movement's Heart</div>
     <h2 class="section-title">About Reclaimers</h2>
-    <p class="section-intro">Close to 90,000 South Africans work as informal reclaimers, doing close to 90% of all recycling in this country.</p>
+    <p class="section-intro" id="reclaimersIntro">It is estimated that between 60,000 and 90,000 people work as informal reclaimers in South Africa. They collect the majority of used recyclables that are recycled in this country.</p>
 
     <div class="subsection-block">
       <h3 class="subsection-title">Who Are Reclaimers</h3>
-      <div class="subsection-text"><p>Reclaimers are the people who collect, sort, and sell recyclable materials from streets, depots, and landfills — work that keeps South Africa's cities clean and its recycling industry running, largely without recognition or fair pay.</p>
-      <span class="placeholder-note">Placeholder text — more detail to be drawn from wastepickerintegration.org</span></div>
+      <div class="subsection-text" id="whoAreReclaimersText"><p>Reclaimers are the people who collect, sort, and sell recyclable materials from streets, depots, and landfills — work that keeps South Africa's cities clean and its recycling industry running, largely without recognition or fair pay.</p></div>
     </div>
 
     <div class="subsection-block" id="reclaimers-contributions">
       <h3 class="subsection-title">Reclaimers' Contributions</h3>
-      <div class="subsection-text"><p>Reclaimers do an estimated 80–90% of all recycling in South Africa, saving municipalities hundreds of millions of rands in landfill costs every year while diverting waste that would otherwise pollute the environment.</p>
-      <span class="placeholder-note">Placeholder text — to be revised by ARO</span></div>
+      <div class="subsection-text" id="contributionsText"><p>Reclaimers collect an estimated 80–90% of used recyclables that are recycled in South Africa (2015 estimate), saving municipalities hundreds of millions of rands in landfill costs every year while diverting waste that would otherwise pollute the environment.</p></div>
     </div>
 
     <div class="subsection-block" id="meet-reclaimers">
@@ -548,37 +511,26 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
 </section>
 <div class="section-divider section-divider-mix"></div>
 
-<section id="partners" class="sec-dark-alt" style="padding:5rem 2rem">
-  <div class="container" style="text-align:center">
-    <div class="section-eyebrow">Partners & Funders</div>
-    <h2 class="section-title" style="font-size:2.5rem">Standing With ARO</h2>
-    <div class="partners-grid" id="partnersGrid"></div>
-  </div>
-</section>
-<div class="section-divider section-divider-mix"></div>
-
 <section id="support" class="sec-white">
   <div class="container">
     <div class="section-eyebrow">Stand With Reclaimers</div>
     <h2 class="section-title">Support</h2>
     <p class="section-intro">There are several ways to support ARO and the reclaimers who keep South Africa clean.</p>
     <div class="support-grid">
-      <div class="support-card" id="support-recycling">
+      <div class="support-card">
         <i class="fa-solid fa-recycle"></i>
         <h3>Recycling with Reclaimers</h3>
-        <p>Put out your recyclables in a way that reclaimers can access, or contact ARO to join the Recycling with Reclaimers programme in your area.</p>
-        <span class="placeholder-note">Placeholder text — to be revised by ARO</span>
+        <p id="supportRecyclingText">Put out your recyclables in a way that reclaimers can access, or contact ARO to join the Recycling with Reclaimers programme in your area.</p>
       </div>
-      <div class="support-card" id="support-solidarity">
+      <div class="support-card">
         <i class="fa-solid fa-people-group"></i>
         <h3>Solidarity Support</h3>
-        <p>Businesses and organisations can partner with ARO, buy from reclaimers, and ensure recycling contracts support the people already doing the work.</p>
-        <span class="placeholder-note">Placeholder text — to be revised by ARO</span>
+        <p id="supportSolidarityText">Businesses and organisations can partner with ARO, buy from reclaimers, and ensure recycling contracts support the people already doing the work.</p>
       </div>
-      <div class="support-card" id="support-donate">
+      <div class="support-card">
         <i class="fa-solid fa-hand-holding-heart"></i>
         <h3>Donate</h3>
-        <p>Financial support helps ARO organise, campaign, and run programmes for reclaimers nationally. Contact us to find out how to donate.</p>
+        <p id="supportDonateText">Financial support helps ARO organise, campaign, and run programmes for reclaimers nationally. Contact us to find out how to donate.</p>
         <a href="mailto:info@africanreclaimers.org" class="cta-btn" style="display:inline-block;margin-top:0.25rem;background:var(--green);color:#fff;padding:0.6rem 1.1rem;font-family:var(--font-display);font-size:0.8rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase">Contact Us to Donate</a>
       </div>
     </div>
@@ -591,36 +543,7 @@ footer { background: var(--green-mid); border-top: 2px solid var(--green-dim); p
     <div class="section-eyebrow">Common Questions</div>
     <h2 class="section-title">FAQs</h2>
     <p class="section-intro">Answers to the questions we're asked most often. More will be added over time.</p>
-    <div class="faq-list" id="faqList">
-      <div class="faq-item">
-        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Why was ARO formed? <i class="fa-solid fa-plus"></i></button>
-        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">What do reclaimers do? <i class="fa-solid fa-plus"></i></button>
-        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">How much do reclaimers earn? <i class="fa-solid fa-plus"></i></button>
-        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">Why should we support reclaimers? <i class="fa-solid fa-plus"></i></button>
-        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">How are reclaimers affected by separation at source? <i class="fa-solid fa-plus"></i></button>
-        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">What is the EPR Service Fee? <i class="fa-solid fa-plus"></i></button>
-        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">What is SAWPRS? <i class="fa-solid fa-plus"></i></button>
-        <div class="faq-answer"><p>Placeholder answer — text to be provided by ARO.</p></div>
-      </div>
-    </div>
+    <div class="faq-list" id="faqList"><div class="loading" style="color:var(--ink-soft)">Loading…</div></div>
   </div>
 </section>
 <div class="section-divider section-divider-mix"></div>
@@ -705,6 +628,17 @@ function formatDate(d) {
 function initials(name) {
   return (name||'').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
 }
+function renderBody(text) {
+  if (!text) return '';
+  return text.split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('');
+}
+function renderNameRoleList(text) {
+  if (!text) return '';
+  return text.split('\n').filter(l => l.trim()).map(line => {
+    const [name, role] = line.split('—').map(s => (s||'').trim());
+    return `<li><span class="bearer-name">${name||line.trim()}</span>${role ? `<span class="bearer-role">${role}</span>` : ''}</li>`;
+  }).join('');
+}
 async function getCol(col) {
   const snap = await getDocs(collection(db, col));
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -714,23 +648,52 @@ async function getCol(col) {
 async function init() {
   try {
     // Config
-    const [siteSnap, statsSnap] = await Promise.all([
+    const [siteSnap, statsSnap, pageContentSnap] = await Promise.all([
       getDoc(doc(db, 'config', 'site')),
-      getDoc(doc(db, 'config', 'stats'))
+      getDoc(doc(db, 'config', 'stats')),
+      getDoc(doc(db, 'config', 'pageContent'))
     ]);
     const site  = siteSnap.exists()  ? siteSnap.data()  : {};
     const stats = statsSnap.exists() ? (statsSnap.data().items || []) : [];
+    const pc    = pageContentSnap.exists() ? pageContentSnap.data() : {};
 
     // Collections
-    const [campaigns, programmes, policy, films, news, reclaimers, partners] = await Promise.all([
+    const [campaigns, programmes, policy, films, news, reclaimers, faqs] = await Promise.all([
       getCol('campaigns'), getCol('programmes'), getCol('policy'),
       getCol('films'), getCol('news'),
-      getCol('reclaimers'), getCol('partners')
+      getCol('reclaimers'), getCol('faqs')
     ]);
 
     // Hero bg
     const heroImg = campaigns.find(c=>c.image)?.image || programmes.find(p=>p.image)?.image || '';
     if (heroImg) document.getElementById('heroBg').style.backgroundImage = `url('${heroImg}')`;
+
+    // Page content (hero, About ARO, About Reclaimers, Support)
+    const setText = (id, val) => { const el = document.getElementById(id); if (el && val) el.textContent = val; };
+    const setHTML = (id, html) => { const el = document.getElementById(id); if (el && html) el.innerHTML = html; };
+    setText('heroHeading', pc.heroHeading);
+    setText('heroExplanation', pc.heroExplanation);
+    setHTML('aboutAroText', renderBody(pc.aboutAroText));
+    setHTML('historyText', renderBody(pc.historyText));
+    setHTML('structuresText', renderBody(pc.structuresText));
+    setHTML('officeBearersList', renderNameRoleList(pc.officeBearersText));
+    setHTML('npcStaffList', renderNameRoleList(pc.npcStaffText));
+    setHTML('recyclingText', renderBody(pc.recyclingText) + (pc.recyclingLinkUrl ? `<p><a href="${pc.recyclingLinkUrl}" target="_blank" rel="noopener" style="color:var(--green-bright)">Visit ARO Recycling →</a></p>` : ''));
+    setText('reclaimersIntro', pc.reclaimersIntro);
+    setHTML('whoAreReclaimersText', renderBody(pc.whoAreReclaimersText));
+    setHTML('contributionsText', renderBody(pc.contributionsText));
+    setText('supportRecyclingText', pc.supportRecyclingText);
+    setText('supportSolidarityText', pc.supportSolidarityText);
+    setText('supportDonateText', pc.supportDonateText);
+
+    // FAQs
+    const faqEl = document.getElementById('faqList');
+    if (!faqs.length) { faqEl.innerHTML = '<div class="empty-state">FAQs coming soon</div>'; }
+    else { faqEl.innerHTML = faqs.map(f => `
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">${f.question} <i class="fa-solid fa-plus"></i></button>
+        <div class="faq-answer"><p>${f.answer||''}</p></div>
+      </div>`).join(''); }
 
     // Ticker
     const tickerHTML = stats.map(s =>
@@ -827,11 +790,6 @@ async function init() {
         <div class="reclaimer-role">${r.role||''}${r.area?' · '+r.area:''}</div>
         ${r.bio?`<p class="reclaimer-bio">${r.bio}</p>`:''}
       </a>`).join(''); }
-
-    // Partners
-    document.getElementById('partnersGrid').innerHTML = partners.map(p =>
-      `<a href="${p.url||'#'}" class="partner-chip" ${p.url?'target="_blank" rel="noopener"':''}>${p.name}</a>`
-    ).join('');
 
     // Contact
     document.getElementById('contactDetail').innerHTML = `

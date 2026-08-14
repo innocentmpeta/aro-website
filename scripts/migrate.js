@@ -43,7 +43,7 @@ const ARRAY_COLLECTIONS = [
   'films',
   'news',
   'reclaimers',
-  'partners'
+  'faqs'
 ];
 
 async function migrate() {
@@ -56,6 +56,9 @@ async function migrate() {
 
     await db.collection('config').doc('stats').set({ items: content.stats });
     console.log('✓  Stats migrated');
+
+    await db.collection('config').doc('pageContent').set(content.pageContent);
+    console.log('✓  Page content migrated');
   } catch (err) {
     console.error('✗  Config migration failed:', err.message);
   }

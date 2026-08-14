@@ -219,11 +219,12 @@ textarea { resize:vertical; min-height:90px; }
       <li><a href="#" data-page="films"><span class="nav-icon"><i class="fa-solid fa-film"></i></span>Videos</a></li>
       <li><a href="#" data-page="news"><span class="nav-icon"><i class="fa-solid fa-newspaper"></i></span>News & Stories</a></li>
       <li><a href="#" data-page="reclaimers"><span class="nav-icon"><i class="fa-solid fa-person"></i></span>Reclaimers</a></li>
+      <li><a href="#" data-page="faqs"><span class="nav-icon"><i class="fa-solid fa-circle-question"></i></span>FAQs</a></li>
     </ul>
     <div class="sidebar-section">Settings</div>
     <ul class="sidebar-nav">
       <li><a href="#" data-page="stats"><span class="nav-icon"><i class="fa-solid fa-chart-bar"></i></span>Impact Stats</a></li>
-      <li><a href="#" data-page="partners"><span class="nav-icon"><i class="fa-solid fa-handshake"></i></span>Partners</a></li>
+      <li><a href="#" data-page="pagecontent"><span class="nav-icon"><i class="fa-solid fa-file-lines"></i></span>Page Content</a></li>
       <li><a href="#" data-page="siteinfo"><span class="nav-icon"><i class="fa-solid fa-circle-info"></i></span>Site Info</a></li>
     </ul>
     <div class="sidebar-bottom">
@@ -305,6 +306,14 @@ textarea { resize:vertical; min-height:90px; }
       </div>
     </div>
 
+    <!-- FAQS -->
+    <div class="page" id="page-faqs">
+      <div class="cms-card">
+        <div class="cms-card-header"><div class="cms-card-title">FAQs</div><button class="btn btn-primary" onclick="openModal('faqs')"><i class="fa-solid fa-plus"></i> Add Question</button></div>
+        <div class="cms-card-body"><div class="item-list" id="faqs-list"></div></div>
+      </div>
+    </div>
+
     <!-- STATS -->
     <div class="page" id="page-stats">
       <div class="cms-card">
@@ -316,11 +325,47 @@ textarea { resize:vertical; min-height:90px; }
       </div>
     </div>
 
-    <!-- PARTNERS -->
-    <div class="page" id="page-partners">
+    <!-- PAGE CONTENT -->
+    <div class="page" id="page-pagecontent">
       <div class="cms-card">
-        <div class="cms-card-header"><div class="cms-card-title">Partners & Funders</div><button class="btn btn-primary" onclick="openModal('partners')"><i class="fa-solid fa-plus"></i> Add Partner</button></div>
-        <div class="cms-card-body"><div class="item-list" id="partners-list"></div></div>
+        <div class="cms-card-header"><div class="cms-card-title">Page Content</div><button class="btn btn-primary" onclick="savePageContent()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button></div>
+        <div class="cms-card-body">
+          <p style="color:var(--ink-soft);font-size:0.85rem;margin-bottom:1rem">Static text shown on the homepage — the hero, About ARO, About Reclaimers, and Support sections.</p>
+
+          <p style="font-family:var(--font-m);font-size:0.63rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem">Homepage Hero</p>
+          <div class="form-grid">
+            <div class="form-group full"><label>Heading</label><input type="text" id="pc-heroHeading"></div>
+            <div class="form-group full"><label>Explanation Text</label><textarea id="pc-heroExplanation" rows="3"></textarea></div>
+          </div>
+          <div class="sep"></div>
+
+          <p style="font-family:var(--font-m);font-size:0.63rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem">About ARO</p>
+          <div class="form-grid">
+            <div class="form-group full"><label>About ARO</label><textarea id="pc-aboutAroText" rows="4"></textarea></div>
+            <div class="form-group full"><label>History</label><textarea id="pc-historyText" rows="3"></textarea></div>
+            <div class="form-group full"><label>Structures</label><textarea id="pc-structuresText" rows="3"></textarea></div>
+            <div class="form-group full"><label>Office Bearers (one per line — "Name — Role")</label><textarea id="pc-officeBearersText" rows="4"></textarea></div>
+            <div class="form-group full"><label>NPC Staff (one per line — "Name — Role")</label><textarea id="pc-npcStaffText" rows="3"></textarea></div>
+            <div class="form-group full"><label>ARO Recycling</label><textarea id="pc-recyclingText" rows="3"></textarea></div>
+            <div class="form-group full"><label>ARO Recycling Website URL</label><input type="url" id="pc-recyclingLinkUrl"></div>
+          </div>
+          <div class="sep"></div>
+
+          <p style="font-family:var(--font-m);font-size:0.63rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem">About Reclaimers</p>
+          <div class="form-grid">
+            <div class="form-group full"><label>Section Intro</label><textarea id="pc-reclaimersIntro" rows="3"></textarea></div>
+            <div class="form-group full"><label>Who Are Reclaimers</label><textarea id="pc-whoAreReclaimersText" rows="3"></textarea></div>
+            <div class="form-group full"><label>Reclaimers' Contributions</label><textarea id="pc-contributionsText" rows="3"></textarea></div>
+          </div>
+          <div class="sep"></div>
+
+          <p style="font-family:var(--font-m);font-size:0.63rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem">Support</p>
+          <div class="form-grid">
+            <div class="form-group full"><label>Recycling with Reclaimers</label><textarea id="pc-supportRecyclingText" rows="3"></textarea></div>
+            <div class="form-group full"><label>Solidarity Support</label><textarea id="pc-supportSolidarityText" rows="3"></textarea></div>
+            <div class="form-group full"><label>Donate</label><textarea id="pc-supportDonateText" rows="3"></textarea></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -464,18 +509,20 @@ async function getCol(col) {
 }
 
 async function loadAll() {
-  const [campaigns, programmes, policy, films, news, reclaimers, partners] = await Promise.all([
+  const [campaigns, programmes, policy, films, news, reclaimers, faqs] = await Promise.all([
     getCol('campaigns'), getCol('programmes'), getCol('policy'),
-    getCol('films'), getCol('news'), getCol('reclaimers'), getCol('partners')
+    getCol('films'), getCol('news'), getCol('reclaimers'), getCol('faqs')
   ]);
-  const [siteSnap, statsSnap] = await Promise.all([
+  const [siteSnap, statsSnap, pageContentSnap] = await Promise.all([
     getDoc(doc(db, 'config', 'site')),
-    getDoc(doc(db, 'config', 'stats'))
+    getDoc(doc(db, 'config', 'stats')),
+    getDoc(doc(db, 'config', 'pageContent'))
   ]);
   DATA = {
-    campaigns, programmes, policy, films, news, reclaimers, partners,
+    campaigns, programmes, policy, films, news, reclaimers, faqs,
     site:  siteSnap.exists()  ? siteSnap.data()  : {},
-    stats: statsSnap.exists() ? (statsSnap.data().items || []) : []
+    stats: statsSnap.exists() ? (statsSnap.data().items || []) : [],
+    pageContent: pageContentSnap.exists() ? pageContentSnap.data() : {}
   };
   renderDashboard();
 }
@@ -566,9 +613,10 @@ window.handleUpload = async function(fieldId, uploadPath, input) {
 // ── Render pages ──────────────────────────────────────────────────────────────
 async function renderPage(page) {
   await loadAll();
-  if (page === 'dashboard') { renderDashboard(); return; }
-  if (page === 'stats')     { renderStats();     return; }
-  if (page === 'siteinfo')  { renderSiteInfo();  return; }
+  if (page === 'dashboard')    { renderDashboard();    return; }
+  if (page === 'stats')        { renderStats();        return; }
+  if (page === 'siteinfo')     { renderSiteInfo();     return; }
+  if (page === 'pagecontent')  { renderPageContent();  return; }
   const listEl = document.getElementById(page + '-list');
   if (!listEl) return;
   const items = DATA[page] || [];
@@ -577,7 +625,7 @@ async function renderPage(page) {
 }
 
 function renderDashboard() {
-  const cols = { campaigns:'Campaigns', programmes:'Projects', policy:'Policy', films:'Videos', news:'News', reclaimers:'Reclaimers', partners:'Partners' };
+  const cols = { campaigns:'Campaigns', programmes:'Projects', policy:'Policy', films:'Videos', news:'News', reclaimers:'Reclaimers', faqs:'FAQs' };
   document.getElementById('dashSummary').innerHTML = Object.entries(cols).map(([k,v]) =>
     `<div class="dash-card"><div class="dash-count">${(DATA[k]||[]).length}</div><div class="dash-label">${v}</div></div>`
   ).join('');
@@ -601,6 +649,21 @@ function renderSiteInfo() {
   });
 }
 
+const PAGE_CONTENT_FIELDS = [
+  'heroHeading','heroExplanation',
+  'aboutAroText','historyText','structuresText','officeBearersText','npcStaffText','recyclingText','recyclingLinkUrl',
+  'reclaimersIntro','whoAreReclaimersText','contributionsText',
+  'supportRecyclingText','supportSolidarityText','supportDonateText'
+];
+
+function renderPageContent() {
+  const pc = DATA.pageContent || {};
+  PAGE_CONTENT_FIELDS.forEach(k => {
+    const el = document.getElementById('pc-' + k);
+    if (el) el.value = pc[k] || '';
+  });
+}
+
 function renderItemRow(col, item) {
   const hasVideos = ['campaigns','programmes','policy'].includes(col);
   const videoCount = hasVideos ? (item.videos||[]).length : 0;
@@ -610,14 +673,13 @@ function renderItemRow(col, item) {
   if (col==='news') meta = `<span class="badge ${item.published?'badge-green':'badge-orange'}">${item.published?'Published':'Draft'}</span> <span style="font-family:var(--font-m);font-size:0.62rem;color:var(--ink-soft);margin-left:0.4rem">${item.date||''}</span>`;
   if (col==='films') meta = `<span class="badge badge-grey">${item.type||'film'}</span>${item.year?` <span style="font-family:var(--font-m);font-size:0.62rem;color:var(--ink-soft);margin-left:0.4rem">${item.year}</span>`:''}`;
   if (col==='reclaimers') meta = `<span style="font-family:var(--font-m);font-size:0.62rem;color:var(--ink-soft)">${item.role||''}${item.area?' · '+item.area:''}</span>`;
-  if (col==='partners') meta = `<span style="font-family:var(--font-m);font-size:0.62rem;color:var(--ink-soft)">${item.url||''}</span>`;
 
   return `<div class="item-row">
     ${item.image ? `<img class="item-img-thumb" src="${item.image}" alt="">` : ''}
     <div class="item-main">
-      <div class="item-title">${item.title||item.name||'—'}</div>
+      <div class="item-title">${item.title||item.name||item.question||'—'}</div>
       <div class="item-meta">${meta}</div>
-      <div class="item-summary">${((item.summary||item.bio||item.body||item.description||'')).substring(0,120)}...</div>
+      <div class="item-summary">${((item.summary||item.bio||item.body||item.description||item.answer||'')).substring(0,120)}...</div>
       ${hasVideos && videoCount > 0 ? `<div style="margin-top:0.35rem;font-family:var(--font-m);font-size:0.6rem;color:var(--green)"><i class="fa-solid fa-film"></i> ${videoCount} video${videoCount>1?'s':''}</div>` : ''}
     </div>
     <div class="item-actions">
@@ -655,6 +717,21 @@ window.saveSiteInfo = async function() {
     await setDoc(doc(db, 'config', 'site'), body);
     setStatus('Saved', 'saved');
     toast('Site information saved');
+    await loadAll();
+  } catch(e) { setStatus('Error', 'error'); toast('Save failed', 'error'); }
+};
+
+window.savePageContent = async function() {
+  const body = {};
+  PAGE_CONTENT_FIELDS.forEach(k => {
+    const el = document.getElementById('pc-'+k);
+    if (el) body[k] = el.value;
+  });
+  setStatus('Saving…', 'saving');
+  try {
+    await setDoc(doc(db, 'config', 'pageContent'), body);
+    setStatus('Saved', 'saved');
+    toast('Page content saved');
     await loadAll();
   } catch(e) { setStatus('Error', 'error'); toast('Save failed', 'error'); }
 };
@@ -726,10 +803,9 @@ function buildForm(col, item) {
     <div class="form-group full"><label>Portrait Photo</label>${makeUploadField('main', v('image'), 'reclaimers')}
     <div class="form-group full" style="margin-top:0.75rem"><label>Additional Photos (Gallery)</label>${makeUploadField('gallery', '', 'reclaimers/gallery')}${imgHint}</div>`;
 
-  if (col==='partners') return `
-    <div class="form-group full"><label>Organisation Name</label><input type="text" id="f-name" value="${v('name')}"></div>
-    <div class="form-group full"><label>Website URL</label><input type="url" id="f-url" value="${v('url')}"></div>
-    <div class="form-group full"><label>Logo</label>${makeUploadField('main', v('logo'), 'partners')}`;
+  if (col==='faqs') return `
+    <div class="form-group full"><label>Question</label><input type="text" id="f-question" value="${v('question')}"></div>
+    <div class="form-group full"><label>Answer</label><textarea id="f-answer" rows="4">${v('answer')}</textarea>${bodyHint}</div>`;
 
   return '<p style="color:var(--ink-soft)">Unknown collection.</p>';
 }
@@ -754,7 +830,7 @@ function collectForm(col) {
   if (col==='films')        return { title:g('f-title'), type:g('f-type'), year:g('f-year'), embed:g('f-embed'), trailer:g('f-trailer'), description:g('f-description'), body:g('f-body'), credit:g('f-credit'), images:mergeImages(existing.images, galleryImg) };
   if (col==='news')         return { title:g('f-title'), category:g('f-category'), date:g('f-date'), body:g('f-body'), image:img||existing.image||'', published:document.getElementById('f-published')?.checked||false };
   if (col==='reclaimers')   return { name:g('f-name'), role:g('f-role'), area:g('f-area'), quote:g('f-quote'), bio:g('f-bio'), image:img||existing.image||'', images:mergeImages(existing.images, galleryImg) };
-  if (col==='partners')     return { name:g('f-name'), url:g('f-url'), logo:img };
+  if (col==='faqs')         return { question:g('f-question'), answer:g('f-answer') };
 }
 
 window.modalSave = async function() {

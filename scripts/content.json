@@ -12,9 +12,35 @@
   },
   "stats": [
     { "id": "s1", "value": "6,000+", "label": "ARO Members" },
-    { "id": "s2", "value": "80–90%", "label": "of SA recycling done by reclaimers" },
+    { "id": "s2", "value": "80–90%", "label": "of used recyclables collected for recycling by reclaimers (2015)" },
     { "id": "s3", "value": "R780m", "label": "saved in landfill costs annually" },
-    { "id": "s4", "value": "90,000", "label": "informal reclaimers nationally" }
+    { "id": "s4", "value": "60,000–90,000", "label": "informal reclaimers nationally" }
+  ],
+  "pageContent": {
+    "heroHeading": "African Reclaimers Organisation",
+    "heroExplanation": "ARO is a democratic organisation of over 6,000 reclaimers. We fight for recognition, fair pay, and justice — because the people who recycle South Africa's waste deserve to be treated with dignity.",
+    "aboutAroText": "ARO is a mass-based democratic organisation of reclaimers, established in 2018. We call ourselves \"reclaimers\" — not \"waste pickers\" — because we are reclaiming both the recyclable materials that would otherwise go to landfill, and our dignity as workers doing essential work for South Africa. Our vision is a waste economy that recognises, includes, and fairly pays the reclaimers who already do most of the work. ARO Recycling operates alongside the organisation to put this vision into practice.",
+    "historyText": "Reclaimers began organising in 2016 in response to threats against their livelihoods, culminating in the first-ever march of Johannesburg's landfill and street reclaimers. That founding action grew into the mass-based movement that is ARO today.",
+    "structuresText": "ARO is organised through 42 local branches across Johannesburg, each electing 2 representatives to sit on ARO's coordinating committee, which in turn elects an executive committee. ARO also has members organising in Mpumalanga and the Cape Town area.\n\nMpumalanga & Cape Town structures — pending detail from Luyanda.",
+    "officeBearersText": "[Office Bearer Name] — Chairperson\n[Office Bearer Name] — Deputy Chairperson\n[Office Bearer Name] — Secretary\n[Office Bearer Name] — Treasurer",
+    "npcStaffText": "Eli [Surname] — NPC Staff\nLuyanda [Surname] — NPC Staff\n[Organising Team Member] — Organising Team",
+    "recyclingText": "ARO Recycling is the trading arm connected to the organisation, helping put ARO's vision of reclaimer-led recycling into practice on the ground.",
+    "recyclingLinkUrl": "",
+    "reclaimersIntro": "It is estimated that between 60,000 and 90,000 people work as informal reclaimers in South Africa. They collect the majority of used recyclables that are recycled in this country.",
+    "whoAreReclaimersText": "Reclaimers are the people who collect, sort, and sell recyclable materials from streets, depots, and landfills — work that keeps South Africa's cities clean and its recycling industry running, largely without recognition or fair pay.",
+    "contributionsText": "Reclaimers collect an estimated 80–90% of used recyclables that are recycled in South Africa (2015 estimate), saving municipalities hundreds of millions of rands in landfill costs every year while diverting waste that would otherwise pollute the environment.",
+    "supportRecyclingText": "Put out your recyclables in a way that reclaimers can access, or contact ARO to join the Recycling with Reclaimers programme in your area.",
+    "supportSolidarityText": "Businesses and organisations can partner with ARO, buy from reclaimers, and ensure recycling contracts support the people already doing the work.",
+    "supportDonateText": "Financial support helps ARO organise, campaign, and run programmes for reclaimers nationally. Contact us to find out how to donate."
+  },
+  "faqs": [
+    { "id": "faq1", "question": "Why was ARO formed?", "answer": "Placeholder answer — text to be provided by ARO." },
+    { "id": "faq2", "question": "What do reclaimers do?", "answer": "Placeholder answer — text to be provided by ARO." },
+    { "id": "faq3", "question": "How much do reclaimers earn?", "answer": "Placeholder answer — text to be provided by ARO." },
+    { "id": "faq4", "question": "Why should we support reclaimers?", "answer": "Placeholder answer — text to be provided by ARO." },
+    { "id": "faq5", "question": "How are reclaimers affected by separation at source?", "answer": "Placeholder answer — text to be provided by ARO." },
+    { "id": "faq6", "question": "What is the EPR Service Fee?", "answer": "Placeholder answer — text to be provided by ARO." },
+    { "id": "faq7", "question": "What is SAWPRS?", "answer": "Placeholder answer — text to be provided by ARO." }
   ],
   "campaigns": [
     {
@@ -198,11 +224,5 @@
       "bio": "Mantoa has been reclaiming in Johannesburg for over a decade. Her son completed agricultural college on her reclaimer income. She is ARO's Chairperson and one of the movement's most recognised organisers.",
       "image": ""
     }
-  ],
-  "partners": [
-    { "id": "pt1", "name": "University of Johannesburg", "logo": "", "url": "" },
-    { "id": "pt2", "name": "SERI", "logo": "", "url": "https://seri-sa.org" },
-    { "id": "pt3", "name": "TRANSFORM", "logo": "", "url": "" },
-    { "id": "pt4", "name": "IAWP", "logo": "", "url": "https://wastepickersinternational.org" }
   ]
 }

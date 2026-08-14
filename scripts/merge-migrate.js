@@ -8,13 +8,22 @@
  * - New doc (id not present live): created in full from content.json.
  *
  * Run once: node scripts/merge-migrate.js
- * Requires serviceAccount-aro.json in the project root.
+ * Requires a Firebase service account key JSON file in the project root
+ * (any of the names below).
  */
 
 const admin = require('firebase-admin');
+const fs = require('fs');
 const path = require('path');
 
-const serviceAccount = require(path.join(__dirname, '..', 'serviceAccount-aro.json'));
+const CANDIDATE_NAMES = ['serviceAccount-aro.json', 'aro-ServiceKey.json'];
+const root = path.join(__dirname, '..');
+const found = CANDIDATE_NAMES.map(n => path.join(root, n)).find(p => fs.existsSync(p));
+if (!found) {
+  console.error(`\n❌  No service account key found in project root. Expected one of: ${CANDIDATE_NAMES.join(', ')}\n`);
+  process.exit(1);
+}
+const serviceAccount = require(found);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -33,7 +42,7 @@ const ARRAY_COLLECTIONS = [
   'films',
   'news',
   'reclaimers',
-  'partners'
+  'faqs'
 ];
 
 async function run() {
@@ -43,6 +52,8 @@ async function run() {
   console.log('Site config merged');
   await db.collection('config').doc('stats').set({ items: content.stats });
   console.log('Stats replaced');
+  await db.collection('config').doc('pageContent').set(content.pageContent, { merge: true });
+  console.log('Page content merged');
 
   for (const col of ARRAY_COLLECTIONS) {
     const items = content[col] || [];
